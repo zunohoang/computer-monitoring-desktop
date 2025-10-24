@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace computer_monitoring_desktop.Views
+namespace computer_monitoring_desktop.Views.Auth
 {
-    public partial class frmMain : Form
+    public partial class RegisterView : UserControl
     {
-        public frmMain()
+        public RegisterView()
         {
             InitializeComponent();
         }

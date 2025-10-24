@@ -12,7 +12,7 @@ namespace computer_monitoring_desktop
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmMain());
+            Application.Run(new MainForm());
         }
     }
 }
