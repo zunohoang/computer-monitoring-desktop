@@ -1,4 +1,5 @@
-using computer_monitoring_desktop.Views;
+﻿using computer_monitoring_desktop.Views;
+using System.Drawing.Text;
 namespace computer_monitoring_desktop
 {
     internal static class Program
@@ -9,10 +10,12 @@ namespace computer_monitoring_desktop
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+
+            AntdUI.Config.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            AntdUI.Config.TextRenderingHighQuality = true;
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            Application.Run(new MainWindow());
         }
     }
 }

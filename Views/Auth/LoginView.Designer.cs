@@ -28,74 +28,102 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnLogin = new AntdUI.Button();
-            txtUsername = new TextBox();
-            txtPassword = new TextBox();
+            AntdUI.HyperlinkLabel.LinkAppearance linkAppearance3 = new AntdUI.HyperlinkLabel.LinkAppearance();
+            AntdUI.HyperlinkLabel.LinkAppearance linkAppearance4 = new AntdUI.HyperlinkLabel.LinkAppearance();
+            lblLogin = new AntdUI.Label();
+            input1 = new AntdUI.Input();
             label1 = new AntdUI.Label();
             label2 = new AntdUI.Label();
+            input2 = new AntdUI.Input();
+            button1 = new AntdUI.Button();
+            hyperlinkLabel1 = new AntdUI.HyperlinkLabel();
             SuspendLayout();
             // 
-            // btnLogin
+            // lblLogin
             // 
-            btnLogin.Location = new Point(251, 237);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(132, 55);
-            btnLogin.TabIndex = 0;
-            btnLogin.Text = "Đăng nhập";
-            btnLogin.Click += btnLogin_Click;
+            lblLogin.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblLogin.Location = new Point(353, 63);
+            lblLogin.Name = "lblLogin";
+            lblLogin.Size = new Size(212, 92);
+            lblLogin.TabIndex = 0;
+            lblLogin.Text = "Đăng nhập";
             // 
-            // txtUsername
+            // input1
             // 
-            txtUsername.Location = new Point(289, 66);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(156, 27);
-            txtUsername.TabIndex = 1;
-            // 
-            // txtPassword
-            // 
-            txtPassword.Location = new Point(289, 159);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(156, 27);
-            txtPassword.TabIndex = 2;
+            input1.Location = new Point(302, 206);
+            input1.Name = "input1";
+            input1.Size = new Size(291, 51);
+            input1.TabIndex = 1;
+            input1.Text = "Nhập email";
             // 
             // label1
             // 
-            label1.Location = new Point(136, 53);
+            label1.Location = new Point(307, 171);
             label1.Name = "label1";
-            label1.Size = new Size(125, 53);
-            label1.TabIndex = 3;
+            label1.Size = new Size(140, 29);
+            label1.TabIndex = 2;
             label1.Text = "Tên đăng nhập:";
             // 
             // label2
             // 
-            label2.Location = new Point(136, 148);
+            label2.Location = new Point(307, 280);
             label2.Name = "label2";
-            label2.Size = new Size(125, 53);
-            label2.TabIndex = 4;
+            label2.Size = new Size(94, 29);
+            label2.TabIndex = 3;
             label2.Text = "Mật khẩu:";
+            // 
+            // input2
+            // 
+            input2.Location = new Point(302, 315);
+            input2.Name = "input2";
+            input2.Size = new Size(291, 47);
+            input2.TabIndex = 4;
+            input2.Text = "Mật khẩu";
+            input2.UseSystemPasswordChar = true;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(309, 395);
+            button1.Name = "button1";
+            button1.Size = new Size(284, 48);
+            button1.TabIndex = 5;
+            button1.Text = "Đăng nhập";
+            button1.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // hyperlinkLabel1
+            // 
+            hyperlinkLabel1.HoverStyle = linkAppearance3;
+            hyperlinkLabel1.Location = new Point(390, 449);
+            hyperlinkLabel1.Name = "hyperlinkLabel1";
+            hyperlinkLabel1.NormalStyle = linkAppearance4;
+            hyperlinkLabel1.Size = new Size(121, 29);
+            hyperlinkLabel1.TabIndex = 6;
+            hyperlinkLabel1.Text = "Quên mật khẩu ?";
             // 
             // LoginView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(hyperlinkLabel1);
+            Controls.Add(button1);
+            Controls.Add(input2);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(txtPassword);
-            Controls.Add(txtUsername);
-            Controls.Add(btnLogin);
+            Controls.Add(input1);
+            Controls.Add(lblLogin);
             Name = "LoginView";
-            Size = new Size(652, 347);
+            Size = new Size(910, 518);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private AntdUI.Button btnLogin;
-        private TextBox txtUsername;
-        private TextBox txtPassword;
+        private AntdUI.Label lblLogin;
+        private AntdUI.Input input1;
         private AntdUI.Label label1;
         private AntdUI.Label label2;
+        private AntdUI.Input input2;
+        private AntdUI.Button button1;
+        private AntdUI.HyperlinkLabel hyperlinkLabel1;
     }
 }
