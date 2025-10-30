@@ -2,15 +2,8 @@
 {
     partial class LoginView
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,110 +13,160 @@
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            AntdUI.HyperlinkLabel.LinkAppearance linkAppearance3 = new AntdUI.HyperlinkLabel.LinkAppearance();
-            AntdUI.HyperlinkLabel.LinkAppearance linkAppearance4 = new AntdUI.HyperlinkLabel.LinkAppearance();
-            lblLogin = new AntdUI.Label();
-            input1 = new AntdUI.Input();
-            label1 = new AntdUI.Label();
-            label2 = new AntdUI.Label();
-            input2 = new AntdUI.Input();
-            button1 = new AntdUI.Button();
-            hyperlinkLabel1 = new AntdUI.HyperlinkLabel();
+            linkRegister = new AntdUI.Label();
+            lblNoAccount = new AntdUI.Label();
+            divider1 = new AntdUI.Divider();
+            btnLogin = new AntdUI.Button();
+            linkForgotPassword = new AntdUI.Label();
+            inputPassword = new AntdUI.Input();
+            lblPassword = new AntdUI.Label();
+            inputEmail = new AntdUI.Input();
+            lblEmail = new AntdUI.Label();
+            lblTitle = new AntdUI.Label();
             SuspendLayout();
             // 
-            // lblLogin
+            // linkRegister
             // 
-            lblLogin.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblLogin.Location = new Point(353, 63);
-            lblLogin.Name = "lblLogin";
-            lblLogin.Size = new Size(212, 92);
-            lblLogin.TabIndex = 0;
-            lblLogin.Text = "Đăng nhập";
+            linkRegister.Anchor = AnchorStyles.Top;
+            linkRegister.Cursor = Cursors.Hand;
+            linkRegister.ForeColor = Color.FromArgb(22, 119, 255);
+            linkRegister.Location = new Point(424, 588);
+            linkRegister.Margin = new Padding(3, 4, 3, 4);
+            linkRegister.Name = "linkRegister";
+            linkRegister.Size = new Size(114, 40);
+            linkRegister.TabIndex = 9;
+            linkRegister.Text = "Đăng ký ngay";
             // 
-            // input1
+            // lblNoAccount
             // 
-            input1.Location = new Point(302, 206);
-            input1.Name = "input1";
-            input1.Size = new Size(291, 51);
-            input1.TabIndex = 1;
-            input1.Text = "Nhập email";
+            lblNoAccount.Anchor = AnchorStyles.Top;
+            lblNoAccount.Location = new Point(253, 588);
+            lblNoAccount.Margin = new Padding(3, 4, 3, 4);
+            lblNoAccount.Name = "lblNoAccount";
+            lblNoAccount.Size = new Size(160, 40);
+            lblNoAccount.TabIndex = 8;
+            lblNoAccount.Text = "Chưa có tài khoản?";
+            lblNoAccount.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label1
+            // divider1
             // 
-            label1.Location = new Point(307, 171);
-            label1.Name = "label1";
-            label1.Size = new Size(140, 29);
-            label1.TabIndex = 2;
-            label1.Text = "Tên đăng nhập:";
+            divider1.Anchor = AnchorStyles.Top;
+            divider1.Location = new Point(196, 554);
+            divider1.Margin = new Padding(3, 4, 3, 4);
+            divider1.Name = "divider1";
+            divider1.Size = new Size(389, 1);
+            divider1.TabIndex = 7;
             // 
-            // label2
+            // btnLogin
             // 
-            label2.Location = new Point(307, 280);
-            label2.Name = "label2";
-            label2.Size = new Size(94, 29);
-            label2.TabIndex = 3;
-            label2.Text = "Mật khẩu:";
+            btnLogin.Anchor = AnchorStyles.Top;
+            btnLogin.Location = new Point(196, 468);
+            btnLogin.Margin = new Padding(3, 4, 3, 4);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(389, 53);
+            btnLogin.TabIndex = 6;
+            btnLogin.Text = "Đăng nhập";
+            btnLogin.Type = AntdUI.TTypeMini.Primary;
             // 
-            // input2
+            // linkForgotPassword
             // 
-            input2.Location = new Point(302, 315);
-            input2.Name = "input2";
-            input2.Size = new Size(291, 47);
-            input2.TabIndex = 4;
-            input2.Text = "Mật khẩu";
-            input2.UseSystemPasswordChar = true;
+            linkForgotPassword.Anchor = AnchorStyles.Top;
+            linkForgotPassword.Cursor = Cursors.Hand;
+            linkForgotPassword.ForeColor = Color.FromArgb(22, 119, 255);
+            linkForgotPassword.Location = new Point(196, 421);
+            linkForgotPassword.Margin = new Padding(3, 4, 3, 4);
+            linkForgotPassword.Name = "linkForgotPassword";
+            linkForgotPassword.Size = new Size(389, 27);
+            linkForgotPassword.TabIndex = 5;
+            linkForgotPassword.Text = "Quên mật khẩu?";
+            linkForgotPassword.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // button1
+            // inputPassword
             // 
-            button1.Location = new Point(309, 395);
-            button1.Name = "button1";
-            button1.Size = new Size(284, 48);
-            button1.TabIndex = 5;
-            button1.Text = "Đăng nhập";
-            button1.Type = AntdUI.TTypeMini.Primary;
+            inputPassword.Anchor = AnchorStyles.Top;
+            inputPassword.Location = new Point(196, 348);
+            inputPassword.Margin = new Padding(3, 4, 3, 4);
+            inputPassword.Name = "inputPassword";
+            inputPassword.PasswordChar = '*';
+            inputPassword.PlaceholderText = "Nhập mật khẩu";
+            inputPassword.Size = new Size(389, 53);
+            inputPassword.TabIndex = 4;
             // 
-            // hyperlinkLabel1
+            // lblPassword
             // 
-            hyperlinkLabel1.HoverStyle = linkAppearance3;
-            hyperlinkLabel1.Location = new Point(390, 449);
-            hyperlinkLabel1.Name = "hyperlinkLabel1";
-            hyperlinkLabel1.NormalStyle = linkAppearance4;
-            hyperlinkLabel1.Size = new Size(121, 29);
-            hyperlinkLabel1.TabIndex = 6;
-            hyperlinkLabel1.Text = "Quên mật khẩu ?";
+            lblPassword.Anchor = AnchorStyles.Top;
+            lblPassword.Font = new Font("Segoe UI", 9F);
+            lblPassword.Location = new Point(196, 314);
+            lblPassword.Margin = new Padding(3, 4, 3, 4);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(389, 27);
+            lblPassword.TabIndex = 3;
+            lblPassword.Text = "Mật khẩu";
+            // 
+            // inputEmail
+            // 
+            inputEmail.Anchor = AnchorStyles.Top;
+            inputEmail.Location = new Point(196, 241);
+            inputEmail.Margin = new Padding(3, 4, 3, 4);
+            inputEmail.Name = "inputEmail";
+            inputEmail.PlaceholderText = "Nhập email";
+            inputEmail.Size = new Size(389, 53);
+            inputEmail.TabIndex = 2;
+            // 
+            // lblEmail
+            // 
+            lblEmail.Anchor = AnchorStyles.Top;
+            lblEmail.Font = new Font("Segoe UI", 9F);
+            lblEmail.Location = new Point(196, 208);
+            lblEmail.Margin = new Padding(3, 4, 3, 4);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(389, 27);
+            lblEmail.TabIndex = 1;
+            lblEmail.Text = "Email";
+            // 
+            // lblTitle
+            // 
+            lblTitle.Anchor = AnchorStyles.Top;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.Location = new Point(196, 128);
+            lblTitle.Margin = new Padding(3, 4, 3, 4);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(389, 53);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Đăng nhập";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // LoginView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(hyperlinkLabel1);
-            Controls.Add(button1);
-            Controls.Add(input2);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(input1);
-            Controls.Add(lblLogin);
+            AutoScroll = true;
+            Controls.Add(lblTitle);
+            Controls.Add(lblEmail);
+            Controls.Add(inputEmail);
+            Controls.Add(lblPassword);
+            Controls.Add(inputPassword);
+            Controls.Add(linkForgotPassword);
+            Controls.Add(btnLogin);
+            Controls.Add(divider1);
+            Controls.Add(lblNoAccount);
+            Controls.Add(linkRegister);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "LoginView";
-            Size = new Size(910, 518);
+            Size = new Size(797, 800);
             ResumeLayout(false);
         }
-
-        #endregion
-
-        private AntdUI.Label lblLogin;
-        private AntdUI.Input input1;
-        private AntdUI.Label label1;
-        private AntdUI.Label label2;
-        private AntdUI.Input input2;
-        private AntdUI.Button button1;
-        private AntdUI.HyperlinkLabel hyperlinkLabel1;
+        private AntdUI.Label linkRegister;
+        private AntdUI.Label lblNoAccount;
+        private AntdUI.Divider divider1;
+        private AntdUI.Button btnLogin;
+        private AntdUI.Label linkForgotPassword;
+        private AntdUI.Input inputPassword;
+        private AntdUI.Label lblPassword;
+        private AntdUI.Input inputEmail;
+        private AntdUI.Label lblEmail;
+        private AntdUI.Label lblTitle;
     }
 }
