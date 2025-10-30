@@ -1,8 +1,4 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace computer_monitoring_desktop.Models
 {
@@ -10,13 +6,12 @@ namespace computer_monitoring_desktop.Models
     {
         public static readonly List<MenuItemModel> MenuList = new List<MenuItemModel>
         {
-            new MenuItemModel {Text = "Dashboard",IconSvg = "DashboardOutlined", Tag = "Dashboard"},
-            new MenuItemModel {Text = "Quản lí cuộc thi",IconSvg = "TrophyOutlined", Tag = "Contests"},
-            new MenuItemModel {Text = "Quản lí phòng thi",IconSvg = "BankOutlined", Tag = "Rooms"},
-            new MenuItemModel {Text = "Quản lí vi phạm",IconSvg = "WarningOutlined", Tag = "Violations"},
-            new MenuItemModel {Text = "Quản lí tin nhắn",IconSvg = "MessageOutlined", Tag = "Messages"},
-
+            new MenuItemModel {Text = "Dashboard", IconSvg = "DashboardOutlined", Tag = "Dashboard"},
+            new MenuItemModel {Text = "Audit log", IconSvg = "ClockCircleOutlined", Tag = "AuditLog"},
+            new MenuItemModel {Text = "Quản lý cuộc thi", IconSvg = "TrophyOutlined", Tag = "Contests"},
+            new MenuItemModel {Text = "Quản lý phòng thi", IconSvg = "BankOutlined", Tag = "Rooms"},
+            new MenuItemModel {Text = "Quản lý vi phạm", IconSvg = "WarningOutlined", Tag = "Violations"},
+            new MenuItemModel {Text = "Quản lý tin nhắn", IconSvg = "MessageOutlined", Tag = "Messages"},
         };
-
     }
 }

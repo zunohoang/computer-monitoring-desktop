@@ -41,8 +41,8 @@ namespace computer_monitoring_desktop.Views
             var loginView = new LoginView();
             loginView.OnLoginSuccess += (s, e) => {
                 AntdUI.Message.success(this, "Đăng nhập thành công! Chào mừng bạn!", autoClose: 3);
-                // After successful login, navigate to Dashboard
-                LoadDashboardView();
+                // After successful login, navigate to Audit Log
+                LoadAuditLogView();
             };
             loginView.OnSwitchToRegister += (s, e) => LoadRegisterView();
             ViewManager.LoadView(pnlContent, loginView);
@@ -52,6 +52,12 @@ namespace computer_monitoring_desktop.Views
         {
             var dashboard = new DashboardView();
             ViewManager.LoadView(pnlContent, dashboard);
+        }
+
+        private void LoadAuditLogView()
+        {
+            var auditLogView = new AuditLogView();
+            ViewManager.LoadView(pnlContent, auditLogView);
         }
 
         public void LoadContestView()
@@ -141,6 +147,9 @@ namespace computer_monitoring_desktop.Views
                 {
                     case "Dashboard":
                         LoadDashboardView();
+                        break;
+                    case "AuditLog":
+                        LoadAuditLogView();
                         break;
                     case "Contests":
                         LoadContestView();
