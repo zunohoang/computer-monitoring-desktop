@@ -1,20 +1,31 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using computer_monitoring_desktop.Models.Audit;
 using computer_monitoring_desktop.Models.Rooms;
+using computer_monitoring_desktop.Models.Repositories;
 
 namespace computer_monitoring_desktop.Views
 {
+    // Load sau khi người dung nhấn vào tab này (data đi từ form MainWindow.cs)
     public partial class RoomManagementView : UserControl
     {
+        // 
+        private readonly IRoomRepository roomRepo;
         private List<ExamRoom> rooms = new();
         private ExamRoom? selectedRoom;
         private AuditAttempt? selectedAttempt;
 
         public RoomManagementView()
+            : this(new InMemoryRoomRepository())
         {
+        }
+
+        internal RoomManagementView(IRoomRepository repository)
+        {
+            roomRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+
             InitializeComponent();
 
             lstRooms.FormattingEnabled = true;
@@ -38,7 +49,8 @@ namespace computer_monitoring_desktop.Views
 
         private void LoadRooms()
         {
-            rooms = RoomMockModel.Rooms.ToList();
+            // Lấy data thông qua repository
+            rooms = roomRepo.GetRooms().ToList();
             lstRooms.DataSource = rooms;
             lblRoomsTitle.Text = $"Phong thi ({rooms.Count})";
             lblHint.Text = "Chon thi sinh de mo man hinh log chi tiet. Nhan nut Back de quay lai.";
@@ -58,7 +70,7 @@ namespace computer_monitoring_desktop.Views
         {
             if (e.ListItem is ExamRoom room)
             {
-                var attemptCount = RoomMockModel.GetAttemptCount(room.Id);
+                var attemptCount = roomRepo.GetAttemptCount(room.Id);
                 e.Value = $"{room.AccessCode} ({attemptCount}/{room.Capacity})";
             }
         }
@@ -85,7 +97,7 @@ namespace computer_monitoring_desktop.Views
             lvContestants.BeginUpdate();
             lvContestants.Items.Clear();
 
-            var attempts = AuditMockModel.GetAttemptsByRoom(room.Id);
+            var attempts = roomRepo.GetAttemptsByRoom(room.Id);
             foreach (var attempt in attempts)
             {
                 var item = new ListViewItem(attempt.StudentCode)

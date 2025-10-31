@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -23,21 +24,30 @@ namespace computer_monitoring_desktop.Views
         private AntdUI.Label summaryAlerts = null!;
         private AntdUI.Label summaryLogs = null!;
 
+        private readonly IAuditRepository auditRepo;
+
         public AuditChartView()
-            : this(AuditMockModel.Attempts.First().Id)
+            : this(new InMemoryAuditRepository(), new InMemoryAuditRepository().GetAttempts().First().Id)
         {
         }
 
-        internal AuditChartView(AuditAttempt attempt)
-            : this(attempt.Id)
+        internal AuditChartView(IAuditRepository repository)
+            : this(repository, repository.GetAttempts().First().Id)
         {
         }
 
         public AuditChartView(int attemptId)
+            : this(new InMemoryAuditRepository(), attemptId)
         {
+        }
+
+        internal AuditChartView(IAuditRepository repository, int attemptId)
+        {
+            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+
             InitializeComponent();
 
-            blacklistNames = AuditMockModel.Blacklist
+            blacklistNames = auditRepo.GetBlacklist()
                 .Select(item => item.Name.Trim().ToLowerInvariant())
                 .ToHashSet();
 
@@ -72,11 +82,11 @@ namespace computer_monitoring_desktop.Views
 
         private void BindDataset(int attemptId)
         {
-            dataset = AuditMockModel.GetDataset(attemptId);
+            dataset = auditRepo.GetDataset(attemptId);
             attempt = dataset.Attempt;
             processes = dataset.Processes;
             logs = dataset.Logs;
-            timelineRange = AuditMockModel.GetTimelineRange(attempt.Id);
+            timelineRange = auditRepo.GetTimelineRange(attempt.Id);
         }
 
         private void UpdateHeaderText()
