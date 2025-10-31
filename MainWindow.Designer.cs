@@ -52,7 +52,7 @@
             titlebar.Name = "titlebar";
             titlebar.ShowButton = true;
             titlebar.ShowIcon = true;
-            titlebar.Size = new Size(1068, 34);
+            titlebar.Size = new Size(1330, 42);
             titlebar.SubText = "v1.0.0";
             titlebar.TabIndex = 0;
             titlebar.Text = "Hệ thống quản lí máy tính";
@@ -63,12 +63,12 @@
             inpSearch.Dock = DockStyle.Right;
             inpSearch.IconRatio = 0.8F;
             inpSearch.LocalizationPlaceholderText = "search";
-            inpSearch.Location = new Point(610, 0);
+            inpSearch.Location = new Point(856, 0);
             inpSearch.Margin = new Padding(2);
             inpSearch.Name = "inpSearch";
             inpSearch.PlaceholderText = "Tìm kiếm";
             inpSearch.PrefixSvg = "SearchOutlined";
-            inpSearch.Size = new Size(134, 34);
+            inpSearch.Size = new Size(168, 42);
             inpSearch.TabIndex = 4;
             inpSearch.TextChanged += inpSearch_TextChanged;
             // 
@@ -78,10 +78,10 @@
             btnTheme.Ghost = true;
             btnTheme.IconRatio = 0.8F;
             btnTheme.IconSvg = "SunOutlined";
-            btnTheme.Location = new Point(744, 0);
+            btnTheme.Location = new Point(1024, 0);
             btnTheme.Margin = new Padding(2);
             btnTheme.Name = "btnTheme";
-            btnTheme.Size = new Size(36, 34);
+            btnTheme.Size = new Size(45, 42);
             btnTheme.TabIndex = 3;
             btnTheme.ToggleIconSvg = "MoonOutlined";
             btnTheme.WaveSize = 0;
@@ -93,10 +93,10 @@
             btnSettings.Ghost = true;
             btnSettings.IconRatio = 0.8F;
             btnSettings.IconSvg = "SettingOutlined";
-            btnSettings.Location = new Point(780, 0);
+            btnSettings.Location = new Point(1069, 0);
             btnSettings.Margin = new Padding(2);
             btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(36, 34);
+            btnSettings.Size = new Size(45, 42);
             btnSettings.TabIndex = 2;
             btnSettings.ToggleIconSvg = "MenuFoldOutlined";
             btnSettings.WaveSize = 0;
@@ -108,10 +108,10 @@
             btnCollapse.Ghost = true;
             btnCollapse.IconRatio = 1F;
             btnCollapse.IconSvg = "MenuUnfoldOutlined";
-            btnCollapse.Location = new Point(0, 523);
+            btnCollapse.Location = new Point(0, 641);
             btnCollapse.Margin = new Padding(2);
             btnCollapse.Name = "btnCollapse";
-            btnCollapse.Size = new Size(86, 42);
+            btnCollapse.Size = new Size(108, 52);
             btnCollapse.TabIndex = 1;
             btnCollapse.ToggleIconSvg = "MenuFoldOutlined";
             btnCollapse.WaveSize = 0;
@@ -123,10 +123,10 @@
             pnlSidebar.Controls.Add(mnuSidebar);
             pnlSidebar.Controls.Add(btnCollapse);
             pnlSidebar.Dock = DockStyle.Left;
-            pnlSidebar.Location = new Point(0, 34);
+            pnlSidebar.Location = new Point(0, 42);
             pnlSidebar.Margin = new Padding(2);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(86, 565);
+            pnlSidebar.Size = new Size(108, 693);
             pnlSidebar.TabIndex = 2;
             pnlSidebar.Text = "panel1";
             // 
@@ -136,7 +136,7 @@
             mnuSidebar.Location = new Point(0, 0);
             mnuSidebar.Margin = new Padding(2);
             mnuSidebar.Name = "mnuSidebar";
-            mnuSidebar.Size = new Size(86, 523);
+            mnuSidebar.Size = new Size(108, 641);
             mnuSidebar.TabIndex = 2;
             mnuSidebar.Text = "menu1";
             mnuSidebar.SelectChanged += mnuSidebar_SelectChanged;
@@ -145,18 +145,18 @@
             // 
             pnlContent.Back = Color.Transparent;
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Location = new Point(86, 34);
+            pnlContent.Location = new Point(108, 42);
             pnlContent.Margin = new Padding(2);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(982, 565);
+            pnlContent.Size = new Size(1222, 693);
             pnlContent.TabIndex = 3;
             pnlContent.Text = "panel2";
             // 
             // MainWindow
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1068, 599);
+            ClientSize = new Size(1330, 735);
             Controls.Add(pnlContent);
             Controls.Add(pnlSidebar);
             Controls.Add(titlebar);
