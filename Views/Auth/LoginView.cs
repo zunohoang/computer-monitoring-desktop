@@ -26,7 +26,7 @@ namespace computer_monitoring_desktop.Views.Auth
         private void BtnLogin_Click(object sender, EventArgs e)
         {
             var form = this.FindForm();
-            
+
             // Validate inputs
             if (string.IsNullOrWhiteSpace(inputEmail.Text))
             {

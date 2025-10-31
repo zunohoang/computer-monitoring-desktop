@@ -11,9 +11,6 @@ namespace computer_monitoring_desktop.Views
         private System.Windows.Forms.Panel pnlMain;
         private AntdUI.Panel pnlHeader;
         private System.Windows.Forms.Panel pnlContent;
-        private AntdUI.Panel pnlStats;
-        private AntdUI.Panel pnlParticipants;
-        private AntdUI.Panel pnlRooms;
 
         public ContestDetailsView(string id)
         {
@@ -178,7 +175,6 @@ namespace computer_monitoring_desktop.Views
 
             // Horizontal layout for 4 cards
             int cardWidth = 260;
-            int cardHeight = 120;
             int cardSpacing = 20;
             int startX = 0;
 
