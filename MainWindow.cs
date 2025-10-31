@@ -1,10 +1,11 @@
 ﻿using AntdUI;
 using computer_monitoring_desktop.Models;
+using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Utils;
 using computer_monitoring_desktop.Views.Auth;
+using computer_monitoring_desktop.Views.ContestsView;
 using computer_monitoring_desktop.Views.SubViews;
-using System;               
-using System.Linq;
+using System;
 using System.Windows.Forms;
 
 namespace computer_monitoring_desktop.Views
@@ -41,8 +42,8 @@ namespace computer_monitoring_desktop.Views
             var loginView = new LoginView();
             loginView.OnLoginSuccess += (s, e) => {
                 AntdUI.Message.success(this, "Đăng nhập thành công! Chào mừng bạn!", autoClose: 3);
-                // After successful login, navigate to Audit Log
-                LoadAuditLogView();
+                // After successful login, navigate to room management dashboard
+                LoadRoomManagementView();
             };
             loginView.OnSwitchToRegister += (s, e) => LoadRegisterView();
             ViewManager.LoadView(pnlContent, loginView);
@@ -54,16 +55,33 @@ namespace computer_monitoring_desktop.Views
             ViewManager.LoadView(pnlContent, dashboard);
         }
 
-        private void LoadAuditLogView()
-        {
-            var auditLogView = new AuditLogView();
-            ViewManager.LoadView(pnlContent, auditLogView);
-        }
-
         public void LoadContestView()
         {
             var contestView = new ContestView();
             ViewManager.LoadView(pnlContent, contestView);
+        }
+
+        public void LoadRoomManagementView()
+        {
+            var roomView = new RoomManagementView();
+            ViewManager.LoadView(pnlContent, roomView);
+        }
+        
+        public void LoadViolationView()
+        {
+            var violationView = new ViolationView();
+            ViewManager.LoadView(pnlContent, violationView);
+        }
+
+        public void LoadAuditDetailView(int attemptId)
+        {
+            var detailView = new AuditDetailView(attemptId);
+            ViewManager.LoadView(pnlContent, detailView);
+        }
+
+        internal void LoadAuditDetailView(Models.Audit.AuditAttempt attempt)
+        {
+            LoadAuditDetailView(attempt.Id);
         }
 
         public void LoadContestDetailsView(string contestId)
@@ -88,7 +106,7 @@ namespace computer_monitoring_desktop.Views
             mnuSidebar.Collapsed = true;
 
             mnuSidebar.Items.Clear();
-            foreach (var itemModel in MenuData.MenuList)
+            foreach (var itemModel in DataClass.MenuItems)
             {
                 var childItem = itemModel.Text.ToLower();
 
@@ -148,11 +166,14 @@ namespace computer_monitoring_desktop.Views
                     case "Dashboard":
                         LoadDashboardView();
                         break;
-                    case "AuditLog":
-                        LoadAuditLogView();
-                        break;
                     case "Contests":
                         LoadContestView();
+                        break;
+                    case "Rooms":
+                        LoadRoomManagementView();
+                        break;
+                    case "Violations":
+                        LoadViolationView();
                         break;
                     default:
                         break;
