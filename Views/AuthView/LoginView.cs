@@ -2,16 +2,25 @@
 using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
+using computer_monitoring_desktop.Dtos;
+using computer_monitoring_desktop.Services;
+using computer_monitoring_desktop.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace computer_monitoring_desktop.Views.Auth
 {
     public partial class LoginView : UserControl
     {
+        private readonly ILogger<LoginView> _logger;
+
         public event EventHandler OnLoginSuccess;
         public event EventHandler OnSwitchToRegister;
+        private AuthService authService = new AuthService();
+
 
         public LoginView()
         {
+            _logger = LoggerProvider.CreateLogger<LoginView>();
             InitializeComponent();
             InitializeEvents();
         }
@@ -23,7 +32,7 @@ namespace computer_monitoring_desktop.Views.Auth
             linkRegister.Click += LinkRegister_Click;
         }
 
-        private void BtnLogin_Click(object sender, EventArgs e)
+        private async void BtnLogin_Click(object sender, EventArgs e)
         {
             var form = this.FindForm();
 
@@ -46,12 +55,29 @@ namespace computer_monitoring_desktop.Views.Auth
                 return;
             }
 
-            // TODO: Implement actual login logic here
-            // For now, just show success message
-            AntdUI.Message.success(form, "Đăng nhập thành công!", autoClose: 2);
-            
-            // Trigger success event
-            OnLoginSuccess?.Invoke(this, EventArgs.Empty);
+            try
+            {
+                LoginResponse? loginResponse = await authService.LoginAsync(new LoginRequest
+                {
+                    email = inputEmail.Text.Trim(),
+                    password = inputPassword.Text
+                });
+
+                if (loginResponse != null && (!string.IsNullOrEmpty(loginResponse.token) || loginResponse.success == true))
+                {
+                    AntdUI.Message.success(form, "Đăng nhập thành công!", autoClose: 2);
+                    OnLoginSuccess?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    string errorMessage = loginResponse?.message ?? "Đăng nhập thất bại!";
+                    AntdUI.Message.error(form, errorMessage, autoClose: 3);
+                }
+            }
+            catch (Exception ex)
+            {
+                AntdUI.Message.error(form, $"Lỗi kết nối: {ex.Message}", autoClose: 3);
+            }
         }
 
         private void LinkForgotPassword_Click(object sender, EventArgs e)
