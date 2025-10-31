@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -18,22 +19,30 @@ namespace computer_monitoring_desktop.Views
 
         private readonly BindingList<ProcessRow> processRows = new();
         private readonly BindingSource processBinding = new();
+        private readonly IAuditRepository auditRepo;
 
         public TextLogView()
-            : this(AuditMockModel.Attempts.First().Id)
+            : this(new InMemoryAuditRepository(), new InMemoryAuditRepository().GetAttempts().First().Id)
         {
         }
 
-        internal TextLogView(AuditAttempt attempt)
-            : this(attempt.Id)
+        internal TextLogView(IAuditRepository repository)
+            : this(repository, repository.GetAttempts().First().Id)
         {
         }
 
         public TextLogView(int attemptId)
+            : this(new InMemoryAuditRepository(), attemptId)
         {
+        }
+
+        internal TextLogView(IAuditRepository repository, int attemptId)
+        {
+            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+
             InitializeComponent();
 
-            blacklistNames = AuditMockModel.Blacklist
+            blacklistNames = auditRepo.GetBlacklist()
                 .Select(item => item.Name.Trim().ToLowerInvariant())
                 .ToHashSet();
 
@@ -67,7 +76,7 @@ namespace computer_monitoring_desktop.Views
 
         private void BindDataset(int attemptId)
         {
-            dataset = AuditMockModel.GetDataset(attemptId);
+            dataset = auditRepo.GetDataset(attemptId);
             attempt = dataset.Attempt;
             processes = dataset.Processes;
         }

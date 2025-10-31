@@ -33,10 +33,10 @@ namespace computer_monitoring_desktop.Views
         {
             pnlMain = new Panel();
             pnlContentHost = new Panel();
-            btnChart = new AntdUI.Button();
-            btnText = new AntdUI.Button();
             pnlHeader = new AntdUI.Panel();
+            btnChart = new AntdUI.Button();
             btnBack = new AntdUI.Button();
+            btnText = new AntdUI.Button();
             pnlMain.SuspendLayout();
             pnlHeader.SuspendLayout();
             SuspendLayout();
@@ -58,33 +58,12 @@ namespace computer_monitoring_desktop.Views
             // 
             pnlContentHost.BackColor = Color.White;
             pnlContentHost.Dock = DockStyle.Fill;
-            pnlContentHost.Location = new Point(32, 70);
+            pnlContentHost.Location = new Point(32, 80);
             pnlContentHost.Margin = new Padding(0);
             pnlContentHost.Name = "pnlContentHost";
             pnlContentHost.Padding = new Padding(16);
-            pnlContentHost.Size = new Size(1761, 881);
+            pnlContentHost.Size = new Size(1761, 871);
             pnlContentHost.TabIndex = 2;
-            // 
-            // btnChart
-            // 
-            btnChart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnChart.Location = new Point(1641, 6);
-            btnChart.Margin = new Padding(8, 0, 0, 0);
-            btnChart.Name = "btnChart";
-            btnChart.Size = new Size(120, 40);
-            btnChart.TabIndex = 1;
-            btnChart.Text = "Audit chart";
-            // 
-            // btnText
-            // 
-            btnText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnText.Location = new Point(1513, 6);
-            btnText.Margin = new Padding(0);
-            btnText.Name = "btnText";
-            btnText.Size = new Size(120, 40);
-            btnText.TabIndex = 0;
-            btnText.Text = "Text log";
-            btnText.Type = AntdUI.TTypeMini.Primary;
             // 
             // pnlHeader
             // 
@@ -98,8 +77,18 @@ namespace computer_monitoring_desktop.Views
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(28, 24, 28, 24);
             pnlHeader.Radius = 12;
-            pnlHeader.Size = new Size(1761, 46);
+            pnlHeader.Size = new Size(1761, 56);
             pnlHeader.TabIndex = 0;
+            // 
+            // btnChart
+            // 
+            btnChart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnChart.Location = new Point(1641, 6);
+            btnChart.Margin = new Padding(8, 0, 0, 0);
+            btnChart.Name = "btnChart";
+            btnChart.Size = new Size(120, 40);
+            btnChart.TabIndex = 1;
+            btnChart.Text = "Audit chart";
             // 
             // btnBack
             // 
@@ -111,6 +100,17 @@ namespace computer_monitoring_desktop.Views
             btnBack.Size = new Size(120, 44);
             btnBack.TabIndex = 0;
             btnBack.Text = "Back";
+            // 
+            // btnText
+            // 
+            btnText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnText.Location = new Point(1513, 6);
+            btnText.Margin = new Padding(0);
+            btnText.Name = "btnText";
+            btnText.Size = new Size(120, 40);
+            btnText.TabIndex = 0;
+            btnText.Text = "Text log";
+            btnText.Type = AntdUI.TTypeMini.Primary;
             // 
             // AuditDetailView
             // 

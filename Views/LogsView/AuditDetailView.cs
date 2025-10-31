@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -11,9 +12,17 @@ namespace computer_monitoring_desktop.Views
         private TextLogView? textLogView;
         private AuditChartView? auditChartView;
         private ViewMode currentMode = ViewMode.Text;
+        private readonly IAuditRepository auditRepo;
 
         public AuditDetailView(int attemptId)
+            : this(new InMemoryAuditRepository(), attemptId)
         {
+        }
+
+        internal AuditDetailView(IAuditRepository repository, int attemptId)
+        {
+            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+
             InitializeComponent();
             BindDataset(attemptId);
 
@@ -29,7 +38,7 @@ namespace computer_monitoring_desktop.Views
         }
 
         internal AuditDetailView(AuditAttempt attempt)
-            : this(attempt.Id)
+            : this(new InMemoryAuditRepository(), attempt.Id)
         {
         }
 
@@ -49,7 +58,7 @@ namespace computer_monitoring_desktop.Views
 
         private void BindDataset(int attemptId)
         {
-            dataset = AuditMockModel.GetDataset(attemptId);
+            dataset = auditRepo.GetDataset(attemptId);
             attempt = dataset.Attempt;
         }
 
@@ -57,7 +66,7 @@ namespace computer_monitoring_desktop.Views
         {
             if (textLogView == null)
             {
-                textLogView = new TextLogView(attempt)
+                textLogView = new TextLogView(auditRepo)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
@@ -67,7 +76,7 @@ namespace computer_monitoring_desktop.Views
 
             if (auditChartView == null)
             {
-                auditChartView = new AuditChartView(attempt)
+                auditChartView = new AuditChartView(auditRepo)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
