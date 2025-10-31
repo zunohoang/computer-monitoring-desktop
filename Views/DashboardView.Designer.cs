@@ -169,23 +169,7 @@
             lblContestsIcon.Size = new Size(53, 62);
             lblContestsIcon.TabIndex = 0;
             lblContestsIcon.Text = "";
-            // 
-            // cardStudents
-            // 
-            cardStudents.Back = Color.White;
-            cardStudents.BorderColor = Color.FromArgb(240, 240, 240);
-            cardStudents.BorderWidth = 1F;
-            cardStudents.Controls.Add(lblStudentsIcon);
-            cardStudents.Controls.Add(lblStudentsTitle);
-            cardStudents.Controls.Add(lblStudentsValue);
-            cardStudents.Location = new Point(79, 0);
-            cardStudents.Margin = new Padding(0, 0, 15, 0);
-            cardStudents.Name = "cardStudents";
-            cardStudents.Padding = new Padding(27, 31, 27, 31);
-            cardStudents.Radius = 8;
-            cardStudents.Shadow = 8;
-            cardStudents.Size = new Size(260, 177);
-            cardStudents.TabIndex = 1;
+            
             // 
             // lblStudentsIcon
             // 

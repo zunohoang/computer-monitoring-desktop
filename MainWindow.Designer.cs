@@ -36,6 +36,7 @@
             pnlSidebar = new AntdUI.Panel();
             mnuSidebar = new AntdUI.Menu();
             pnlContent = new AntdUI.Panel();
+            breadcrumb1 = new AntdUI.Breadcrumb();
             titlebar.SuspendLayout();
             pnlSidebar.SuspendLayout();
             SuspendLayout();
@@ -63,7 +64,7 @@
             inpSearch.Dock = DockStyle.Right;
             inpSearch.IconRatio = 0.8F;
             inpSearch.LocalizationPlaceholderText = "search";
-            inpSearch.Location = new Point(610, 0);
+            inpSearch.Location = new Point(682, 0);
             inpSearch.Margin = new Padding(2);
             inpSearch.Name = "inpSearch";
             inpSearch.PlaceholderText = "Tìm kiếm";
@@ -78,7 +79,7 @@
             btnTheme.Ghost = true;
             btnTheme.IconRatio = 0.8F;
             btnTheme.IconSvg = "SunOutlined";
-            btnTheme.Location = new Point(744, 0);
+            btnTheme.Location = new Point(816, 0);
             btnTheme.Margin = new Padding(2);
             btnTheme.Name = "btnTheme";
             btnTheme.Size = new Size(36, 34);
@@ -93,7 +94,7 @@
             btnSettings.Ghost = true;
             btnSettings.IconRatio = 0.8F;
             btnSettings.IconSvg = "SettingOutlined";
-            btnSettings.Location = new Point(780, 0);
+            btnSettings.Location = new Point(852, 0);
             btnSettings.Margin = new Padding(2);
             btnSettings.Name = "btnSettings";
             btnSettings.Size = new Size(36, 34);
@@ -145,12 +146,22 @@
             // 
             pnlContent.Back = Color.Transparent;
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Location = new Point(86, 34);
+            pnlContent.Location = new Point(86, 67);
             pnlContent.Margin = new Padding(2);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(982, 565);
+            pnlContent.Size = new Size(982, 532);
             pnlContent.TabIndex = 3;
             pnlContent.Text = "panel2";
+            // 
+            // breadcrumb1
+            // 
+            breadcrumb1.Dock = DockStyle.Top;
+            breadcrumb1.Location = new Point(86, 34);
+            breadcrumb1.Name = "breadcrumb1";
+            breadcrumb1.Size = new Size(982, 33);
+            breadcrumb1.TabIndex = 0;
+            breadcrumb1.Text = "breadcrumb1";
+
             // 
             // MainWindow
             // 
@@ -158,6 +169,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1068, 599);
             Controls.Add(pnlContent);
+            Controls.Add(breadcrumb1);
             Controls.Add(pnlSidebar);
             Controls.Add(titlebar);
             Margin = new Padding(2);
@@ -179,5 +191,6 @@
         private AntdUI.Panel pnlSidebar;
         private AntdUI.Menu mnuSidebar;
         private AntdUI.Panel pnlContent;
+        private AntdUI.Breadcrumb breadcrumb1;
     }
 }
