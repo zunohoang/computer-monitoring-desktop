@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
 
-namespace computer_monitoring_desktop.Views
+namespace computer_monitoring_desktop.Views.ContestsView
 {
     public partial class ContestDetailsView : UserControl
     {
@@ -22,9 +22,9 @@ namespace computer_monitoring_desktop.Views
 
         private void InitializeCustomComponents()
         {
-            this.Dock = DockStyle.Fill;
-            this.BackColor = Color.FromArgb(240, 242, 245);
-            this.Padding = new Padding(20);
+            Dock = DockStyle.Fill;
+            BackColor = Color.FromArgb(240, 242, 245);
+            Padding = new Padding(20);
 
             // Main container - use WinForms Panel for AutoScroll support
             pnlMain = new System.Windows.Forms.Panel
@@ -64,7 +64,7 @@ namespace computer_monitoring_desktop.Views
 
             pnlMain.Controls.Add(pnlContent);
             pnlMain.Controls.Add(pnlHeader);
-            this.Controls.Add(pnlMain);
+            Controls.Add(pnlMain);
         }
 
         private void LoadContestDetails()
@@ -596,7 +596,7 @@ namespace computer_monitoring_desktop.Views
         private void BtnBack_Click(object sender, EventArgs e)
         {
             // Navigate back to ContestView
-            var mainWindow = this.FindForm() as MainWindow;
+            var mainWindow = FindForm() as MainWindow;
             if (mainWindow != null)
             {
                 mainWindow.LoadContestView();
@@ -605,10 +605,10 @@ namespace computer_monitoring_desktop.Views
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            this.Name = "ContestDetailsView";
-            this.Size = new Size(1400, 900);
-            this.ResumeLayout(false);
+            SuspendLayout();
+            Name = "ContestDetailsView";
+            Size = new Size(1400, 900);
+            ResumeLayout(false);
         }
     }
 }
