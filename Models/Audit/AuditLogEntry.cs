@@ -2,7 +2,7 @@ using System;
 
 namespace computer_monitoring_desktop.Models.Audit
 {
-    internal class AuditLogEntry
+    public class AuditLogEntry
     {
         public int Id { get; set; }
         public string Type { get; set; } = string.Empty;

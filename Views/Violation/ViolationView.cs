@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static AntdUI.Table;
-using computer_monitoring_desktop.Models;
+using computer_monitoring_desktop.Models.Violation;
 
 namespace computer_monitoring_desktop.Views
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace computer_monitoring_desktop.Models
+namespace computer_monitoring_desktop.Models.Violation
 {
     internal class ViolationRecord
     {

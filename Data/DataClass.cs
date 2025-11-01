@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using computer_monitoring_desktop.Models;
+﻿using computer_monitoring_desktop.Models;
 using computer_monitoring_desktop.Models.Audit;
 using computer_monitoring_desktop.Models.Contest;
 using computer_monitoring_desktop.Models.Menu;
@@ -280,9 +278,9 @@ namespace computer_monitoring_desktop.Data
 
         internal static readonly IReadOnlyList<ExamRoom> ExamRooms = new List<ExamRoom>
         {
-            new ExamRoom { Id = 101, AccessCode = "ROOM001", Name = "Phong 101 - Day A", Capacity = 30, ContestName = "Ky thi Olympic Tin hoc 2024", AutoApprove = true },
-            new ExamRoom { Id = 102, AccessCode = "ROOM002", Name = "Phong 202 - Day B", Capacity = 25, ContestName = "Ky thi Lap trinh co ban K68", AutoApprove = false },
-            new ExamRoom { Id = 103, AccessCode = "ROOM003", Name = "Phong Lab - Tang 3", Capacity = 20, ContestName = "Hackathon 2024", AutoApprove = true },
+            new ExamRoom { Id = 101, AccessCode = "ROOM001", Name = "Phòng 101 - Day A", Capacity = 30, ContestName = "Ky thi Olympic Tin hoc 2024", AutoApprove = true },
+            new ExamRoom { Id = 102, AccessCode = "ROOM002", Name = "Phòng 202 - Day B", Capacity = 25, ContestName = "Ky thi Lap trinh co ban K68", AutoApprove = false },
+            new ExamRoom { Id = 103, AccessCode = "ROOM003", Name = "Phòng Lab - Tang 3", Capacity = 20, ContestName = "Hackathon 2024", AutoApprove = true },
         };
 
         internal static DateTime ParseDate(string value)
@@ -296,4 +294,3 @@ namespace computer_monitoring_desktop.Data
         }
     }
 }
-

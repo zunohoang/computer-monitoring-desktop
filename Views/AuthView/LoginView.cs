@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
 using computer_monitoring_desktop.Dtos;
-using computer_monitoring_desktop.Services;
+using computer_monitoring_desktop.Services.Auth;
 using computer_monitoring_desktop.Utils;
 using Microsoft.Extensions.Logging;
 

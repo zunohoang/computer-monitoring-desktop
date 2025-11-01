@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using computer_monitoring_desktop.Models.Audit;
 
-namespace computer_monitoring_desktop.Models.Repositories
+namespace computer_monitoring_desktop.Models.Repositories.Audit
 {
     internal interface IAuditRepository
     {

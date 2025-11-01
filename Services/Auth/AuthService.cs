@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace computer_monitoring_desktop.Services
+namespace computer_monitoring_desktop.Services.Auth
 {
     public class AuthService
     {

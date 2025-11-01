@@ -1,44 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using computer_monitoring_desktop.Models.Audit;
+﻿using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories.Room;
 using computer_monitoring_desktop.Models.Rooms;
-using computer_monitoring_desktop.Models.Repositories;
+using computer_monitoring_desktop.Services.RoomServices;
 
 namespace computer_monitoring_desktop.Views
 {
     // Load sau khi người dung nhấn vào tab này (data đi từ form MainWindow.cs)
     public partial class RoomManagementView : UserControl
     {
-        // 
-        private readonly IRoomRepository roomRepo;
+        private readonly IRoomService roomService;
         private List<ExamRoom> rooms = new();
         private ExamRoom? selectedRoom;
         private AuditAttempt? selectedAttempt;
 
-        public RoomManagementView()
-            : this(new InMemoryRoomRepository())
-        {
-        }
+        public RoomManagementView() : this(new RoomService()) { }
 
-        internal RoomManagementView(IRoomRepository repository)
+        public RoomManagementView(IRoomService service)
         {
-            roomRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+            roomService = service ?? throw new ArgumentNullException(nameof(service));
 
             InitializeComponent();
 
             lstRooms.FormattingEnabled = true;
             lstRooms.DisplayMember = nameof(ExamRoom.AccessCode);
             lstRooms.ValueMember = nameof(ExamRoom.Id);
+
             lstRooms.Format += LstRooms_Format;
             lstRooms.SelectedIndexChanged += LstRooms_SelectedIndexChanged;
 
             lvContestants.ItemSelectionChanged += LvContestants_ItemSelectionChanged;
             lvContestants.ItemActivate += (_, __) =>
             {
-                if (lvContestants.SelectedItems.Count > 0 &&
-                    lvContestants.SelectedItems[0].Tag is AuditAttempt attempt)
+                if (lvContestants.SelectedItems.Count > 0 && lvContestants.SelectedItems[0].Tag is AuditAttempt attempt)
                 {
                     NavigateToLogs(attempt);
                 }
@@ -49,11 +42,10 @@ namespace computer_monitoring_desktop.Views
 
         private void LoadRooms()
         {
-            // Lấy data thông qua repository
-            rooms = roomRepo.GetRooms().ToList();
+            rooms = roomService.GetRooms().ToList();
             lstRooms.DataSource = rooms;
-            lblRoomsTitle.Text = $"Phong thi ({rooms.Count})";
-            lblHint.Text = "Chon thi sinh de mo man hinh log chi tiet. Nhan nut Back de quay lai.";
+            lblRoomsTitle.Text = $"Phòng thi ({rooms.Count})";
+            lblHint.Text = "Chọn thí sinh để mở màn hình log chi tiết. Nhấn nút back để quay lại.";
 
             if (rooms.Count > 0)
             {
@@ -61,8 +53,8 @@ namespace computer_monitoring_desktop.Views
             }
             else
             {
-                lblContestantsTitle.Text = "Thi sinh";
-                ResetDetails("Chua co phong thi");
+                lblContestantsTitle.Text = "Thí sinh";
+                ResetDetails("Chưa có phòng thi");
             }
         }
 
@@ -70,7 +62,7 @@ namespace computer_monitoring_desktop.Views
         {
             if (e.ListItem is ExamRoom room)
             {
-                var attemptCount = roomRepo.GetAttemptCount(room.Id);
+                var attemptCount = roomService.GetAttemptCount(room.Id);
                 e.Value = $"{room.AccessCode} ({attemptCount}/{room.Capacity})";
             }
         }
@@ -81,13 +73,13 @@ namespace computer_monitoring_desktop.Views
             {
                 selectedRoom = null;
                 lvContestants.Items.Clear();
-                ResetDetails("Chua chon phong thi");
+                ResetDetails("Chưa chọn phòng thi");
                 return;
             }
 
             selectedRoom = room;
-            lblRoomsTitle.Text = $"Phong thi ({rooms.Count})";
-            lblContestantsTitle.Text = $"Thi sinh - {room.AccessCode}";
+            lblRoomsTitle.Text = $"Phòng thi ({rooms.Count})";
+            lblContestantsTitle.Text = $"Thí sinh - {room.AccessCode}";
 
             LoadContestants(room);
         }
@@ -97,13 +89,11 @@ namespace computer_monitoring_desktop.Views
             lvContestants.BeginUpdate();
             lvContestants.Items.Clear();
 
-            var attempts = roomRepo.GetAttemptsByRoom(room.Id);
+            var attempts = roomService.GetAttemptsByRoom(room.Id);
+
             foreach (var attempt in attempts)
             {
-                var item = new ListViewItem(attempt.StudentCode)
-                {
-                    Tag = attempt
-                };
+                var item = new ListViewItem(attempt.StudentCode) { Tag = attempt };
                 item.SubItems.Add(attempt.StudentName);
                 item.SubItems.Add(attempt.MachineName);
                 lvContestants.Items.Add(item);
@@ -113,8 +103,9 @@ namespace computer_monitoring_desktop.Views
 
             var attemptCount = attempts.Count;
             lblHint.Text = attemptCount > 0
-                ? $"Phong {room.AccessCode}: {attemptCount}/{room.Capacity} thi sinh. Chon mot dong de xem log chi tiet."
-                : "Phong nay chua co thi sinh nao tham gia.";
+                ? $"Phòng {room.AccessCode}: {attemptCount}/{room.Capacity} thí sinh. Chọn một dòng để xem log chi tiết."
+                : "Phòng này chưa có thí sinh nào tham gia.";
+
             selectedAttempt = null;
         }
 
@@ -133,12 +124,12 @@ namespace computer_monitoring_desktop.Views
             {
                 mainWindow.BeginInvoke(new Action(() =>
                 {
-                    mainWindow.LoadAuditDetailView(attempt.Id);
+                    mainWindow.LoadAuditDetailView(attempt);
                 }));
             }
             else
             {
-                AntdUI.Message.warn(FindForm(), "Khong the mo log chi tiet ngay bay gio. Vui long thu lai.");
+                AntdUI.Message.warn(FindForm(), "Không thể mở log chi tiết ngay bây giờ. Vui lòng thử lại.");
             }
         }
 

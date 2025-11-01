@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace computer_monitoring_desktop.Models.Audit
 {
-    internal sealed class AuditDataset
+    public sealed class AuditDataset
     {
         public AuditDataset(AuditAttempt attempt, IReadOnlyList<AuditProcess> processes, IReadOnlyList<AuditLogEntry> logs)
         {

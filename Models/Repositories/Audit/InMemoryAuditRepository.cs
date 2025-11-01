@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using computer_monitoring_desktop.Data;
+﻿using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Models.Audit;
 
-namespace computer_monitoring_desktop.Models.Repositories
+namespace computer_monitoring_desktop.Models.Repositories.Audit
 {
+    // Source data là từ DataClass, sau này thay data từ backend truyền vào đây
     internal class InMemoryAuditRepository : IAuditRepository
     {
         public IReadOnlyList<AuditAttempt> GetAttempts() => DataClass.AuditAttempts;

@@ -1,34 +1,37 @@
-using System;
-using System.Windows.Forms;
-using computer_monitoring_desktop.Models.Audit;
-using computer_monitoring_desktop.Models.Repositories;
+﻿using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Services.AuditServices;
 
 namespace computer_monitoring_desktop.Views
 {
+    // Giao diện hiển thị 2 loại log là text và chart
     public partial class AuditDetailView : UserControl
     {
-        private AuditDataset dataset = null!;
-        private AuditAttempt attempt = null!;
+        private readonly IAuditService? auditService;
+        // Dataset và attempt đã được lưu trong repo nhưng ở đây cũng cần phải lưu !(view của attempt nào)
+        private AuditDataset? currentDataset;
+        private ViewMode currentMode = ViewMode.Text;
         private TextLogView? textLogView;
         private AuditChartView? auditChartView;
-        private ViewMode currentMode = ViewMode.Text;
-        private readonly IAuditRepository auditRepo;
 
-        public AuditDetailView(int attemptId)
-            : this(new InMemoryAuditRepository(), attemptId)
-        {
-        }
+        // Chạy từ MainWindow -> inject default Audit's service 
+        //public AuditDetailView(int attemptId) : this(new AuditService(), attemptId) { }
 
-        internal AuditDetailView(IAuditRepository repository, int attemptId)
+        internal AuditDetailView(AuditAttempt attempt) : this(new AuditService(), attempt) { }
+
+        // Inject Inmemory Audit Service
+        internal AuditDetailView(IAuditService service, AuditAttempt attempt)
         {
-            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+            // Không biết handle trường hợp nào nữa, kệ đi
+            auditService = service ?? throw new ArgumentNullException(nameof(service));
 
             InitializeComponent();
-            BindDataset(attemptId);
+            BindDataset(attempt.Id);
 
             Load += (_, __) =>
             {
+                // Load vào thì hiện text log 
                 EnsureViews();
+                PushDatasetToViews();
                 ShowView(currentMode);
             };
 
@@ -37,36 +40,36 @@ namespace computer_monitoring_desktop.Views
             btnChart.Click += (_, __) => ShowView(ViewMode.Chart);
         }
 
-        internal AuditDetailView(AuditAttempt attempt)
-            : this(new InMemoryAuditRepository(), attempt.Id)
-        {
-        }
-
-        public void UpdateAttempt(int attemptId)
-        {
-            BindDataset(attemptId);
-            EnsureViews();
-            textLogView?.UpdateAttempt(attempt);
-            auditChartView?.UpdateAttempt(attempt);
-            ShowView(currentMode);
-        }
-
-        internal void UpdateAttempt(AuditAttempt newAttempt)
-        {
-            UpdateAttempt(newAttempt.Id);
-        }
-
         private void BindDataset(int attemptId)
         {
-            dataset = auditRepo.GetDataset(attemptId);
-            attempt = dataset.Attempt;
+            var dataset = auditService?.GetAuditDetails(attemptId);
+            currentDataset = dataset;
+        }
+
+        private void PushDatasetToViews()
+        {
+            if (currentDataset == null) return;
+
+            textLogView?.UpdateDataset(currentDataset);
+            auditChartView?.UpdateDataset(currentDataset);
+        }
+
+        public void UpdateAttempt(AuditAttempt attempt)
+        {
+            var dataset = auditService?.GetAuditDetails(attempt.Id);
+            if (dataset == null) return;
+
+            BindDataset(attempt.Id);
+            EnsureViews();
+            PushDatasetToViews();
+            ShowView(currentMode);
         }
 
         private void EnsureViews()
         {
             if (textLogView == null)
             {
-                textLogView = new TextLogView(auditRepo)
+                textLogView = new TextLogView(auditService)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
@@ -76,7 +79,7 @@ namespace computer_monitoring_desktop.Views
 
             if (auditChartView == null)
             {
-                auditChartView = new AuditChartView(auditRepo)
+                auditChartView = new AuditChartView(auditService)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
@@ -107,6 +110,7 @@ namespace computer_monitoring_desktop.Views
                 }
             }
 
+            // Chỉnh kiểu sau khi nhấn nút
             btnText.Type = mode == ViewMode.Text ? AntdUI.TTypeMini.Primary : AntdUI.TTypeMini.Default;
             btnChart.Type = mode == ViewMode.Chart ? AntdUI.TTypeMini.Primary : AntdUI.TTypeMini.Default;
         }
@@ -119,6 +123,7 @@ namespace computer_monitoring_desktop.Views
             }
         }
 
+        // Local log type
         private enum ViewMode
         {
             Text,
