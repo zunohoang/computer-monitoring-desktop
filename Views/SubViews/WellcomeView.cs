@@ -51,7 +51,7 @@ namespace computer_monitoring_desktop.Views.SubViews
             }, (config) =>
             {
                 config.Text = "LOADING...";
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
             }, () =>
             {
                 if (label1 != null)

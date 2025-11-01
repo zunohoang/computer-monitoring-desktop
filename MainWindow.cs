@@ -17,16 +17,34 @@ namespace computer_monitoring_desktop.Views
         public MainWindow()
         {
             InitializeComponent();
-            
+            this.WindowState = FormWindowState.Maximized;
             LoadMenu();
             // isLight = ThemeHelper.isLightMode();
             btnTheme.Toggle = !isLight;
             ThemeHelper.setColorMode(this, isLight);
-
             Config.ShowInWindow = true;
-
-            // Load the welcome view
+            // Attach breadcrumb navigation
+            BreadcrumbHelper.AttachNavigation(breadcrumb1, HandleBreadcrumbNavigation);
             LoadWelcomeView();
+        }
+
+        private void HandleBreadcrumbNavigation(object tagOrText)
+        {
+            // Use tag if set, otherwise use text
+            string key = tagOrText?.ToString();
+            switch (key)
+            {
+                case "Trang chủ":
+                    LoadDashboardView();
+                    break;
+                case "Danh sách cuộc thi":
+                    LoadContestView();
+                    break;
+                case "Chi tiết cuộc thi":
+                    // Optionally reload details or do nothing
+                    break;
+                // Add more cases as needed
+            }
         }
 
         private void LoadWelcomeView()
@@ -55,8 +73,15 @@ namespace computer_monitoring_desktop.Views
             ViewManager.LoadView(pnlContent, dashboard);
         }
 
+        // Helper to set breadcrumb items dynamically
+        public void SetBreadcrumb(params (string Text, object Tag)[] items)
+        {
+            BreadcrumbHelper.SetBreadcrumb(breadcrumb1, items);
+        }
+
         public void LoadContestView()
         {
+            SetBreadcrumb(("Trang chủ", null), ("Danh sách cuộc thi", null));
             var contestView = new ContestView();
             ViewManager.LoadView(pnlContent, contestView);
         }
@@ -84,9 +109,10 @@ namespace computer_monitoring_desktop.Views
             LoadAuditDetailView(attempt.Id);
         }
 
-        public void LoadContestDetailsView(string contestId)
+        public void LoadContestDetailsView(string contestId,string contestName)
         {
-            var contestDetailsView = new ContestDetailsView(contestId);
+            SetBreadcrumb(("Trang chủ", null), ("Danh sách cuộc thi", null), (contestName, contestId));
+            var contestDetailsView = new ContestDetailsView(contestId,contestName);
             ViewManager.LoadView(pnlContent, contestDetailsView);
         }
 

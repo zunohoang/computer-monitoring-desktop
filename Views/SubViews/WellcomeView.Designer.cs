@@ -58,7 +58,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 18F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Size = new Size(2008, 848);
+            tableLayoutPanel1.Size = new Size(1454, 800);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -68,7 +68,7 @@
             label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 3);
             label1.Name = "label1";
-            label1.Size = new Size(2002, 163);
+            label1.Size = new Size(1448, 154);
             label1.TabIndex = 0;
             label1.Text = "Chào mừng đến với hệ thống quản lí máy tính";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -77,9 +77,9 @@
             // 
             label2.Dock = DockStyle.Fill;
             label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(505, 172);
+            label2.Location = new Point(366, 163);
             label2.Name = "label2";
-            label2.Size = new Size(998, 95);
+            label2.Size = new Size(721, 90);
             label2.TabIndex = 3;
             label2.Text = "Bạn chưa có tài khoản ? Đăng kí ngay";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -88,7 +88,7 @@
             // 
             button1.Anchor = AnchorStyles.None;
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(920, 317);
+            button1.Location = new Point(643, 299);
             button1.Name = "button1";
             button1.Size = new Size(167, 58);
             button1.TabIndex = 1;
@@ -98,9 +98,9 @@
             // 
             label3.Dock = DockStyle.Fill;
             label3.Font = new Font("Segoe UI", 10.2F);
-            label3.Location = new Point(505, 425);
+            label3.Location = new Point(366, 403);
             label3.Name = "label3";
-            label3.Size = new Size(998, 95);
+            label3.Size = new Size(721, 90);
             label3.TabIndex = 4;
             label3.Text = "Bạn đã có tài khoản ? Chào bạn trở lại";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -109,7 +109,7 @@
             // 
             button2.Anchor = AnchorStyles.None;
             button2.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.Location = new Point(920, 570);
+            button2.Location = new Point(643, 539);
             button2.Name = "button2";
             button2.Size = new Size(167, 58);
             button2.TabIndex = 2;
@@ -123,7 +123,7 @@
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "WellcomeView";
-            Size = new Size(2008, 848);
+            Size = new Size(1454, 800);
             Load += WellcomeView_Load;
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
