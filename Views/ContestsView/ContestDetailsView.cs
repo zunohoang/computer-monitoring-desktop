@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AntdUI;
 using computer_monitoring_desktop.Models;
+using computer_monitoring_desktop.Models.Contest;
+using computer_monitoring_desktop.Models.Rooms;
 using computer_monitoring_desktop.Services;
 
 namespace computer_monitoring_desktop.Views.Contests
 {
     public partial class ContestDetailsView : UserControl
     {
-        private List<Room> allRooms;
+        private List<ExamRoom> allRooms;
         private int pageSize = 10;
         private int currentPage = 1;
 
@@ -29,12 +31,38 @@ namespace computer_monitoring_desktop.Views.Contests
             // Enable smooth scroll for spnContainer
             var prop = spnContainer.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             if (prop != null) prop.SetValue(spnContainer, true, null);
+            
+            // Handle statCardsTable resize for responsive wrapping
+            statCardsTable.Resize += StatCardsTable_Resize;
+            this.Load += (s, e) => AdjustStatCardsTableHeight();
+            
             if (!string.IsNullOrEmpty(contestName))
                 SetContestName(contestName);
 
             LoadContestDetails(id);
             LoadStatsAndParticipants(id);
             LoadRoomsTable();
+        }
+
+        private void StatCardsTable_Resize(object sender, EventArgs e)
+        {
+            AdjustStatCardsTableHeight();
+        }
+
+        private void AdjustStatCardsTableHeight()
+        {
+            if (statCardsTable == null || statCardsTable.Controls.Count == 0) return;
+
+            int cardWidth = 300;
+            int cardHeight = 177;
+            int gap = 16;
+            int margin = 15;
+            int availableWidth = statCardsTable.Width;
+            int cardsPerRow = Math.Max(1, (availableWidth + gap) / (cardWidth + margin + gap));
+            int totalRows = (int)Math.Ceiling((double)statCardsTable.Controls.Count / cardsPerRow);
+            int totalHeight = totalRows * cardHeight + (totalRows - 1) * gap;
+
+            statCardsTable.Height = totalHeight;
         }
 
         private void LoadStatsAndParticipants(string id)
@@ -62,7 +90,7 @@ namespace computer_monitoring_desktop.Views.Contests
                 }
             };
             if (details.Participants != null)
-            tblParticipants.Binding(new BindingList<Participant>(details.Participants));
+                tblParticipants.Binding(new BindingList<Participant>(details.Participants));
             pgnParticipants.Total = details.Participants?.Count ?? 0;
             pgnParticipants.PageSize = 10;
             pgnParticipants.Current = 1;
@@ -103,34 +131,30 @@ namespace computer_monitoring_desktop.Views.Contests
             tblRooms.RowSelectedFore = Color.Black;
 
             tblRooms.Columns.Add(new Column("Id", "ID") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("RoomCode", "Mã phòng") { Align = ColumnAlign.Left });
+            tblRooms.Columns.Add(new Column("AccessCode", "Mã phòng") { Align = ColumnAlign.Left });
+            tblRooms.Columns.Add(new Column("Name", "Tên phòng") { Align = ColumnAlign.Left });
             tblRooms.Columns.Add(new Column("Capacity", "Sức chứa") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("CurrentParticipants", "Số thí sinh") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("ApprovalMode", "Chế độ duyệt") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("RegisterTime", "Thời gian đăng ký") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("ExamTime", "Thời gian thi") { Align = ColumnAlign.Center });
-            tblRooms.Columns.Add(new Column("Actions", "Thao tác") {
+            tblRooms.Columns.Add(new Column("AutoApprove", "Chế độ duyệt") { 
                 Align = ColumnAlign.Center,
                 Render = (record, value, rowIndex) => {
-                    var btn = new CellButton("Detail", "Chi tiết", TTypeMini.Primary) {
+                    bool autoApprove = value is bool b && b;
+                    return autoApprove ? "Tự động" : "Thủ công";
+                }
+            });
+            tblRooms.Columns.Add(new Column("ContestName", "Cuộc thi") { Align = ColumnAlign.Left });
+            tblRooms.Columns.Add(new Column("Actions", "Thao tác")
+            {
+                Align = ColumnAlign.Center,
+                Render = (record, value, rowIndex) => {
+                    var btn = new CellButton("Detail", "Chi tiết", TTypeMini.Primary)
+                    {
                         Ghost = false,
                     };
                     return btn;
                 }
             });
 
-            var rooms = details.Rooms.Select((r, idx) => new {
-                Id = (idx + 1).ToString(),
-                r.RoomCode,
-                r.Capacity,
-                r.CurrentParticipants,
-                r.ApprovalMode,
-                r.RegisterTime,
-                r.ExamTime,
-
-            }).ToList();
-
-            tblRooms.DataSource = rooms;
+            tblRooms.DataSource = details.Rooms;
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using computer_monitoring_desktop.Models;
+using computer_monitoring_desktop.Models.Contest;
 
 namespace computer_monitoring_desktop.Services
 {
@@ -18,13 +18,11 @@ namespace computer_monitoring_desktop.Services
 
         public List<Contest> GetAllContests()
         {
-            // In real implementation, call API here
             return _mockContests;
         }
 
         public Contest GetContestById(string id)
         {
-            // In real implementation, call API here
             return _mockContests.Find(c => c.Id == id);
         }
 

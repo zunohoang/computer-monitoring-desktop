@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
@@ -239,8 +239,8 @@ namespace computer_monitoring_desktop.Views
             // Action Buttons Container
             var actionPanel = new System.Windows.Forms.Panel
             {
-                Location = new Point(1360, 15), 
-                Size = new Size(229, 30), 
+                Location = new Point(1360, 15),
+                Size = new Size(229, 30),
                 BackColor = Color.Transparent
             };
 
@@ -255,7 +255,7 @@ namespace computer_monitoring_desktop.Views
                 Font = new Font("Segoe UI", 9F),
                 IconSvg = "EyeOutlined"
             };
-            btnView.Click += (s, e) => ViewContest(id,name);
+            btnView.Click += (s, e) => ViewContest(id, name);
 
             // Edit Button
             var btnEdit = new AntdUI.Button
@@ -307,13 +307,13 @@ namespace computer_monitoring_desktop.Views
             // For now, the input is in the pagination panel below the table.
         }
 
-        private void ViewContest(string id,string name)
+        private void ViewContest(string id, string name)
         {
             // Navigate to contest details view
             var mainWindow = this.FindForm() as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.LoadContestDetailsView(id,name);
+                mainWindow.LoadContestDetailsView(id, name);
             }
         }
 

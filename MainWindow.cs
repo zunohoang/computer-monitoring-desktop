@@ -3,7 +3,7 @@ using computer_monitoring_desktop.Models;
 using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Utils;
 using computer_monitoring_desktop.Views.Auth;
-using computer_monitoring_desktop.Views.ContestsView;
+using computer_monitoring_desktop.Views.Contests;
 using computer_monitoring_desktop.Views.SubViews;
 using System;
 using System.Windows.Forms;

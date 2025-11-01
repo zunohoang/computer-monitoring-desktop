@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using computer_monitoring_desktop.Models;
 using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Contest;
 using computer_monitoring_desktop.Models.Menu;
 using computer_monitoring_desktop.Models.Rooms;
 
@@ -15,6 +17,146 @@ namespace computer_monitoring_desktop.Data
             new MenuItemModel {Text = "Quản lý phòng thi", IconSvg = "BankOutlined", Tag = "Rooms"},
             new MenuItemModel {Text = "Quản lý vi phạm", IconSvg = "WarningOutlined", Tag = "Violations"},
             new MenuItemModel {Text = "Quản lý tin nhắn", IconSvg = "MessageOutlined", Tag = "Messages"},
+        };
+
+        internal static readonly IReadOnlyList<Contest> Contests = new List<Contest>
+        {
+            new Contest 
+            { 
+                Id = "1", 
+                Name = "Olympic Tin học 2024", 
+                Description = "Kỳ thi Olympic Tin học sinh viên toàn quốc lần thứ 32",
+                Status = "Đã kết thúc",
+                StartTime = ParseDate("08:00:00 20/10/2024"),
+                EndTime = ParseDate("12:00:00 20/10/2024"),
+                Creator = "Nguyễn Văn Admin",
+                CreatedAt = ParseDate("10:00:00 1/10/2024"),
+                TotalRooms = 2,
+                TotalCapacity = 55,
+                CurrentParticipants = 48,
+                Violations = 12,
+                Participants = new List<Participant>
+                {
+                    new Participant { StudentId = "20210001", Name = "Nguyễn Văn A" },
+                    new Participant { StudentId = "20210002", Name = "Trần Thị B" },
+                    new Participant { StudentId = "20210003", Name = "Lê Minh C" },
+                    new Participant { StudentId = "20210004", Name = "Phạm Gia D" },
+                    new Participant { StudentId = "20210005", Name = "Hoàng Thu E" },
+                    new Participant { StudentId = "20210006", Name = "Vũ Văn F" },
+                    new Participant { StudentId = "20210007", Name = "Đặng Thị G" },
+                    new Participant { StudentId = "20210008", Name = "Mai Văn H" },
+                    new Participant { StudentId = "20210009", Name = "Bùi Thị I" },
+                    new Participant { StudentId = "20210010", Name = "Dương Văn K" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom 
+                    { 
+                        Id = 101,
+                        AccessCode = "ROOM001",
+                        Name = "Phòng 101 - Dãy A",
+                        Capacity = 30,
+                        ContestName = "Olympic Tin học 2024",
+                        AutoApprove = true
+                    },
+                    new ExamRoom 
+                    { 
+                        Id = 102,
+                        AccessCode = "ROOM002",
+                        Name = "Phòng 202 - Dãy B",
+                        Capacity = 25,
+                        ContestName = "Olympic Tin học 2024",
+                        AutoApprove = false
+                    },
+                }
+            },
+            new Contest 
+            { 
+                Id = "2", 
+                Name = "Kỳ thi Lập trình cơ bản K68", 
+                Description = "Kỳ thi giữa kỳ môn Lập trình cơ bản cho sinh viên K68",
+                Status = "Đang diễn ra",
+                StartTime = ParseDate("14:00:00 1/11/2024"),
+                EndTime = ParseDate("16:00:00 1/11/2024"),
+                Creator = "Trần Văn Giáo viên",
+                CreatedAt = ParseDate("09:00:00 25/10/2024"),
+                TotalRooms = 3,
+                TotalCapacity = 75,
+                CurrentParticipants = 62,
+                Violations = 5,
+                Participants = new List<Participant>
+                {
+                    new Participant { StudentId = "20220001", Name = "Lê Thị L" },
+                    new Participant { StudentId = "20220002", Name = "Ngô Văn M" },
+                    new Participant { StudentId = "20220003", Name = "Võ Thị N" },
+                    new Participant { StudentId = "20220004", Name = "Phan Văn O" },
+                    new Participant { StudentId = "20220005", Name = "Đinh Thị P" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom 
+                    { 
+                        Id = 103,
+                        AccessCode = "ROOM003",
+                        Name = "Phòng 203 - Dãy B",
+                        Capacity = 25,
+                        ContestName = "Kỳ thi Lập trình cơ bản K68",
+                        AutoApprove = true
+                    },
+                    new ExamRoom 
+                    { 
+                        Id = 104,
+                        AccessCode = "ROOM004",
+                        Name = "Phòng 204 - Dãy B",
+                        Capacity = 25,
+                        ContestName = "Kỳ thi Lập trình cơ bản K68",
+                        AutoApprove = true
+                    },
+                    new ExamRoom 
+                    { 
+                        Id = 105,
+                        AccessCode = "ROOM005",
+                        Name = "Phòng 301 - Dãy C",
+                        Capacity = 25,
+                        ContestName = "Kỳ thi Lập trình cơ bản K68",
+                        AutoApprove = false
+                    },
+                }
+            },
+            new Contest 
+            { 
+                Id = "3", 
+                Name = "Hackathon 2024", 
+                Description = "Cuộc thi lập trình 24h - Sáng tạo ứng dụng AI",
+                Status = "Sắp diễn ra",
+                StartTime = ParseDate("08:00:00 15/11/2024"),
+                EndTime = ParseDate("08:00:00 16/11/2024"),
+                Creator = "Phạm Thị Tổ chức",
+                CreatedAt = ParseDate("15:00:00 1/11/2024"),
+                TotalRooms = 1,
+                TotalCapacity = 40,
+                CurrentParticipants = 35,
+                Violations = 0,
+                Participants = new List<Participant>
+                {
+                    new Participant { StudentId = "20210011", Name = "Trương Văn Q" },
+                    new Participant { StudentId = "20210012", Name = "Lý Thị R" },
+                    new Participant { StudentId = "20210013", Name = "Huỳnh Văn S" },
+                    new Participant { StudentId = "20210014", Name = "Tô Thị T" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom 
+                    { 
+                        Id = 106,
+                        AccessCode = "LAB301",
+                        Name = "Phòng Lab - Tầng 3",
+                        Capacity = 40,
+                        ContestName = "Hackathon 2024",
+                        AutoApprove = false
+                    },
+                }
+            },
         };
 
         internal static readonly IReadOnlyList<AuditAttempt> AuditAttempts = new List<AuditAttempt>

@@ -1,6 +1,6 @@
 namespace computer_monitoring_desktop.Models.Rooms
 {
-    internal class ExamRoom
+    public class ExamRoom
     {
         public int Id { get; set; }
         public string AccessCode { get; set; } = string.Empty;
