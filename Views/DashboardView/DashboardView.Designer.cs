@@ -4,7 +4,462 @@
     {
         private System.ComponentModel.IContainer components = null;
 
-        private AntdUI.Label lblHeader;
+       
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            pnlMain = new AntdUI.Panel();
+            pnlHeader = new AntdUI.Panel();
+            lblTitle = new AntdUI.Label();
+            pnlViolationsHeader = new AntdUI.Panel();
+            lblViolationsTableTitle = new AntdUI.Label();
+            cardContests = new AntdUI.Panel();
+            lblContestsTitle = new AntdUI.Label();
+            lblRoomsIcon = new AntdUI.Label();
+            lblContestsValue = new AntdUI.Label();
+            lblContestsIcon = new AntdUI.Label();
+            cardStudents = new AntdUI.Panel();
+            lblStudentsIcon = new AntdUI.Label();
+            lblStudentsTitle = new AntdUI.Label();
+            lblStudentsValue = new AntdUI.Label();
+            cardPending = new AntdUI.Panel();
+            lblPendingIcon = new AntdUI.Label();
+            lblPendingTitle = new AntdUI.Label();
+            lblPendingValue = new AntdUI.Label();
+            cardRooms = new AntdUI.Panel();
+            lblRoomsTitle = new AntdUI.Label();
+            lblRoomsValue = new AntdUI.Label();
+            cardViolations = new AntdUI.Panel();
+            lblViolationsIcon = new AntdUI.Label();
+            lblViolationsTitle = new AntdUI.Label();
+            lblViolationsValue = new AntdUI.Label();
+            pnlViolationsTable = new AntdUI.Panel();
+            tblViolations = new AntdUI.Table();
+            pgnViolations = new AntdUI.Pagination();
+            pnlStats = new AntdUI.FlowPanel();
+            pnlMain.SuspendLayout();
+            pnlHeader.SuspendLayout();
+            pnlViolationsHeader.SuspendLayout();
+            cardContests.SuspendLayout();
+            cardStudents.SuspendLayout();
+            cardPending.SuspendLayout();
+            cardRooms.SuspendLayout();
+            cardViolations.SuspendLayout();
+            pnlViolationsTable.SuspendLayout();
+            pnlStats.SuspendLayout();
+            SuspendLayout();
+            // 
+            // pnlMain
+            // 
+            pnlMain.Controls.Add(pnlViolationsTable);
+            pnlMain.Controls.Add(pnlStats);
+            pnlMain.Controls.Add(pnlHeader);
+            pnlMain.Dock = DockStyle.Fill;
+            pnlMain.Location = new Point(0, 0);
+            pnlMain.Margin = new Padding(3, 4, 3, 4);
+            pnlMain.Name = "pnlMain";
+            pnlMain.Padding = new Padding(34, 40, 34, 40);
+            pnlMain.Size = new Size(1313, 505);
+            pnlMain.TabIndex = 0;
+            // 
+            // pnlHeader
+            // 
+            pnlHeader.Back = Color.Transparent;
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(34, 40);
+            pnlHeader.Margin = new Padding(3, 4, 3, 4);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1245, 80);
+            pnlHeader.TabIndex = 0;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.Location = new Point(0, 13);
+            lblTitle.Margin = new Padding(3, 4, 3, 4);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(343, 53);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Dashboard";
+            // 
+            // cardContests
+            // 
+            cardContests.BorderColor = Color.FromArgb(240, 240, 240);
+            cardContests.BorderWidth = 1F;
+            cardContests.Controls.Add(lblContestsTitle);
+            cardContests.Controls.Add(lblContestsIcon);
+            cardContests.Controls.Add(lblContestsValue);
+            cardContests.Margin = new Padding(0, 0, 15, 0);
+            cardContests.MinimumSize = new Size(280, 177);
+            cardContests.Name = "cardContests";
+            cardContests.Padding = new Padding(20);
+            cardContests.Radius = 8;
+            cardContests.Shadow = 8;
+            cardContests.Size = new Size(300, 177);
+            cardContests.TabIndex = 0;
+            // 
+            // lblContestsIcon
+            // 
+            lblContestsIcon.BackColor = Color.Transparent;
+            lblContestsIcon.BadgeAlign  = AntdUI.TAlign.TL;
+            lblContestsIcon.BadgeBack = Color.FromArgb(82, 196, 26);
+            lblContestsIcon.BadgeSize = 1F;
+            lblContestsIcon.BadgeSvg = "TrophyOutlined";
+            lblContestsIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblContestsIcon.Location = new Point(24, 24);
+            lblContestsIcon.Name = "lblContestsIcon";
+            lblContestsIcon.Size = new Size(48, 48);
+            lblContestsIcon.TabIndex = 0;
+            lblContestsIcon.Text = "";
+            // 
+            // lblContestsTitle
+            // 
+            lblContestsTitle.BackColor = Color.Transparent;
+            lblContestsTitle.Font = new Font("Microsoft Sans Serif", 10.2F);
+            lblContestsTitle.Location = new Point(80, 28);
+            lblContestsTitle.Name = "lblContestsTitle";
+            lblContestsTitle.Size = new Size(220, 30);
+            lblContestsTitle.TabIndex = 1;
+            lblContestsTitle.Text = "Cuộc thi diễn ra";
+            // 
+            // lblContestsValue
+            // 
+            lblContestsValue.BackColor = Color.Transparent;
+            lblContestsValue.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold);
+            lblContestsValue.ForeColor = Color.FromArgb(82, 196, 26);
+            lblContestsValue.Location = new Point(24, 90);
+            lblContestsValue.Name = "lblContestsValue";
+            lblContestsValue.Size = new Size(292, 50);
+            lblContestsValue.TabIndex = 2;
+            // 
+            // lblContestsIcon
+            // 
+            lblContestsIcon.BackColor = Color.Transparent;
+            lblContestsIcon.BadgeBack = Color.FromArgb(82, 196, 26);
+            lblContestsIcon.BadgeSize = 1F;
+            lblContestsIcon.BadgeSvg = "DesktopOutlined";
+            lblContestsIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblContestsIcon.Location = new Point(27, 31);
+            lblContestsIcon.Margin = new Padding(4, 5, 4, 5);
+            lblContestsIcon.Name = "lblContestsIcon";
+            lblContestsIcon.Size = new Size(53, 62);
+            lblContestsIcon.TabIndex = 0;
+            lblContestsIcon.Text = "";
+            // 
+            // cardStudents
+            // 
+            cardStudents.BorderColor = Color.FromArgb(240, 240, 240);
+            cardStudents.BorderWidth = 1F;
+            cardStudents.Controls.Add(lblStudentsIcon);
+            cardStudents.Controls.Add(lblStudentsTitle);
+            cardStudents.Controls.Add(lblStudentsValue);
+            cardStudents.Margin = new Padding(0, 0, 15, 0);
+            cardStudents.MinimumSize = new Size(280, 177);
+            cardStudents.Name = "cardStudents";
+            cardStudents.Padding = new Padding(20);
+            cardStudents.Radius = 8;
+            cardStudents.Shadow = 8;
+            cardStudents.Size = new Size(300, 177);
+            cardStudents.TabIndex = 1;
+            // 
+            // lblStudentsIcon
+            // 
+            lblStudentsIcon.BackColor = Color.Transparent;
+            lblStudentsIcon.BadgeAlign = AntdUI.TAlign.TL;
+            lblStudentsIcon.BadgeBack = Color.FromArgb(24, 144, 255);
+            lblStudentsIcon.BadgeSize = 1F;
+            lblStudentsIcon.BadgeSvg = "UserOutlined";
+            lblStudentsIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblStudentsIcon.Location = new Point(24, 24);
+            lblStudentsIcon.Name = "lblStudentsIcon";
+            lblStudentsIcon.Size = new Size(48, 48);
+            lblStudentsIcon.TabIndex = 0;
+            lblStudentsIcon.Text = "";
+            // 
+            // lblStudentsTitle
+            // 
+            lblStudentsTitle.BackColor = Color.Transparent;
+            lblStudentsTitle.Font = new Font("Microsoft Sans Serif", 10.2F);
+            lblStudentsTitle.Location = new Point(80, 28);
+            lblStudentsTitle.Name = "lblStudentsTitle";
+            lblStudentsTitle.Size = new Size(220, 30);
+            lblStudentsTitle.TabIndex = 1;
+            lblStudentsTitle.Text = "Thí sinh đang thi";
+            // 
+            // lblStudentsValue
+            // 
+            lblStudentsValue.BackColor = Color.Transparent;
+            lblStudentsValue.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold);
+            lblStudentsValue.ForeColor = Color.FromArgb(24, 144, 255);
+            lblStudentsValue.Location = new Point(24, 90);
+            lblStudentsValue.Name = "lblStudentsValue";
+            lblStudentsValue.Size = new Size(292, 50);
+            lblStudentsValue.TabIndex = 2;
+            // 
+            // cardPending
+            // 
+            cardPending.BorderColor = Color.FromArgb(240, 240, 240);
+            cardPending.BorderWidth = 1F;
+            cardPending.Controls.Add(lblPendingIcon);
+            cardPending.Controls.Add(lblPendingTitle);
+            cardPending.Controls.Add(lblPendingValue);
+            cardPending.Margin = new Padding(0, 0, 15, 0);
+            cardPending.MinimumSize = new Size(280, 177);
+            cardPending.Name = "cardPending";
+            cardPending.Padding = new Padding(20);
+            cardPending.Radius = 8;
+            cardPending.Shadow = 8;
+            cardPending.Size = new Size(300, 177);
+            cardPending.TabIndex = 2;
+            // 
+            // lblPendingIcon
+            // 
+            lblPendingIcon.BackColor = Color.Transparent;
+            lblPendingIcon.BadgeAlign = AntdUI.TAlign.TL;
+            lblPendingIcon.BadgeBack = Color.FromArgb(250, 173, 20);
+            lblPendingIcon.BadgeSize = 1F;
+            lblPendingIcon.BadgeSvg = "AuditOutlined";
+            lblPendingIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblPendingIcon.Location = new Point(24, 24);
+            lblPendingIcon.Name = "lblPendingIcon";
+            lblPendingIcon.Size = new Size(48, 48);
+            lblPendingIcon.TabIndex = 0;
+            lblPendingIcon.Text = "";
+            // 
+            // lblPendingTitle
+            // 
+            lblPendingTitle.BackColor = Color.Transparent;
+            lblPendingTitle.Font = new Font("Microsoft Sans Serif", 10.2F);
+            lblPendingTitle.Location = new Point(80, 28);
+            lblPendingTitle.Name = "lblPendingTitle";
+            lblPendingTitle.Size = new Size(220, 30);
+            lblPendingTitle.TabIndex = 1;
+            lblPendingTitle.Text = "Chờ duyệt";
+            // 
+            // lblPendingValue
+            // 
+            lblPendingValue.BackColor = Color.Transparent;
+            lblPendingValue.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold);
+            lblPendingValue.ForeColor = Color.FromArgb(250, 173, 20);
+            lblPendingValue.Location = new Point(24, 90);
+            lblPendingValue.Name = "lblPendingValue";
+            lblPendingValue.Size = new Size(292, 50);
+            lblPendingValue.TabIndex = 2;
+            // 
+            // cardRooms
+            // 
+            cardRooms.BorderColor = Color.FromArgb(240, 240, 240);
+            cardRooms.BorderWidth = 1F;
+            cardRooms.Controls.Add(lblRoomsIcon);
+            cardRooms.Controls.Add(lblRoomsTitle);
+            cardRooms.Controls.Add(lblRoomsValue);
+            cardRooms.Margin = new Padding(0, 0, 15, 0);
+            cardRooms.MinimumSize = new Size(280, 177);
+            cardRooms.Name = "cardRooms";
+            cardRooms.Padding = new Padding(20);
+            cardRooms.Radius = 8;
+            cardRooms.Shadow = 8;
+            cardRooms.Size = new Size(300, 177);
+            cardRooms.TabIndex = 3;
+            // 
+            // lblRoomsIcon
+            // 
+            lblRoomsIcon.BackColor = Color.Transparent;
+            lblRoomsIcon.BadgeAlign = AntdUI.TAlign.TL;
+            lblRoomsIcon.BadgeBack = Color.FromArgb(114, 46, 209);
+            lblRoomsIcon.BadgeSize = 1F;
+            lblRoomsIcon.BadgeSvg = "HomeOutlined";
+            lblRoomsIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblRoomsIcon.Location = new Point(24, 24);
+            lblRoomsIcon.Name = "lblRoomsIcon";
+            lblRoomsIcon.Size = new Size(48, 48);
+            lblRoomsIcon.TabIndex = 0;
+            lblRoomsIcon.Text = "";
+            // 
+            // lblRoomsTitle
+            // 
+            lblRoomsTitle.BackColor = Color.Transparent;
+            lblRoomsTitle.Font = new Font("Microsoft Sans Serif", 10.2F);
+            lblRoomsTitle.Location = new Point(80, 28);
+            lblRoomsTitle.Name = "lblRoomsTitle";
+            lblRoomsTitle.Size = new Size(220, 30);
+            lblRoomsTitle.TabIndex = 1;
+            lblRoomsTitle.Text = "Tổng số phòng thi";
+            // 
+            // lblRoomsValue
+            // 
+            lblRoomsValue.BackColor = Color.Transparent;
+            lblRoomsValue.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold);
+            lblRoomsValue.ForeColor = Color.FromArgb(114, 46, 209);
+            lblRoomsValue.Location = new Point(24, 90);
+            lblRoomsValue.Name = "lblRoomsValue";
+            lblRoomsValue.Size = new Size(292, 50);
+            lblRoomsValue.TabIndex = 2;
+            // 
+            // cardViolations
+            // 
+            cardViolations.BorderColor = Color.FromArgb(240, 240, 240);
+            cardViolations.BorderWidth = 1F;
+            cardViolations.Controls.Add(lblViolationsIcon);
+            cardViolations.Controls.Add(lblViolationsTitle);
+            cardViolations.Controls.Add(lblViolationsValue);
+            cardViolations.Margin = new Padding(0, 0, 15, 0);
+            cardViolations.MinimumSize = new Size(280, 177);
+            cardViolations.Name = "cardViolations";
+            cardViolations.Padding = new Padding(20);
+            cardViolations.Radius = 8;
+            cardViolations.Shadow = 8;
+            cardViolations.Size = new Size(300, 177);
+            cardViolations.TabIndex = 4;
+            // 
+            // lblViolationsIcon
+            // 
+            lblViolationsIcon.BackColor = Color.Transparent;
+            lblViolationsIcon.BadgeAlign = AntdUI.TAlign.TL;
+            lblViolationsIcon.BadgeBack = Color.FromArgb(255, 77, 79);
+            lblViolationsIcon.BadgeSize = 1F;
+            lblViolationsIcon.BadgeSvg = "WarningOutlined";
+            lblViolationsIcon.Font = new Font("Microsoft Sans Serif", 24F);
+            lblViolationsIcon.Location = new Point(24, 24);
+            lblViolationsIcon.Name = "lblViolationsIcon";
+            lblViolationsIcon.Size = new Size(48, 48);
+            lblViolationsIcon.TabIndex = 0;
+            lblViolationsIcon.Text = "";
+            // 
+            // lblViolationsTitle
+            // 
+            lblViolationsTitle.BackColor = Color.Transparent;
+            lblViolationsTitle.Font = new Font("Microsoft Sans Serif", 10.2F);
+            lblViolationsTitle.Location = new Point(80, 28);
+            lblViolationsTitle.Name = "lblViolationsTitle";
+            lblViolationsTitle.Size = new Size(220, 30);
+            lblViolationsTitle.TabIndex = 1;
+            lblViolationsTitle.Text = "Vi phạm chưa xử lí";
+            // 
+            // lblViolationsValue
+            // 
+            lblViolationsValue.BackColor = Color.Transparent;
+            lblViolationsValue.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold);
+            lblViolationsValue.ForeColor = Color.FromArgb(255, 77, 79);
+            lblViolationsValue.Location = new Point(24, 90);
+            lblViolationsValue.Name = "lblViolationsValue";
+            lblViolationsValue.Size = new Size(292, 50);
+            lblViolationsValue.TabIndex = 2;
+            lblViolationsValue.Text = "2 / 3";
+            // 
+            // pnlViolationsTable
+            // 
+            pnlViolationsTable.Controls.Add(tblViolations);
+            pnlViolationsTable.Controls.Add(pgnViolations);
+            pnlViolationsTable.Controls.Add(pnlViolationsHeader);
+            pnlViolationsTable.Dock = DockStyle.Top;
+            pnlViolationsTable.Location = new Point(34, 320);
+            pnlViolationsTable.Margin = new Padding(3, 4, 3, 4);
+            pnlViolationsTable.Name = "pnlViolationsTable";
+            pnlViolationsTable.Padding = new Padding(13);
+            pnlViolationsTable.Size = new Size(1245, 365);
+            pnlViolationsTable.TabIndex = 2;
+            // 
+            // pnlViolationsHeader
+            // 
+            pnlViolationsHeader.Back = Color.Transparent;
+            pnlViolationsHeader.Controls.Add(lblViolationsTableTitle);
+            pnlViolationsHeader.Dock = DockStyle.Top;
+            pnlViolationsHeader.Location = new Point(13, 13);
+            pnlViolationsHeader.Name = "pnlViolationsHeader";
+            pnlViolationsHeader.Size = new Size(1219, 50);
+            pnlViolationsHeader.TabIndex = 2;
+            // 
+            // lblViolationsTableTitle
+            // 
+            lblViolationsTableTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblViolationsTableTitle.Location = new Point(0, 10);
+            lblViolationsTableTitle.Name = "lblViolationsTableTitle";
+            lblViolationsTableTitle.Size = new Size(300, 35);
+            lblViolationsTableTitle.TabIndex = 0;
+            lblViolationsTableTitle.Text = "Danh sách vi phạm";
+            // 
+            // tblViolations
+            // 
+            tblViolations.Bordered = true;
+            tblViolations.Dock = DockStyle.Fill;
+            tblViolations.EnableHeaderResizing = true;
+            tblViolations.Gap = 12;
+            tblViolations.Location = new Point(13, 63);
+            tblViolations.Margin = new Padding(2);
+            tblViolations.Name = "tblViolations";
+            tblViolations.Size = new Size(1219, 256);
+            tblViolations.TabIndex = 0;
+            // 
+            // pgnViolations
+            // 
+            pgnViolations.Dock = DockStyle.Bottom;
+            pgnViolations.Location = new Point(13, 319);
+            pgnViolations.Margin = new Padding(2);
+            pgnViolations.Name = "pgnViolations";
+            pgnViolations.PageSize = 5;
+            pgnViolations.RightToLeft = RightToLeft.Yes;
+            pgnViolations.ShowSizeChanger = true;
+            pgnViolations.Size = new Size(1219, 50);
+            pgnViolations.SizeChangerWidth = 50;
+            pgnViolations.TabIndex = 1;
+            // 
+            // pnlStats
+            // 
+            pnlStats.Controls.Add(cardViolations);
+            pnlStats.Controls.Add(cardRooms);
+            pnlStats.Controls.Add(cardContests);
+            pnlStats.Controls.Add(cardPending);
+            pnlStats.Controls.Add(cardStudents);
+            pnlStats.AutoSize = true;
+            pnlStats.Dock = DockStyle.Top;
+            pnlStats.Gap = 16;
+            pnlStats.Location = new Point(34, 120);
+            pnlStats.Margin = new Padding(0, 0, 0, 20);
+            pnlStats.MinimumSize = new Size(0, 177);
+            pnlStats.Name = "pnlStats";
+            pnlStats.Size = new Size(1245, 177);
+            pnlStats.TabIndex = 1;
+            // 
+            // DashboardView
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Transparent;
+            Controls.Add(pnlMain);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "DashboardView";
+            Size = new Size(1313, 505);
+            pnlMain.ResumeLayout(false);
+            pnlHeader.ResumeLayout(false);
+            cardContests.ResumeLayout(false);
+            cardStudents.ResumeLayout(false);
+            cardPending.ResumeLayout(false);
+            cardRooms.ResumeLayout(false);
+            cardViolations.ResumeLayout(false);
+            pnlViolationsTable.ResumeLayout(false);
+            pnlViolationsHeader.ResumeLayout(false);
+            pnlStats.ResumeLayout(false);
+            ResumeLayout(false);
+        }
+
+        
+
+
+        private AntdUI.FlowPanel pnlStats;
+        private AntdUI.Panel pnlMain;
+        private AntdUI.Panel pnlHeader;
+        private AntdUI.Label lblTitle;
         private AntdUI.Panel cardContests;
         private AntdUI.Panel cardStudents;
         private AntdUI.Panel cardPending;
@@ -32,469 +487,8 @@
         // Violations table
         private AntdUI.Panel pnlViolationsTable;
         private AntdUI.Panel pnlViolationsHeader;
-        private System.Windows.Forms.Panel pnlViolationsContainer;
-        private AntdUI.Label lblHeaderStudentId;
-        private AntdUI.Label lblHeaderDescription;
-        private AntdUI.Label lblHeaderSeverity;
-        private AntdUI.Label lblHeaderStatus;
-        private AntdUI.Label lblHeaderTime;
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private void InitializeComponent()
-        {
-            lblHeader = new AntdUI.Label();
-            cardContests = new AntdUI.Panel();
-            lblContestsTitle = new AntdUI.Label();
-            lblRoomsIcon = new AntdUI.Label();
-            lblContestsValue = new AntdUI.Label();
-            lblContestsIcon = new AntdUI.Label();
-            cardStudents = new AntdUI.Panel();
-            lblStudentsIcon = new AntdUI.Label();
-            lblStudentsTitle = new AntdUI.Label();
-            lblStudentsValue = new AntdUI.Label();
-            cardPending = new AntdUI.Panel();
-            lblPendingIcon = new AntdUI.Label();
-            lblPendingTitle = new AntdUI.Label();
-            lblPendingValue = new AntdUI.Label();
-            cardRooms = new AntdUI.Panel();
-            lblRoomsTitle = new AntdUI.Label();
-            lblRoomsValue = new AntdUI.Label();
-            cardViolations = new AntdUI.Panel();
-            lblViolationsIcon = new AntdUI.Label();
-            lblViolationsTitle = new AntdUI.Label();
-            lblViolationsValue = new AntdUI.Label();
-            pnlViolationsTable = new AntdUI.Panel();
-            pnlViolationsContainer = new Panel();
-            pnlViolationsHeader = new AntdUI.Panel();
-            lblHeaderStudentId = new AntdUI.Label();
-            lblHeaderDescription = new AntdUI.Label();
-            lblHeaderSeverity = new AntdUI.Label();
-            lblHeaderStatus = new AntdUI.Label();
-            lblHeaderTime = new AntdUI.Label();
-            pnlStats = new AntdUI.FlowPanel();
-            cardContests.SuspendLayout();
-            cardStudents.SuspendLayout();
-            cardPending.SuspendLayout();
-            cardRooms.SuspendLayout();
-            cardViolations.SuspendLayout();
-            pnlViolationsTable.SuspendLayout();
-            pnlViolationsHeader.SuspendLayout();
-            pnlStats.SuspendLayout();
-            SuspendLayout();
-            // 
-            // lblHeader
-            // 
-            lblHeader.Dock = DockStyle.Top;
-            lblHeader.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold);
-            lblHeader.Location = new Point(27, 31);
-            lblHeader.Margin = new Padding(4, 5, 4, 5);
-            lblHeader.Name = "lblHeader";
-            lblHeader.Size = new Size(1259, 62);
-            lblHeader.TabIndex = 3;
-            lblHeader.Text = "Dashboard";
-            // 
-            // cardContests
-            // 
-            cardContests.Back = Color.White;
-            cardContests.BorderColor = Color.FromArgb(240, 240, 240);
-            cardContests.BorderWidth = 1F;
-            cardContests.Controls.Add(lblContestsTitle);
-            cardContests.Controls.Add(lblRoomsIcon);
-            cardContests.Controls.Add(lblContestsValue);
-            cardContests.Location = new Point(629, 0);
-            cardContests.Margin = new Padding(0, 0, 15, 0);
-            cardContests.Name = "cardContests";
-            cardContests.Padding = new Padding(27, 31, 27, 31);
-            cardContests.Radius = 8;
-            cardContests.Shadow = 8;
-            cardContests.Size = new Size(260, 177);
-            cardContests.TabIndex = 0;
-            // 
-            // lblContestsTitle
-            // 
-            lblContestsTitle.BackColor = Color.Transparent;
-            lblContestsTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblContestsTitle.ForeColor = Color.Gray;
-            lblContestsTitle.Location = new Point(78, 31);
-            lblContestsTitle.Margin = new Padding(4, 5, 4, 5);
-            lblContestsTitle.Name = "lblContestsTitle";
-            lblContestsTitle.Size = new Size(216, 62);
-            lblContestsTitle.TabIndex = 1;
-            lblContestsTitle.Text = "Cuộc thi diễn ra";
-            // 
-            // lblRoomsIcon
-            // 
-            lblRoomsIcon.BackColor = Color.Transparent;
-            lblRoomsIcon.BadgeBack = Color.FromArgb(82, 196, 26);
-            lblRoomsIcon.BadgeSize = 1F;
-            lblRoomsIcon.BadgeSvg = "TrophyOutlined";
-            lblRoomsIcon.Font = new Font("Microsoft Sans Serif", 24F);
-            lblRoomsIcon.Location = new Point(17, 31);
-            lblRoomsIcon.Margin = new Padding(4, 5, 4, 5);
-            lblRoomsIcon.Name = "lblRoomsIcon";
-            lblRoomsIcon.Size = new Size(53, 62);
-            lblRoomsIcon.TabIndex = 0;
-            lblRoomsIcon.Text = "";
-            // 
-            // lblContestsValue
-            // 
-            lblContestsValue.BackColor = Color.Transparent;
-            lblContestsValue.Font = new Font("Microsoft Sans Serif", 28F, FontStyle.Bold);
-            lblContestsValue.ForeColor = Color.FromArgb(82, 196, 26);
-            lblContestsValue.Location = new Point(27, 92);
-            lblContestsValue.Margin = new Padding(4, 5, 4, 5);
-            lblContestsValue.Name = "lblContestsValue";
-            lblContestsValue.Size = new Size(264, 54);
-            lblContestsValue.TabIndex = 2;
-            lblContestsValue.Text = "0";
-            // 
-            // lblContestsIcon
-            // 
-            lblContestsIcon.BackColor = Color.Transparent;
-            lblContestsIcon.BadgeBack = Color.Black;
-            lblContestsIcon.BadgeSize = 1F;
-            lblContestsIcon.BadgeSvg = "DesktopOutlined";
-            lblContestsIcon.Font = new Font("Microsoft Sans Serif", 24F);
-            lblContestsIcon.Location = new Point(27, 31);
-            lblContestsIcon.Margin = new Padding(4, 5, 4, 5);
-            lblContestsIcon.Name = "lblContestsIcon";
-            lblContestsIcon.Size = new Size(53, 62);
-            lblContestsIcon.TabIndex = 0;
-            lblContestsIcon.Text = "";
-            
-            // 
-            // lblStudentsIcon
-            // 
-            lblStudentsIcon.BackColor = Color.Transparent;
-            lblStudentsIcon.BadgeBack = Color.FromArgb(24, 144, 255);
-            lblStudentsIcon.BadgeSize = 1F;
-            lblStudentsIcon.BadgeSvg = "UserOutlined";
-            lblStudentsIcon.ColorExtend = "";
-            lblStudentsIcon.Font = new Font("Microsoft Sans Serif", 24F);
-            lblStudentsIcon.Location = new Point(27, 31);
-            lblStudentsIcon.Margin = new Padding(4, 5, 4, 5);
-            lblStudentsIcon.Name = "lblStudentsIcon";
-            lblStudentsIcon.PrefixSvg = "";
-            lblStudentsIcon.Size = new Size(53, 62);
-            lblStudentsIcon.TabIndex = 0;
-            lblStudentsIcon.Text = "";
-            // 
-            // lblStudentsTitle
-            // 
-            lblStudentsTitle.BackColor = Color.Transparent;
-            lblStudentsTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblStudentsTitle.ForeColor = Color.Gray;
-            lblStudentsTitle.Location = new Point(93, 31);
-            lblStudentsTitle.Margin = new Padding(4, 5, 4, 5);
-            lblStudentsTitle.Name = "lblStudentsTitle";
-            lblStudentsTitle.Size = new Size(215, 62);
-            lblStudentsTitle.TabIndex = 1;
-            lblStudentsTitle.Text = "Thí sinh đang thi";
-            // 
-            // lblStudentsValue
-            // 
-            lblStudentsValue.BackColor = Color.Transparent;
-            lblStudentsValue.Font = new Font("Microsoft Sans Serif", 28F, FontStyle.Bold);
-            lblStudentsValue.ForeColor = Color.FromArgb(24, 144, 255);
-            lblStudentsValue.Location = new Point(27, 92);
-            lblStudentsValue.Margin = new Padding(4, 5, 4, 5);
-            lblStudentsValue.Name = "lblStudentsValue";
-            lblStudentsValue.Size = new Size(267, 54);
-            lblStudentsValue.TabIndex = 2;
-            lblStudentsValue.Text = "1 / 7";
-            // 
-            // cardPending
-            // 
-            cardPending.Back = Color.White;
-            cardPending.BorderColor = Color.FromArgb(240, 240, 240);
-            cardPending.BorderWidth = 1F;
-            cardPending.Controls.Add(lblPendingIcon);
-            cardPending.Controls.Add(lblPendingTitle);
-            cardPending.Controls.Add(lblPendingValue);
-            cardPending.Location = new Point(354, 0);
-            cardPending.Margin = new Padding(0, 0, 15, 0);
-            cardPending.Name = "cardPending";
-            cardPending.Padding = new Padding(27, 31, 27, 31);
-            cardPending.Radius = 8;
-            cardPending.Shadow = 8;
-            cardPending.Size = new Size(260, 177);
-            cardPending.TabIndex = 2;
-            // 
-            // lblPendingIcon
-            // 
-            lblPendingIcon.BackColor = Color.Transparent;
-            lblPendingIcon.BadgeAlign = AntdUI.TAlign.TL;
-            lblPendingIcon.BadgeBack = Color.FromArgb(250, 173, 20);
-            lblPendingIcon.BadgeSize = 1F;
-            lblPendingIcon.BadgeSvg = "AuditOutlined";
-            lblPendingIcon.Font = new Font("Microsoft Sans Serif", 24F);
-            lblPendingIcon.Location = new Point(27, 31);
-            lblPendingIcon.Margin = new Padding(4, 5, 4, 5);
-            lblPendingIcon.Name = "lblPendingIcon";
-            lblPendingIcon.PrefixSvg = "";
-            lblPendingIcon.Size = new Size(53, 62);
-            lblPendingIcon.TabIndex = 0;
-            lblPendingIcon.Text = "";
-            // 
-            // lblPendingTitle
-            // 
-            lblPendingTitle.BackColor = Color.Transparent;
-            lblPendingTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPendingTitle.ForeColor = Color.Gray;
-            lblPendingTitle.Location = new Point(88, 31);
-            lblPendingTitle.Margin = new Padding(4, 5, 4, 5);
-            lblPendingTitle.Name = "lblPendingTitle";
-            lblPendingTitle.Size = new Size(206, 62);
-            lblPendingTitle.TabIndex = 1;
-            lblPendingTitle.Text = "Chờ duyệt";
-            // 
-            // lblPendingValue
-            // 
-            lblPendingValue.BackColor = Color.Transparent;
-            lblPendingValue.BadgeBack = Color.FromArgb(250, 173, 20);
-            lblPendingValue.Font = new Font("Microsoft Sans Serif", 28F, FontStyle.Bold);
-            lblPendingValue.ForeColor = Color.FromArgb(250, 173, 20);
-            lblPendingValue.Location = new Point(27, 92);
-            lblPendingValue.Margin = new Padding(4, 5, 4, 5);
-            lblPendingValue.Name = "lblPendingValue";
-            lblPendingValue.Size = new Size(267, 54);
-            lblPendingValue.TabIndex = 2;
-            lblPendingValue.Text = "2";
-            // 
-            // cardRooms
-            // 
-            cardRooms.Back = Color.White;
-            cardRooms.BorderColor = Color.FromArgb(240, 240, 240);
-            cardRooms.BorderWidth = 1F;
-            cardRooms.Controls.Add(lblContestsIcon);
-            cardRooms.Controls.Add(lblRoomsTitle);
-            cardRooms.Controls.Add(lblRoomsValue);
-            cardRooms.Location = new Point(79, 177);
-            cardRooms.Margin = new Padding(0, 0, 15, 0);
-            cardRooms.Name = "cardRooms";
-            cardRooms.Padding = new Padding(27, 31, 27, 31);
-            cardRooms.Radius = 8;
-            cardRooms.Shadow = 8;
-            cardRooms.Size = new Size(260, 177);
-            cardRooms.TabIndex = 0;
-            // 
-            // lblRoomsTitle
-            // 
-            lblRoomsTitle.BackColor = Color.Transparent;
-            lblRoomsTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblRoomsTitle.ForeColor = Color.Gray;
-            lblRoomsTitle.Location = new Point(96, 48);
-            lblRoomsTitle.Margin = new Padding(4, 5, 4, 5);
-            lblRoomsTitle.Name = "lblRoomsTitle";
-            lblRoomsTitle.Size = new Size(206, 31);
-            lblRoomsTitle.TabIndex = 1;
-            lblRoomsTitle.Text = "Tổng số phòng thi";
-            // 
-            // lblRoomsValue
-            // 
-            lblRoomsValue.BackColor = Color.Transparent;
-            lblRoomsValue.BadgeBack = Color.Black;
-            lblRoomsValue.Font = new Font("Microsoft Sans Serif", 28F, FontStyle.Bold);
-            lblRoomsValue.ForeColor = Color.Black;
-            lblRoomsValue.Location = new Point(27, 92);
-            lblRoomsValue.Margin = new Padding(4, 5, 4, 5);
-            lblRoomsValue.Name = "lblRoomsValue";
-            lblRoomsValue.Size = new Size(267, 54);
-            lblRoomsValue.TabIndex = 2;
-            lblRoomsValue.Text = "3";
-            // 
-            // cardViolations
-            // 
-            cardViolations.Back = Color.White;
-            cardViolations.BorderColor = Color.FromArgb(240, 240, 240);
-            cardViolations.BorderWidth = 1F;
-            cardViolations.Controls.Add(lblViolationsIcon);
-            cardViolations.Controls.Add(lblViolationsTitle);
-            cardViolations.Controls.Add(lblViolationsValue);
-            cardViolations.Location = new Point(904, 0);
-            cardViolations.Margin = new Padding(0, 0, 15, 0);
-            cardViolations.Name = "cardViolations";
-            cardViolations.Padding = new Padding(27, 31, 27, 31);
-            cardViolations.Radius = 8;
-            cardViolations.Shadow = 8;
-            cardViolations.Size = new Size(260, 177);
-            cardViolations.TabIndex = 3;
-            // 
-            // lblViolationsIcon
-            // 
-            lblViolationsIcon.BackColor = Color.Transparent;
-            lblViolationsIcon.BadgeSize = 1F;
-            lblViolationsIcon.BadgeSvg = "FileOutlined";
-            lblViolationsIcon.Font = new Font("Microsoft Sans Serif", 24F);
-            lblViolationsIcon.Location = new Point(27, 31);
-            lblViolationsIcon.Margin = new Padding(4, 5, 4, 5);
-            lblViolationsIcon.Name = "lblViolationsIcon";
-            lblViolationsIcon.Size = new Size(53, 62);
-            lblViolationsIcon.TabIndex = 0;
-            lblViolationsIcon.Text = "";
-            // 
-            // lblViolationsTitle
-            // 
-            lblViolationsTitle.BackColor = Color.Transparent;
-            lblViolationsTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblViolationsTitle.ForeColor = Color.Gray;
-            lblViolationsTitle.Location = new Point(88, 31);
-            lblViolationsTitle.Margin = new Padding(4, 5, 4, 5);
-            lblViolationsTitle.Name = "lblViolationsTitle";
-            lblViolationsTitle.Size = new Size(216, 62);
-            lblViolationsTitle.TabIndex = 1;
-            lblViolationsTitle.Text = "Vi phạm chưa xử lí";
-            // 
-            // lblViolationsValue
-            // 
-            lblViolationsValue.BackColor = Color.Transparent;
-            lblViolationsValue.Font = new Font("Microsoft Sans Serif", 28F, FontStyle.Bold);
-            lblViolationsValue.ForeColor = Color.FromArgb(255, 77, 79);
-            lblViolationsValue.Location = new Point(27, 92);
-            lblViolationsValue.Margin = new Padding(4, 5, 4, 5);
-            lblViolationsValue.Name = "lblViolationsValue";
-            lblViolationsValue.Size = new Size(264, 54);
-            lblViolationsValue.TabIndex = 2;
-            lblViolationsValue.Text = "2 / 3";
-            // 
-            // pnlViolationsTable
-            // 
-            pnlViolationsTable.Back = Color.White;
-            pnlViolationsTable.BorderColor = Color.FromArgb(240, 240, 240);
-            pnlViolationsTable.BorderWidth = 1F;
-            pnlViolationsTable.Controls.Add(pnlViolationsContainer);
-            pnlViolationsTable.Controls.Add(pnlViolationsHeader);
-            pnlViolationsTable.Dock = DockStyle.Bottom;
-            pnlViolationsTable.Location = new Point(27, 454);
-            pnlViolationsTable.Margin = new Padding(4, 5, 4, 5);
-            pnlViolationsTable.Name = "pnlViolationsTable";
-            pnlViolationsTable.Padding = new Padding(27, 31, 27, 31);
-            pnlViolationsTable.Radius = 8;
-            pnlViolationsTable.Shadow = 8;
-            pnlViolationsTable.Size = new Size(1259, 438);
-            pnlViolationsTable.TabIndex = 0;
-            // 
-            // pnlViolationsContainer
-            // 
-            pnlViolationsContainer.AutoScroll = true;
-            pnlViolationsContainer.BackColor = Color.White;
-            pnlViolationsContainer.Dock = DockStyle.Fill;
-            pnlViolationsContainer.Location = new Point(39, 105);
-            pnlViolationsContainer.Margin = new Padding(4, 5, 4, 5);
-            pnlViolationsContainer.Name = "pnlViolationsContainer";
-            pnlViolationsContainer.Size = new Size(1181, 290);
-            pnlViolationsContainer.TabIndex = 0;
-            // 
-            // pnlViolationsHeader
-            // 
-            pnlViolationsHeader.Back = Color.FromArgb(250, 250, 250);
-            pnlViolationsHeader.Controls.Add(lblHeaderStudentId);
-            pnlViolationsHeader.Controls.Add(lblHeaderDescription);
-            pnlViolationsHeader.Controls.Add(lblHeaderSeverity);
-            pnlViolationsHeader.Controls.Add(lblHeaderStatus);
-            pnlViolationsHeader.Controls.Add(lblHeaderTime);
-            pnlViolationsHeader.Dock = DockStyle.Top;
-            pnlViolationsHeader.Location = new Point(39, 43);
-            pnlViolationsHeader.Margin = new Padding(4, 5, 4, 5);
-            pnlViolationsHeader.Name = "pnlViolationsHeader";
-            pnlViolationsHeader.Size = new Size(1181, 62);
-            pnlViolationsHeader.TabIndex = 1;
-            // 
-            // lblHeaderStudentId
-            // 
-            lblHeaderStudentId.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
-            lblHeaderStudentId.Location = new Point(13, 15);
-            lblHeaderStudentId.Margin = new Padding(4, 5, 4, 5);
-            lblHeaderStudentId.Name = "lblHeaderStudentId";
-            lblHeaderStudentId.Size = new Size(133, 31);
-            lblHeaderStudentId.TabIndex = 0;
-            lblHeaderStudentId.Text = "Mã SV";
-            // 
-            // lblHeaderDescription
-            // 
-            lblHeaderDescription.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
-            lblHeaderDescription.Location = new Point(160, 15);
-            lblHeaderDescription.Margin = new Padding(4, 5, 4, 5);
-            lblHeaderDescription.Name = "lblHeaderDescription";
-            lblHeaderDescription.Size = new Size(373, 31);
-            lblHeaderDescription.TabIndex = 1;
-            lblHeaderDescription.Text = "Mô tả";
-            // 
-            // lblHeaderSeverity
-            // 
-            lblHeaderSeverity.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
-            lblHeaderSeverity.Location = new Point(547, 15);
-            lblHeaderSeverity.Margin = new Padding(4, 5, 4, 5);
-            lblHeaderSeverity.Name = "lblHeaderSeverity";
-            lblHeaderSeverity.Size = new Size(120, 31);
-            lblHeaderSeverity.TabIndex = 2;
-            lblHeaderSeverity.Text = "Mức độ";
-            // 
-            // lblHeaderStatus
-            // 
-            lblHeaderStatus.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
-            lblHeaderStatus.Location = new Point(680, 15);
-            lblHeaderStatus.Margin = new Padding(4, 5, 4, 5);
-            lblHeaderStatus.Name = "lblHeaderStatus";
-            lblHeaderStatus.Size = new Size(147, 31);
-            lblHeaderStatus.TabIndex = 3;
-            lblHeaderStatus.Text = "Trạng thái";
-            // 
-            // lblHeaderTime
-            // 
-            lblHeaderTime.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
-            lblHeaderTime.Location = new Point(840, 15);
-            lblHeaderTime.Margin = new Padding(4, 5, 4, 5);
-            lblHeaderTime.Name = "lblHeaderTime";
-            lblHeaderTime.Size = new Size(240, 31);
-            lblHeaderTime.TabIndex = 4;
-            lblHeaderTime.Text = "Thời gian";
-            // 
-            // pnlStats
-            // 
-            pnlStats.Controls.Add(cardRooms);
-            pnlStats.Controls.Add(cardViolations);
-            pnlStats.Controls.Add(cardContests);
-            pnlStats.Controls.Add(cardPending);
-            pnlStats.Controls.Add(cardStudents);
-            pnlStats.Dock = DockStyle.Top;
-            pnlStats.Location = new Point(27, 93);
-            pnlStats.Name = "pnlStats";
-            pnlStats.Size = new Size(1259, 392);
-            pnlStats.TabIndex = 2;
-            pnlStats.Text = "flowPanel1";
-            // 
-            // DashboardView
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoScroll = true;
-            BackColor = Color.FromArgb(240, 242, 245);
-            Controls.Add(pnlStats);
-            Controls.Add(pnlViolationsTable);
-            Controls.Add(lblHeader);
-            Margin = new Padding(4, 5, 4, 5);
-            Name = "DashboardView";
-            Padding = new Padding(27, 31, 27, 31);
-            Size = new Size(1313, 505);
-            cardContests.ResumeLayout(false);
-            cardStudents.ResumeLayout(false);
-            cardPending.ResumeLayout(false);
-            cardRooms.ResumeLayout(false);
-            cardViolations.ResumeLayout(false);
-            pnlViolationsTable.ResumeLayout(false);
-            pnlViolationsHeader.ResumeLayout(false);
-            pnlStats.ResumeLayout(false);
-            ResumeLayout(false);
-        }
-        private AntdUI.FlowPanel pnlStats;
+        private AntdUI.Label lblViolationsTableTitle;
+        private AntdUI.Table tblViolations;
+        private AntdUI.Pagination pgnViolations;
     }
 }

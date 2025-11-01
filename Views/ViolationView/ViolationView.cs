@@ -15,6 +15,8 @@ namespace computer_monitoring_desktop.Views
     {
         private List<ViolationRecord> dataList = new();
         private List<ViolationRecord> filteredList = new();
+        private int violationPageSize = 10;
+        private int violationCurrentPage = 1;
 
         public ViolationView()
         {
@@ -54,6 +56,9 @@ namespace computer_monitoring_desktop.Views
             tbl_violation.RowSelectedBg = Color.FromArgb(230, 247, 255);
             tbl_violation.RowSelectedFore = Color.Black;
 
+            tbl_violation.Columns.Add(new Column("STT", "STT") {
+                Align = ColumnAlign.Center
+            });
             tbl_violation.Columns.Add(new Column("Id", "ID"));
             tbl_violation.Columns.Add(new Column("MaSV", "Mã SV"));
             tbl_violation.Columns.Add(new Column("LoaiViPham", "Loại vi phạm"));
@@ -64,12 +69,35 @@ namespace computer_monitoring_desktop.Views
             tbl_violation.Columns.Add(new Column("ChiTiet", "Nội dung chi tiết") { Align = ColumnAlign.Center});
             tbl_violation.Columns.Add(new Column("XuLy", "Xử lý") { Align = ColumnAlign.Center });
 
+            // Setup pagination
+            pgnViolations.Total = filteredList.Count;
+            pgnViolations.PageSize = violationPageSize;
+            pgnViolations.Current = 1;
+            pgnViolations.ValueChanged += PgnViolations_ValueChanged;
+
+            RefreshTable();
+        }
+
+        private void PgnViolations_ValueChanged(object sender, PagePageEventArgs e)
+        {
+            violationCurrentPage = e.Current;
+            if (e.PageSize != violationPageSize)
+            {
+                violationPageSize = e.PageSize;
+            }
             RefreshTable();
         }
 
         private void RefreshTable()
         {
+            // Paginate filtered list
+            var pagedList = filteredList
+                .Skip((violationCurrentPage - 1) * violationPageSize)
+                .Take(violationPageSize)
+                .ToList();
+
             var dt = new DataTable();
+            dt.Columns.Add("STT", typeof(int));
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("MaSV", typeof(string));
             dt.Columns.Add("LoaiViPham", typeof(string));
@@ -80,7 +108,8 @@ namespace computer_monitoring_desktop.Views
             dt.Columns.Add("ChiTiet", typeof(string));
             dt.Columns.Add("XuLy", typeof(string));
 
-            foreach (var v in filteredList)
+            int rowNumber = (violationCurrentPage - 1) * violationPageSize + 1;
+            foreach (var v in pagedList)
             {
                 TTypeMini mucDoType = v.MucDo switch
                 {
@@ -100,6 +129,7 @@ namespace computer_monitoring_desktop.Views
                 CellTag trangThaiTag = new CellTag(v.TrangThai, trangThaiType);
 
                 dt.Rows.Add(
+                    rowNumber++,
                     v.Id,
                     v.MaSV,
                     v.LoaiViPham,
@@ -113,6 +143,7 @@ namespace computer_monitoring_desktop.Views
             }
 
             tbl_violation.DataSource = dt;
+            pgnViolations.Total = filteredList.Count;
         }
 
         private void table_violation_CellClick(object sender, TableClickEventArgs e)

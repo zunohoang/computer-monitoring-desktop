@@ -1,15 +1,19 @@
 ﻿using System.ComponentModel;
 using computer_monitoring_desktop.Models.Audit;
-using computer_monitoring_desktop.Services.AuditServices;
+using computer_monitoring_desktop.Models.Repositories;
+using AntdUI;
 
 namespace computer_monitoring_desktop.Views
 {
     public partial class TextLogView : UserControl
     {
-        private readonly IAuditService? auditService;
-        // Đối với truy vấn sql nó sẽ ra bảng data table, còn lưu 1 row của bảng thì sử dụng binding list là lưu object (ở đây là class cuối file)
-        private readonly BindingList<ProcessRow> processRows = new();
-        private readonly BindingSource processBinding = new();
+        private AuditDataset dataset = null!;
+        private AuditAttempt attempt = null!;
+        private IReadOnlyList<AuditProcess> processes = Array.Empty<AuditProcess>();
+        private readonly HashSet<string> blacklistNames;
+        private bool isLoaded;
+
+        private readonly IAuditRepository auditRepo;
 
         private bool isLoaded;
         // Bộ data của thí sinh đã chọn
@@ -26,8 +30,9 @@ namespace computer_monitoring_desktop.Views
 
             blacklistNames = auditService?.GetBlacklistNames();
 
-            // Config cho datagridview
-            ConfigureGrid();
+            InitializeTable();
+            BindDataset(attemptId);
+
             Load += HandleLoad;
         }
 
@@ -37,20 +42,22 @@ namespace computer_monitoring_desktop.Views
             if (currentDataset != null)
             {
                 UpdateHeaderText();
-                PopulateGrid();
+                PopulateTable();
             }
         }
 
-        public void UpdateDataset(AuditDataset dataset)
+        private void HandleLoad(object? sender, EventArgs e)
         {
-            currentDataset = dataset ?? throw new ArgumentNullException(nameof(dataset));
-            blacklistNames = auditService?.GetBlacklistNames();
+            isLoaded = true;
+            UpdateHeaderText();
+            PopulateTable();
+        }
 
-            if (isLoaded)
-            {
-                UpdateHeaderText();
-                PopulateGrid();
-            }
+        private void BindDataset(int attemptId)
+        {
+            dataset = auditRepo.GetDataset(attemptId);
+            attempt = dataset.Attempt;
+            processes = dataset.Processes;
         }
 
         private void UpdateHeaderText()
@@ -63,111 +70,54 @@ namespace computer_monitoring_desktop.Views
             lblGridTitle.Text = "Tiến trình đang theo dõi";
         }
 
-        private void ConfigureGrid()
+        private void InitializeTable()
         {
-            processBinding.DataSource = processRows;
-            gridProcesses.AutoGenerateColumns = false;
-            gridProcesses.ReadOnly = true;
-            gridProcesses.DataSource = processBinding;
-
-            gridProcesses.Columns.Clear();
-            gridProcesses.Columns.Add(CreateTextColumn("colProcessName", "Tien trinh", nameof(ProcessRow.ProcessName), 200f));
-            gridProcesses.Columns.Add(CreateTextColumn("colStatus", "Trang thai", nameof(ProcessRow.StatusDisplay), 120f));
-            gridProcesses.Columns.Add(CreateTextColumn("colStart", "Bat dau", nameof(ProcessRow.StartDisplay), 140f));
-            gridProcesses.Columns.Add(CreateTextColumn("colEnd", "Ket thuc", nameof(ProcessRow.EndDisplay), 140f));
-            gridProcesses.Columns.Add(CreateTextColumn("colDuration", "Thoi luong", nameof(ProcessRow.DurationDisplay), 120f));
-            gridProcesses.Columns.Add(CreateTextColumn("colPid", "PID", nameof(ProcessRow.Pid), 80f, DataGridViewContentAlignment.MiddleRight));
-
-            gridProcesses.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            gridProcesses.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(30, 41, 59);
-            gridProcesses.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(241, 245, 249);
-            gridProcesses.EnableHeadersVisualStyles = false;
-
-            gridProcesses.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F);
-            gridProcesses.DefaultCellStyle.ForeColor = Color.FromArgb(30, 41, 59);
-            gridProcesses.DefaultCellStyle.BackColor = Color.White;
-            gridProcesses.DefaultCellStyle.SelectionBackColor = Color.FromArgb(191, 219, 254);
-            gridProcesses.DefaultCellStyle.SelectionForeColor = Color.FromArgb(30, 41, 59);
-            gridProcesses.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 250, 252);
-
-            // Gọi hàm sau mỗi lần bind data xong (để format lại giao diện)
-            gridProcesses.DataBindingComplete += GridProcesses_DataBindingComplete;
-        }
-
-        private static DataGridViewTextBoxColumn CreateTextColumn(string name, string header, string property, float fillWeight, DataGridViewContentAlignment alignment = DataGridViewContentAlignment.MiddleLeft)
-        {
-            return new DataGridViewTextBoxColumn
+            var columns = new ColumnCollection
             {
-                Name = name,
-                HeaderText = header,
-                DataPropertyName = property,
-                FillWeight = fillWeight,
-                DefaultCellStyle = new DataGridViewCellStyle { Alignment = alignment }
+                new Column("ProcessName", "Tiến trình", ColumnAlign.Left),
+                new Column("StatusDisplay", "Trạng thái", ColumnAlign.Center),
+                new Column("StartDisplay", "Bắt đầu", ColumnAlign.Center),
+                new Column("EndDisplay", "Kết thúc", ColumnAlign.Center),
+                new Column("DurationDisplay", "Thời lượng", ColumnAlign.Center),
+                new Column("Pid", "PID", ColumnAlign.Center)
             };
+            
+            tblProcesses.Columns = columns;
+            
+            // Add hover and click styling for blacklisted rows
+            tblProcesses.SetRowStyle += Table_SetRowStyle;
         }
 
-        private void PopulateGrid()
+        private Table.CellStyleInfo Table_SetRowStyle(object sender, TableSetRowStyleEventArgs e)
         {
-            if (currentDataset == null) return;
-
-            var attempt = currentDataset.Attempt;
-            var processes = currentDataset.Processes;
-            // Tắt raise event (kiểu event mà indexchange,... thì sự kiện kích hoạt) cho đến khi update xong bindinglist
-            processRows.RaiseListChangedEvents = false;
-            processRows.Clear();
-
-            // Sắp xếp lại row theo dạng:
-            // Running thì lên trước, sau đó đến endtime lớn hơn (vừa tắt), cuối cùng là giảm dần của starttime
-            var orderedProcesses = auditService?.GetOrderedProcesses(attempt.Id);
-            foreach (var process in orderedProcesses)
+            if (e.Record is ProcessRow row && row.IsBlacklisted)
             {
-                processRows.Add(new ProcessRow(process, blacklistNames?.Contains(process.Name.Trim().ToLowerInvariant()) ?? false ));
+                // Red background for blacklisted rows
+                return new Table.CellStyleInfo
+                {
+                    BackColor = Style.Db.ErrorBg
+                };
             }
-
-            processRows.RaiseListChangedEvents = true;
-            processBinding.ResetBindings(false);
-            gridProcesses.ClearSelection();
-
-            lblGridSubtitle.Text = processRows.Count > 0
-                ? $"Có {processRows.Count} tiến trình được ghi nhận trên máy {attempt.MachineName}."
-                : $"Không có tiến trình nào được ghi nhận trên máy {attempt.MachineName}.";
+            return null;
         }
 
-        private void GridProcesses_DataBindingComplete(object? sender, DataGridViewBindingCompleteEventArgs e)
+        private void PopulateTable()
         {
-            var baseForeColor = Color.FromArgb(30, 41, 59);
-            var baseBackColor = Color.White;
-            var baseSelectionBack = Color.FromArgb(191, 219, 254);
+            var processData = processes
+                .OrderByDescending(p => string.Equals(p.Status, "running", StringComparison.OrdinalIgnoreCase))
+                .ThenBy(p => p.EndTime ?? DateTime.MaxValue)
+                .ThenBy(p => p.StartTime)
+                .Select(process => new ProcessRow(process, blacklistNames.Contains(process.Name.Trim().ToLowerInvariant())))
+                .ToArray();
 
-            foreach (DataGridViewRow row in gridProcesses.Rows)
-            {
-                if (row.DataBoundItem is not ProcessRow processRow)
-                {
-                    continue;
-                }
+            tblProcesses.DataSource = processData;
+            
+            // Refresh the table to apply the SetRowStyle styling
+            tblProcesses.Invalidate();
 
-                if (processRow.IsBlacklisted)
-                {
-                    row.DefaultCellStyle.ForeColor = Color.FromArgb(220, 38, 38);
-                    row.DefaultCellStyle.SelectionForeColor = Color.FromArgb(220, 38, 38);
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(254, 226, 226);
-                    row.DefaultCellStyle.SelectionBackColor = Color.FromArgb(252, 165, 165);
-                }
-                else if (processRow.IsRunning)
-                {
-                    row.DefaultCellStyle.ForeColor = Color.FromArgb(22, 101, 52);
-                    row.DefaultCellStyle.SelectionForeColor = Color.FromArgb(22, 101, 52);
-                    row.DefaultCellStyle.BackColor = baseBackColor;
-                    row.DefaultCellStyle.SelectionBackColor = baseSelectionBack;
-                }
-                else
-                {
-                    row.DefaultCellStyle.ForeColor = baseForeColor;
-                    row.DefaultCellStyle.SelectionForeColor = baseForeColor;
-                    row.DefaultCellStyle.BackColor = baseBackColor;
-                    row.DefaultCellStyle.SelectionBackColor = baseSelectionBack;
-                }
-            }
+            lblGridSubtitle.Text = processData.Length > 0
+                ? $"Có {processData.Length} tiến trình được ghi nhận trên {attempt.MachineName}."
+                : $"Không có tiến trình được ghi nhận trên {attempt.MachineName}.";
         }
 
         // Class không bị kế thừa, không ai biết, chú giấu kỹ quá..., nó là 1 cách để cấu trúc class mang tính đóng gói
@@ -192,7 +142,8 @@ namespace computer_monitoring_desktop.Views
             public bool IsRunning { get; }
             public bool IsBlacklisted { get; }
 
-            public string StatusDisplay => IsRunning ? "Đang chạy" : Status;
+            
+            public string StatusDisplay => IsRunning ? "Dang chay" : Status;
             public string StartDisplay => StartTime.ToString("HH:mm:ss dd/MM");
             public string EndDisplay => EndTime.HasValue ? EndTime.Value.ToString("HH:mm:ss dd/MM") : "Đang chạy";
             public string DurationDisplay

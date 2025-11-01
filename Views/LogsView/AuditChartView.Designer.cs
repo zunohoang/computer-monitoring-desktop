@@ -54,7 +54,6 @@ namespace computer_monitoring_desktop.Views
             // pnlMain
             // 
             pnlMain.AutoScroll = true;
-            pnlMain.BackColor = Color.FromArgb(245, 247, 250);
             pnlMain.Controls.Add(pnlTimelineCard);
             pnlMain.Controls.Add(flpSummary);
             pnlMain.Controls.Add(pnlHeader);
@@ -68,7 +67,6 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlTimelineCard
             // 
-            pnlTimelineCard.Back = Color.White;
             pnlTimelineCard.Controls.Add(pnlTimelineScroll);
             pnlTimelineCard.Controls.Add(pnlTimelineAxis);
             pnlTimelineCard.Controls.Add(lblTimelineTitle);
@@ -125,7 +123,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblAxisEnd.Dock = DockStyle.Right;
             lblAxisEnd.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblAxisEnd.ForeColor = Color.FromArgb(71, 85, 105);
             lblAxisEnd.Location = new Point(1381, 12);
             lblAxisEnd.Margin = new Padding(0);
             lblAxisEnd.Name = "lblAxisEnd";
@@ -137,7 +134,6 @@ namespace computer_monitoring_desktop.Views
             // lblAxisMid
             // 
             lblAxisMid.Font = new Font("Segoe UI", 9F);
-            lblAxisMid.ForeColor = Color.FromArgb(100, 116, 139);
             lblAxisMid.Location = new Point(296, 12);
             lblAxisMid.Margin = new Padding(0);
             lblAxisMid.Name = "lblAxisMid";
@@ -150,7 +146,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblAxisStart.Dock = DockStyle.Left;
             lblAxisStart.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblAxisStart.ForeColor = Color.FromArgb(71, 85, 105);
             lblAxisStart.Location = new Point(12, 12);
             lblAxisStart.Margin = new Padding(0);
             lblAxisStart.Name = "lblAxisStart";
@@ -164,7 +159,6 @@ namespace computer_monitoring_desktop.Views
             lblTimelineTitle.BackColor = Color.Transparent;
             lblTimelineTitle.Dock = DockStyle.Top;
             lblTimelineTitle.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold);
-            lblTimelineTitle.ForeColor = Color.FromArgb(30, 41, 59);
             lblTimelineTitle.Location = new Point(30, 24);
             lblTimelineTitle.Margin = new Padding(0, 0, 0, 12);
             lblTimelineTitle.Name = "lblTimelineTitle";
@@ -203,7 +197,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblDescription.BackColor = Color.Transparent;
             lblDescription.Font = new Font("Segoe UI", 11F);
-            lblDescription.ForeColor = Color.FromArgb(71, 85, 105);
             lblDescription.Location = new Point(0, 80);
             lblDescription.Margin = new Padding(0);
             lblDescription.Name = "lblDescription";
@@ -216,7 +209,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI Semibold", 26F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
             lblTitle.Location = new Point(0, 0);
             lblTitle.Margin = new Padding(0, 0, 0, 15);
             lblTitle.Name = "lblTitle";

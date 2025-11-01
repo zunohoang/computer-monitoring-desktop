@@ -1,11 +1,13 @@
 ﻿using AntdUI;
 using computer_monitoring_desktop.Models;
+using computer_monitoring_desktop.Models.Repositories;
 using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Utils;
 using computer_monitoring_desktop.Views.Auth;
 using computer_monitoring_desktop.Views.Contests;
 using computer_monitoring_desktop.Views.SubViews;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace computer_monitoring_desktop.Views
@@ -34,8 +36,29 @@ namespace computer_monitoring_desktop.Views
             string key = tagOrText?.ToString();
             switch (key)
             {
+                case "home":
                 case "Trang chủ":
+                    SetBreadcrumb(("Trang chủ", "home"));
                     LoadDashboardView();
+                    break;
+                case "Dashboard":
+                    SetBreadcrumb(("Trang chủ", "home"), ("Dashboard", "Dashboard"));
+                    LoadDashboardView();
+                    break;
+                case "rooms":
+                case "Quản lý phòng thi":
+                    SetBreadcrumb(("Trang chủ", "home"), ("Quản lý phòng thi", "rooms"));
+                    LoadRoomManagementView();
+                    break;
+                case "violations":
+                case "Quản lý vi phạm":
+                    SetBreadcrumb(("Trang chủ", "home"), ("Quản lý vi phạm", "violations"));
+                    LoadViolationView();
+                    break;
+                case "messages":
+                case "Quản lý tin nhắn":
+                    SetBreadcrumb(("Trang chủ", "home"), ("Quản lý tin nhắn", "messages"));
+                    // LoadMessagesView();
                     break;
                 case "Danh sách cuộc thi":
                     LoadContestView();
@@ -43,7 +66,13 @@ namespace computer_monitoring_desktop.Views
                 case "Chi tiết cuộc thi":
                     // Optionally reload details or do nothing
                     break;
-                // Add more cases as needed
+                default:
+                    // If it's an attemptId (int), reload the audit chart
+                    if (int.TryParse(key, out int attemptId))
+                    {
+                        LoadAuditChartView(attemptId);
+                    }
+                    break;
             }
         }
 
@@ -98,10 +127,36 @@ namespace computer_monitoring_desktop.Views
             ViewManager.LoadView(pnlContent, violationView);
         }
 
-        public void LoadAuditDetailView(Models.Audit.AuditAttempt attempt)
+        public void LoadAuditChartView(int attemptId)
         {
-            var auditView = new AuditDetailView(attempt);
-            ViewManager.LoadView(pnlContent, auditView);
+            var attempt = new InMemoryAuditRepository().GetAttempts().FirstOrDefault(a => a.Id == attemptId);
+            if (attempt != null)
+            {
+                SetBreadcrumb(
+                    ("Trang chủ", "home"),
+                    ("Quản lý phòng thi", "rooms"),
+                    ($"{attempt.StudentName} - {attempt.StudentCode}", attemptId)
+                );
+            }
+            
+            var logsView = new AuditLogsView(attemptId);
+            ViewManager.LoadView(pnlContent, logsView);
+        }
+
+        internal void LoadAuditChartView(Models.Audit.AuditAttempt attempt)
+        {
+            LoadAuditChartView(attempt.Id);
+        }
+        
+        // Backwards compatibility - redirect to AuditChartView
+        public void LoadAuditDetailView(int attemptId)
+        {
+            LoadAuditChartView(attemptId);
+        }
+
+        internal void LoadAuditDetailView(Models.Audit.AuditAttempt attempt)
+        {
+            LoadAuditChartView(attempt.Id);
         }
 
         public void LoadContestDetailsView(string contestId,string contestName)
@@ -149,10 +204,6 @@ namespace computer_monitoring_desktop.Views
             else pnlSidebar.Width = (int)(50 * Config.Dpi);
             btnCollapse.Toggle = !btnCollapse.Toggle;
             mnuSidebar.Collapsed = !mnuSidebar.Collapsed;
-            if (mnuSidebar.Items.Count > 0)
-            {
-                mnuSidebar.Select(mnuSidebar.Items[0]);
-            }
         }
 
         private void btnTheme_Click(object sender, EventArgs e)
@@ -185,16 +236,23 @@ namespace computer_monitoring_desktop.Views
                 switch (tag)
                 {
                     case "Dashboard":
+                        SetBreadcrumb(("Trang chủ", "home"), ("Dashboard", "Dashboard"));
                         LoadDashboardView();
                         break;
                     case "Contests":
                         LoadContestView();
                         break;
                     case "Rooms":
+                        SetBreadcrumb(("Trang chủ", "home"), ("Quản lý phòng thi", "rooms"));
                         LoadRoomManagementView();
                         break;
                     case "Violations":
+                        SetBreadcrumb(("Trang chủ", "home"), ("Quản lý vi phạm", "violations"));
                         LoadViolationView();
+                        break;
+                    case "Messages":
+                        SetBreadcrumb(("Trang chủ", "home"), ("Quản lý tin nhắn", "messages"));
+                        // LoadMessagesView(); // Add this when you have the view
                         break;
                     default:
                         break;

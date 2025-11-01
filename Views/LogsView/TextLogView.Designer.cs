@@ -33,7 +33,7 @@ namespace computer_monitoring_desktop.Views
         {
             pnlMain = new Panel();
             pnlGridCard = new AntdUI.Panel();
-            gridProcesses = new DataGridView();
+            tblProcesses = new AntdUI.Table();
             lblGridSubtitle = new AntdUI.Label();
             lblGridTitle = new AntdUI.Label();
             pnlHeader = new AntdUI.Panel();
@@ -41,7 +41,6 @@ namespace computer_monitoring_desktop.Views
             lblTitle = new AntdUI.Label();
             pnlMain.SuspendLayout();
             pnlGridCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gridProcesses).BeginInit();
             pnlHeader.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,45 +54,35 @@ namespace computer_monitoring_desktop.Views
             pnlMain.Location = new Point(0, 0);
             pnlMain.Margin = new Padding(0);
             pnlMain.Name = "pnlMain";
-            pnlMain.Padding = new Padding(42, 30, 42, 30);
-            pnlMain.Size = new Size(1825, 975);
+            pnlMain.Padding = new Padding(34, 24, 34, 24);
+            pnlMain.Size = new Size(1460, 780);
             pnlMain.TabIndex = 0;
             // 
             // pnlGridCard
             // 
             pnlGridCard.Back = Color.White;
-            pnlGridCard.Controls.Add(gridProcesses);
+            pnlGridCard.Controls.Add(tblProcesses);
             pnlGridCard.Controls.Add(lblGridSubtitle);
             pnlGridCard.Controls.Add(lblGridTitle);
             pnlGridCard.Dock = DockStyle.Fill;
-            pnlGridCard.Location = new Point(42, 180);
-            pnlGridCard.Margin = new Padding(0, 20, 0, 0);
+            pnlGridCard.Location = new Point(34, 144);
+            pnlGridCard.Margin = new Padding(0, 16, 0, 0);
             pnlGridCard.Name = "pnlGridCard";
-            pnlGridCard.Padding = new Padding(30);
+            pnlGridCard.Padding = new Padding(24);
             pnlGridCard.Radius = 12;
-            pnlGridCard.Size = new Size(1741, 765);
+            pnlGridCard.Size = new Size(1392, 612);
             pnlGridCard.TabIndex = 1;
             // 
-            // gridProcesses
+            // tblProcesses
             // 
-            gridProcesses.AllowUserToAddRows = false;
-            gridProcesses.AllowUserToDeleteRows = false;
-            gridProcesses.AllowUserToResizeRows = false;
-            gridProcesses.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridProcesses.BackgroundColor = Color.White;
-            gridProcesses.BorderStyle = BorderStyle.None;
-            gridProcesses.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            gridProcesses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridProcesses.Dock = DockStyle.Fill;
-            gridProcesses.Location = new Point(30, 150);
-            gridProcesses.Margin = new Padding(0);
-            gridProcesses.MultiSelect = false;
-            gridProcesses.Name = "gridProcesses";
-            gridProcesses.RowHeadersVisible = false;
-            gridProcesses.RowTemplate.Height = 36;
-            gridProcesses.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridProcesses.Size = new Size(1681, 585);
-            gridProcesses.TabIndex = 2;
+            tblProcesses.Dock = DockStyle.Fill;
+            tblProcesses.Gap = 12;
+            tblProcesses.Location = new Point(24, 120);
+            tblProcesses.Margin = new Padding(0);
+            tblProcesses.Name = "tblProcesses";
+            tblProcesses.ScrollBarAvoidHeader = true;
+            tblProcesses.Size = new Size(1344, 468);
+            tblProcesses.TabIndex = 2;
             // 
             // lblGridSubtitle
             // 
@@ -101,13 +90,12 @@ namespace computer_monitoring_desktop.Views
             lblGridSubtitle.Dock = DockStyle.Top;
             lblGridSubtitle.Font = new Font("Segoe UI", 10F);
             lblGridSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblGridSubtitle.Location = new Point(30, 80);
-            lblGridSubtitle.Margin = new Padding(0, 5, 0, 20);
+            lblGridSubtitle.Location = new Point(24, 64);
+            lblGridSubtitle.Margin = new Padding(0, 4, 0, 16);
             lblGridSubtitle.Name = "lblGridSubtitle";
-            lblGridSubtitle.Size = new Size(1681, 70);
+            lblGridSubtitle.Size = new Size(1344, 56);
             lblGridSubtitle.TabIndex = 1;
             lblGridSubtitle.Text = "Thong tin tien trinh se duoc cap nhat theo tung thi sinh sau khi ban lua chon.";
-            lblGridSubtitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblGridTitle
             // 
@@ -115,10 +103,10 @@ namespace computer_monitoring_desktop.Views
             lblGridTitle.Dock = DockStyle.Top;
             lblGridTitle.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold);
             lblGridTitle.ForeColor = Color.FromArgb(30, 41, 59);
-            lblGridTitle.Location = new Point(30, 30);
-            lblGridTitle.Margin = new Padding(0, 0, 0, 10);
+            lblGridTitle.Location = new Point(24, 24);
+            lblGridTitle.Margin = new Padding(0, 0, 0, 8);
             lblGridTitle.Name = "lblGridTitle";
-            lblGridTitle.Size = new Size(1681, 50);
+            lblGridTitle.Size = new Size(1344, 40);
             lblGridTitle.TabIndex = 0;
             lblGridTitle.Text = "Tien trinh dang theo doi";
             lblGridTitle.TextAlign = ContentAlignment.BottomLeft;
@@ -129,11 +117,11 @@ namespace computer_monitoring_desktop.Views
             pnlHeader.Controls.Add(lblDescription);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(42, 30);
-            pnlHeader.Margin = new Padding(0, 0, 0, 20);
+            pnlHeader.Location = new Point(34, 24);
+            pnlHeader.Margin = new Padding(0, 0, 0, 16);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Padding = new Padding(0, 0, 0, 20);
-            pnlHeader.Size = new Size(1741, 150);
+            pnlHeader.Padding = new Padding(0, 0, 0, 16);
+            pnlHeader.Size = new Size(1392, 120);
             pnlHeader.TabIndex = 0;
             // 
             // lblDescription
@@ -141,10 +129,10 @@ namespace computer_monitoring_desktop.Views
             lblDescription.BackColor = Color.Transparent;
             lblDescription.Font = new Font("Segoe UI", 11F);
             lblDescription.ForeColor = Color.FromArgb(71, 85, 105);
-            lblDescription.Location = new Point(0, 75);
+            lblDescription.Location = new Point(0, 60);
             lblDescription.Margin = new Padding(0);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(1200, 55);
+            lblDescription.Size = new Size(960, 44);
             lblDescription.TabIndex = 1;
             lblDescription.Text = "Chon thi sinh trong danh sach de xem chi tiet text log va bieu do audit.";
             lblDescription.TextAlign = ContentAlignment.TopLeft;
@@ -155,24 +143,23 @@ namespace computer_monitoring_desktop.Views
             lblTitle.Font = new Font("Segoe UI Semibold", 26F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
             lblTitle.Location = new Point(0, 0);
-            lblTitle.Margin = new Padding(0, 0, 0, 15);
+            lblTitle.Margin = new Padding(0, 0, 0, 12);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(700, 75);
+            lblTitle.Size = new Size(560, 60);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Text log";
             // 
             // TextLogView
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
             Controls.Add(pnlMain);
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "TextLogView";
-            Size = new Size(1825, 975);
+            Size = new Size(1460, 780);
             pnlMain.ResumeLayout(false);
             pnlGridCard.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gridProcesses).EndInit();
             pnlHeader.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -186,6 +173,6 @@ namespace computer_monitoring_desktop.Views
         private AntdUI.Panel pnlGridCard;
         private AntdUI.Label lblGridTitle;
         private AntdUI.Label lblGridSubtitle;
-        private DataGridView gridProcesses;
+        private AntdUI.Table tblProcesses;
     }
 }

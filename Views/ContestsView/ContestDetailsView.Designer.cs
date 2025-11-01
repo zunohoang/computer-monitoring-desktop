@@ -94,6 +94,7 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardRooms.Controls.Add(lblStatRoomsIcon);
             statCardRooms.Controls.Add(lblStatRoomsTitle);
             statCardRooms.Controls.Add(lblStatRooms);
+            statCardRooms.Location = new Point(138, 0);
             statCardRooms.Margin = new Padding(0, 0, 15, 0);
             statCardRooms.MinimumSize = new Size(280, 177);
             statCardRooms.Name = "statCardRooms";
@@ -145,6 +146,7 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardCapacity.Controls.Add(lblStatCapacityIcon);
             statCardCapacity.Controls.Add(lblStatCapacityTitle);
             statCardCapacity.Controls.Add(lblStatCapacity);
+            statCardCapacity.Location = new Point(473, 0);
             statCardCapacity.Margin = new Padding(0, 0, 15, 0);
             statCardCapacity.MinimumSize = new Size(280, 177);
             statCardCapacity.Name = "statCardCapacity";
@@ -196,6 +198,7 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardCurrent.Controls.Add(lblStatCurrentIcon);
             statCardCurrent.Controls.Add(lblStatCurrentTitle);
             statCardCurrent.Controls.Add(lblStatCurrent);
+            statCardCurrent.Location = new Point(808, 0);
             statCardCurrent.Margin = new Padding(0, 0, 15, 0);
             statCardCurrent.MinimumSize = new Size(280, 177);
             statCardCurrent.Name = "statCardCurrent";
@@ -247,6 +250,7 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardViolations.Controls.Add(lblStatViolationsIcon);
             statCardViolations.Controls.Add(lblStatViolationsTitle);
             statCardViolations.Controls.Add(lblStatViolations);
+            statCardViolations.Location = new Point(138, 197);
             statCardViolations.Margin = new Padding(0, 0, 15, 0);
             statCardViolations.MinimumSize = new Size(280, 177);
             statCardViolations.Name = "statCardViolations";
@@ -297,7 +301,6 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardsTable.Controls.Add(statCardCurrent);
             statCardsTable.Controls.Add(statCardCapacity);
             statCardsTable.Controls.Add(statCardRooms);
-            statCardsTable.AutoSize = true;
             statCardsTable.Dock = DockStyle.Top;
             statCardsTable.Gap = 16;
             statCardsTable.Location = new Point(12, 308);
@@ -309,9 +312,9 @@ namespace computer_monitoring_desktop.Views.Contests
             // 
             // lblContestName
             // 
+            lblContestName.BackColor = Color.Transparent;
             lblContestName.Dock = DockStyle.Top;
             lblContestName.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblContestName.ForeColor = Color.FromArgb(24, 24, 24);
             lblContestName.Location = new Point(27, 7);
             lblContestName.Name = "lblContestName";
             lblContestName.Size = new Size(1208, 40);
@@ -320,7 +323,6 @@ namespace computer_monitoring_desktop.Views.Contests
             // 
             // pnlContestInfo
             // 
-            pnlContestInfo.Back = Color.White;
             pnlContestInfo.BackColor = Color.Transparent;
             pnlContestInfo.BorderColor = Color.FromArgb(240, 240, 240);
             pnlContestInfo.BorderWidth = 1F;
@@ -341,7 +343,7 @@ namespace computer_monitoring_desktop.Views.Contests
             tblRooms.Bordered = true;
             tblRooms.Dock = DockStyle.Fill;
             tblRooms.Gap = 12;
-            tblRooms.Location = new Point(15, 929);
+            tblRooms.Location = new Point(15, 940);
             tblRooms.MinimumSize = new Size(900, 0);
             tblRooms.Name = "tblRooms";
             tblRooms.RowSelectedFore = Color.Black;
@@ -351,12 +353,14 @@ namespace computer_monitoring_desktop.Views.Contests
             // 
             // pgnRoomsTable
             // 
-            pgnRoomsTable.Dock = DockStyle.Bottom;
-            pgnRoomsTable.Location = new Point(14, 1184);
+            pgnRoomsTable.Dock = DockStyle.Top;
+            pgnRoomsTable.Location = new Point(14, 1195);
             pgnRoomsTable.Margin = new Padding(2);
             pgnRoomsTable.Name = "pgnRoomsTable";
             pgnRoomsTable.RightToLeft = RightToLeft.Yes;
-            pgnRoomsTable.Size = new Size(1258, 39);
+            pgnRoomsTable.ShowSizeChanger = true;
+            pgnRoomsTable.Size = new Size(1258, 50);
+            pgnRoomsTable.SizeChangerWidth = 50;
             pgnRoomsTable.TabIndex = 10;
             // 
             // spnContainer
@@ -385,7 +389,7 @@ namespace computer_monitoring_desktop.Views.Contests
             pnlRoomsHeader.BackColor = Color.Transparent;
             pnlRoomsHeader.Controls.Add(lblRoomsHeader);
             pnlRoomsHeader.Dock = DockStyle.Top;
-            pnlRoomsHeader.Location = new Point(15, 875);
+            pnlRoomsHeader.Location = new Point(15, 886);
             pnlRoomsHeader.Name = "pnlRoomsHeader";
             pnlRoomsHeader.Padding = new Padding(0, 8, 0, 8);
             pnlRoomsHeader.Size = new Size(1256, 48);
@@ -409,7 +413,9 @@ namespace computer_monitoring_desktop.Views.Contests
             pgnParticipants.Location = new Point(15, 830);
             pgnParticipants.Name = "pgnParticipants";
             pgnParticipants.RightToLeft = RightToLeft.Yes;
-            pgnParticipants.Size = new Size(1256, 39);
+            pgnParticipants.ShowSizeChanger = true;
+            pgnParticipants.Size = new Size(1256, 50);
+            pgnParticipants.SizeChangerWidth = 50;
             pgnParticipants.TabIndex = 21;
             // 
             // tblParticipants
@@ -510,7 +516,6 @@ namespace computer_monitoring_desktop.Views.Contests
             // 
             // pnlContestDetails
             // 
-            pnlContestDetails.Back = Color.White;
             pnlContestDetails.BackColor = Color.Transparent;
             pnlContestDetails.BorderColor = Color.FromArgb(240, 240, 240);
             pnlContestDetails.BorderWidth = 1F;
@@ -683,6 +688,7 @@ namespace computer_monitoring_desktop.Views.Contests
             statCardsTable.ResumeLayout(false);
             pnlContestInfo.ResumeLayout(false);
             spnContainer.ResumeLayout(false);
+            spnContainer.PerformLayout();
             pnlRoomsHeader.ResumeLayout(false);
             pnlRoomsHeader.PerformLayout();
             pnlParticipantsHeader.ResumeLayout(false);
@@ -694,11 +700,8 @@ namespace computer_monitoring_desktop.Views.Contests
 
         #endregion
 
+        // Main container and layout panels
         private AntdUI.Panel pnlAction;
-        private AntdUI.Panel pnlRoomsHeader;
-        private AntdUI.Label lblRoomsHeader;
-        private AntdUI.Table tblRooms;
-        private Pagination pgnRoomsTable;
         private StackPanel spnContainer;
         private AntdUI.Label lblContestName;
         private AntdUI.Panel pnlContestInfo;
@@ -743,5 +746,9 @@ namespace computer_monitoring_desktop.Views.Contests
         private AntdUI.Button btnExportExcel;
         private AntdUI.Button btnImportExcel;
         private AntdUI.Button btnAddParticipant;
+        private AntdUI.Table tblRooms;
+        private Pagination pgnRoomsTable;
+        private AntdUI.Panel pnlRoomsHeader;
+        private AntdUI.Label lblRoomsHeader;
     }
 }
