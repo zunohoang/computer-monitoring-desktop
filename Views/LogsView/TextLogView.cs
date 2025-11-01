@@ -1,65 +1,51 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using computer_monitoring_desktop.Models.Audit;
-using computer_monitoring_desktop.Models.Repositories;
+using computer_monitoring_desktop.Services.AuditServices;
 
 namespace computer_monitoring_desktop.Views
 {
     public partial class TextLogView : UserControl
     {
-        private AuditDataset dataset = null!;
-        private AuditAttempt attempt = null!;
-        private IReadOnlyList<AuditProcess> processes = Array.Empty<AuditProcess>();
-        private readonly HashSet<string> blacklistNames;
-        private bool isLoaded;
-
+        private readonly IAuditService? auditService;
+        // Đối với truy vấn sql nó sẽ ra bảng data table, còn lưu 1 row của bảng thì sử dụng binding list là lưu object (ở đây là class cuối file)
         private readonly BindingList<ProcessRow> processRows = new();
         private readonly BindingSource processBinding = new();
-        private readonly IAuditRepository auditRepo;
 
-        public TextLogView()
-            : this(new InMemoryAuditRepository(), new InMemoryAuditRepository().GetAttempts().First().Id)
+        private bool isLoaded;
+        // Bộ data của thí sinh đã chọn
+        private AuditDataset? currentDataset;
+        private HashSet<string>? blacklistNames;
+        
+        // Không cần constructor không tham số
+
+        internal TextLogView(IAuditService service)
         {
-        }
-
-        internal TextLogView(IAuditRepository repository)
-            : this(repository, repository.GetAttempts().First().Id)
-        {
-        }
-
-        public TextLogView(int attemptId)
-            : this(new InMemoryAuditRepository(), attemptId)
-        {
-        }
-
-        internal TextLogView(IAuditRepository repository, int attemptId)
-        {
-            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
-
+            // Again, don't know why
+            auditService = service ?? throw new ArgumentNullException(nameof(service));
             InitializeComponent();
 
-            blacklistNames = auditRepo.GetBlacklist()
-                .Select(item => item.Name.Trim().ToLowerInvariant())
-                .ToHashSet();
+            blacklistNames = auditService?.GetBlacklistNames();
 
+            // Config cho datagridview
             ConfigureGrid();
-            BindDataset(attemptId);
-
             Load += HandleLoad;
         }
 
-        internal void UpdateAttempt(AuditAttempt newAttempt)
+        private void HandleLoad(object? sender, EventArgs e)
         {
-            UpdateAttempt(newAttempt.Id);
+            isLoaded = true;
+            if (currentDataset != null)
+            {
+                UpdateHeaderText();
+                PopulateGrid();
+            }
         }
 
-        public void UpdateAttempt(int newAttemptId)
+        public void UpdateDataset(AuditDataset dataset)
         {
-            BindDataset(newAttemptId);
+            currentDataset = dataset ?? throw new ArgumentNullException(nameof(dataset));
+            blacklistNames = auditService?.GetBlacklistNames();
+
             if (isLoaded)
             {
                 UpdateHeaderText();
@@ -67,25 +53,14 @@ namespace computer_monitoring_desktop.Views
             }
         }
 
-        private void HandleLoad(object? sender, EventArgs e)
-        {
-            isLoaded = true;
-            UpdateHeaderText();
-            PopulateGrid();
-        }
-
-        private void BindDataset(int attemptId)
-        {
-            dataset = auditRepo.GetDataset(attemptId);
-            attempt = dataset.Attempt;
-            processes = dataset.Processes;
-        }
-
         private void UpdateHeaderText()
         {
+            if (currentDataset == null) return;
+
+            var attempt = currentDataset.Attempt;
             lblTitle.Text = $"Text log - {attempt.StudentName}";
-            lblDescription.Text = $"MSSV: {attempt.StudentCode} | May tram: {attempt.MachineName} | Phong: {attempt.RoomCode} | Ky thi: {attempt.ContestName}";
-            lblGridTitle.Text = "Tien trinh dang theo doi";
+            lblDescription.Text = $"MSSV: {attempt.StudentCode} | Máy trạm: {attempt.MachineName} | Phòng: {attempt.RoomCode} | Kỳ thi: {attempt.ContestName}";
+            lblGridTitle.Text = "Tiến trình đang theo dõi";
         }
 
         private void ConfigureGrid()
@@ -115,6 +90,7 @@ namespace computer_monitoring_desktop.Views
             gridProcesses.DefaultCellStyle.SelectionForeColor = Color.FromArgb(30, 41, 59);
             gridProcesses.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 250, 252);
 
+            // Gọi hàm sau mỗi lần bind data xong (để format lại giao diện)
             gridProcesses.DataBindingComplete += GridProcesses_DataBindingComplete;
         }
 
@@ -132,15 +108,20 @@ namespace computer_monitoring_desktop.Views
 
         private void PopulateGrid()
         {
+            if (currentDataset == null) return;
+
+            var attempt = currentDataset.Attempt;
+            var processes = currentDataset.Processes;
+            // Tắt raise event (kiểu event mà indexchange,... thì sự kiện kích hoạt) cho đến khi update xong bindinglist
             processRows.RaiseListChangedEvents = false;
             processRows.Clear();
 
-            foreach (var process in processes
-                         .OrderByDescending(p => string.Equals(p.Status, "running", StringComparison.OrdinalIgnoreCase))
-                         .ThenBy(p => p.EndTime ?? DateTime.MaxValue)
-                         .ThenBy(p => p.StartTime))
+            // Sắp xếp lại row theo dạng:
+            // Running thì lên trước, sau đó đến endtime lớn hơn (vừa tắt), cuối cùng là giảm dần của starttime
+            var orderedProcesses = auditService?.GetOrderedProcesses(attempt.Id);
+            foreach (var process in orderedProcesses)
             {
-                processRows.Add(new ProcessRow(process, blacklistNames.Contains(process.Name.Trim().ToLowerInvariant())));
+                processRows.Add(new ProcessRow(process, blacklistNames?.Contains(process.Name.Trim().ToLowerInvariant()) ?? false ));
             }
 
             processRows.RaiseListChangedEvents = true;
@@ -148,8 +129,8 @@ namespace computer_monitoring_desktop.Views
             gridProcesses.ClearSelection();
 
             lblGridSubtitle.Text = processRows.Count > 0
-                ? $"Co {processRows.Count} tien trinh duoc ghi nhan tren may {attempt.MachineName}."
-                : $"Khong co tien trinh nao duoc ghi nhan tren may {attempt.MachineName}.";
+                ? $"Có {processRows.Count} tiến trình được ghi nhận trên máy {attempt.MachineName}."
+                : $"Không có tiến trình nào được ghi nhận trên máy {attempt.MachineName}.";
         }
 
         private void GridProcesses_DataBindingComplete(object? sender, DataGridViewBindingCompleteEventArgs e)
@@ -189,6 +170,7 @@ namespace computer_monitoring_desktop.Views
             }
         }
 
+        // Class không bị kế thừa, không ai biết, chú giấu kỹ quá..., nó là 1 cách để cấu trúc class mang tính đóng gói
         private sealed class ProcessRow
         {
             public ProcessRow(AuditProcess process, bool isBlacklisted)
@@ -210,9 +192,9 @@ namespace computer_monitoring_desktop.Views
             public bool IsRunning { get; }
             public bool IsBlacklisted { get; }
 
-            public string StatusDisplay => IsRunning ? "Dang chay" : Status;
+            public string StatusDisplay => IsRunning ? "Đang chạy" : Status;
             public string StartDisplay => StartTime.ToString("HH:mm:ss dd/MM");
-            public string EndDisplay => EndTime.HasValue ? EndTime.Value.ToString("HH:mm:ss dd/MM") : "Dang chay";
+            public string EndDisplay => EndTime.HasValue ? EndTime.Value.ToString("HH:mm:ss dd/MM") : "Đang chạy";
             public string DurationDisplay
             {
                 get
@@ -227,10 +209,10 @@ namespace computer_monitoring_desktop.Views
 
                     if (duration.TotalHours < 1)
                     {
-                        return $"{duration.TotalMinutes:F0} phut";
+                        return $"{duration.TotalMinutes:F0} phút";
                     }
 
-                    return $"{duration.TotalHours:F1} gio";
+                    return $"{duration.TotalHours:F1} giờ";
                 }
             }
         }

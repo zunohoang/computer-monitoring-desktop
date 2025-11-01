@@ -1,71 +1,51 @@
+using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories;
+using computer_monitoring_desktop.Services.AuditServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
-using computer_monitoring_desktop.Models.Audit;
-using computer_monitoring_desktop.Models.Repositories;
 
 namespace computer_monitoring_desktop.Views
 {
     public partial class AuditChartView : UserControl
     {
-        private AuditDataset dataset = null!;
-        private AuditAttempt attempt = null!;
-        private IReadOnlyList<AuditProcess> processes = Array.Empty<AuditProcess>();
-        private IReadOnlyList<AuditLogEntry> logs = Array.Empty<AuditLogEntry>();
-        private readonly HashSet<string> blacklistNames;
-        private bool isLoaded;
+        private readonly IAuditService auditService;
         private (DateTime Start, DateTime End) timelineRange;
+
+        private bool isLoaded;
+
+        private AuditDataset? currentDataset;
+        private HashSet<string> blacklistNames = new();
 
         private AntdUI.Label summaryTotalProcesses = null!;
         private AntdUI.Label summaryRunningProcesses = null!;
         private AntdUI.Label summaryAlerts = null!;
         private AntdUI.Label summaryLogs = null!;
 
-        private readonly IAuditRepository auditRepo;
-
-        public AuditChartView()
-            : this(new InMemoryAuditRepository(), new InMemoryAuditRepository().GetAttempts().First().Id)
+        internal AuditChartView(IAuditService service)
         {
-        }
-
-        internal AuditChartView(IAuditRepository repository)
-            : this(repository, repository.GetAttempts().First().Id)
-        {
-        }
-
-        public AuditChartView(int attemptId)
-            : this(new InMemoryAuditRepository(), attemptId)
-        {
-        }
-
-        internal AuditChartView(IAuditRepository repository, int attemptId)
-        {
-            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
-
+            auditService = service ?? throw new ArgumentNullException(nameof(service));
             InitializeComponent();
 
-            blacklistNames = auditRepo.GetBlacklist()
-                .Select(item => item.Name.Trim().ToLowerInvariant())
-                .ToHashSet();
-
             BuildSummaryCards();
-            BindDataset(attemptId);
 
             Load += HandleLoad;
             flpTimeline.SizeChanged += (_, __) => ResizeTimelineRows();
         }
 
-        internal void UpdateAttempt(AuditAttempt newAttempt)
+        internal void UpdateDataset(AuditDataset dataset)
         {
-            UpdateAttempt(newAttempt.Id);
-        }
+            currentDataset = dataset ?? throw new ArgumentNullException(nameof(dataset));
 
-        public void UpdateAttempt(int newAttemptId)
-        {
-            BindDataset(newAttemptId);
+            timelineRange = (
+                dataset.Processes.Min(p => p.StartTime),
+                dataset.Processes.Max(p => p.EndTime ?? DateTime.Now)
+                );
+
             if (isLoaded)
             {
                 UpdateHeaderText();
@@ -76,24 +56,21 @@ namespace computer_monitoring_desktop.Views
         private void HandleLoad(object? sender, EventArgs e)
         {
             isLoaded = true;
-            UpdateHeaderText();
-            RenderData();
-        }
-
-        private void BindDataset(int attemptId)
-        {
-            dataset = auditRepo.GetDataset(attemptId);
-            attempt = dataset.Attempt;
-            processes = dataset.Processes;
-            logs = dataset.Logs;
-            timelineRange = auditRepo.GetTimelineRange(attempt.Id);
+            if (currentDataset != null)
+            {
+                UpdateHeaderText();
+                RenderData();
+            }
         }
 
         private void UpdateHeaderText()
         {
+            if (currentDataset == null) return;
+
+            var attempt = currentDataset.Attempt;
             lblTitle.Text = $"Audit chart - {attempt.StudentName}";
-            lblDescription.Text = $"MSSV: {attempt.StudentCode} | May tram: {attempt.MachineName} | Phong: {attempt.RoomCode} | Ky thi: {attempt.ContestName}";
-            lblTimelineTitle.Text = $"Timeline tien trinh (tu {timelineRange.Start:HH:mm:ss dd/MM} den {timelineRange.End:HH:mm:ss dd/MM})";
+            lblDescription.Text = $"MSSV: {attempt.StudentCode} | Máy trạm: {attempt.MachineName} | Phòng: {attempt.RoomCode} | Kỳ thi: {attempt.ContestName}";
+            lblTimelineTitle.Text = $"Timeline tiến trình (từ {timelineRange.Start:HH:mm:ss dd/MM} đến {timelineRange.End:HH:mm:ss dd/MM})";
         }
 
         private void RenderData()
@@ -105,33 +82,45 @@ namespace computer_monitoring_desktop.Views
 
         private void UpdateSummary()
         {
+            if (currentDataset == null) return;
+
+            var processes = currentDataset.Processes;
+            var logs = currentDataset.Logs;
             summaryTotalProcesses.Text = processes.Count.ToString();
-            summaryRunningProcesses.Text = processes.Count(p =>
-                string.Equals(p.Status, "running", StringComparison.OrdinalIgnoreCase)).ToString();
+            summaryRunningProcesses.Text = processes.Count(p => string.Equals(p.Status, "running", StringComparison.OrdinalIgnoreCase)).ToString();
             summaryAlerts.Text = logs.Count(l => l.AlertId > 0).ToString();
             summaryLogs.Text = logs.Count.ToString();
         }
 
+        // Render phần trục ngang (title row)
         private void RenderAxis()
         {
-            lblAxisStart.Text = $"Bat dau: {timelineRange.Start:HH:mm:ss dd/MM}";
+            lblAxisStart.Text = $"Bắt đầu: {timelineRange.Start:HH:mm:ss dd/MM}";
             var midpoint = timelineRange.Start + TimeSpan.FromTicks((timelineRange.End - timelineRange.Start).Ticks / 2);
-            lblAxisMid.Text = $"Giua: {midpoint:HH:mm:ss dd/MM}";
-            lblAxisEnd.Text = $"Ket thuc: {timelineRange.End:HH:mm:ss dd/MM}";
+            lblAxisMid.Text = $"Giữa: {midpoint:HH:mm:ss dd/MM}";
+            lblAxisEnd.Text = $"Kết thúc: {timelineRange.End:HH:mm:ss dd/MM}";
         }
 
+        // Render các row
         private void RenderTimeline()
         {
+            if (currentDataset == null) return;
+
+            var processes = currentDataset.Processes;
+            var logs = currentDataset.Logs;
+
+            // Sú
             flpTimeline.SuspendLayout();
             flpTimeline.Controls.Clear();
 
             if (processes.Count == 0)
             {
-                flpTimeline.Controls.Add(CreateEmptyState("Chua co du lieu timeline nao duoc ghi nhan."));
+                flpTimeline.Controls.Add(CreateEmptyState("Chưa có dữ liệu timeline nào được ghi nhận."));
                 flpTimeline.ResumeLayout();
                 return;
             }
 
+            // Sắp xếp thứ tự row giống bên text: running -> endtime -> starttime
             var ordered = processes
                 .OrderByDescending(p => string.Equals(p.Status, "running", StringComparison.OrdinalIgnoreCase))
                 .ThenBy(p => p.EndTime ?? DateTime.MaxValue)
@@ -243,6 +232,8 @@ namespace computer_monitoring_desktop.Views
             };
         }
 
+        // Class tính toán và định kiểu cho 1 datagridview row 
+        // Nếu thấy bị lệch thì đố ông biết ở đâu trong đoạn dưới này đấy
         private sealed class TimelineRowControl : Control
         {
             private const int NameColumnWidth = 220;
@@ -272,6 +263,7 @@ namespace computer_monitoring_desktop.Views
             {
                 base.OnPaint(e);
 
+                // Khử răng cưa, lag thì tắt cái này đi vậy
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 e.Graphics.Clear(Color.White);
 

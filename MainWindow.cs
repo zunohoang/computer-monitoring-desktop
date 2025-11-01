@@ -98,15 +98,10 @@ namespace computer_monitoring_desktop.Views
             ViewManager.LoadView(pnlContent, violationView);
         }
 
-        public void LoadAuditDetailView(int attemptId)
+        public void LoadAuditDetailView(Models.Audit.AuditAttempt attempt)
         {
-            var detailView = new AuditDetailView(attemptId);
-            ViewManager.LoadView(pnlContent, detailView);
-        }
-
-        internal void LoadAuditDetailView(Models.Audit.AuditAttempt attempt)
-        {
-            LoadAuditDetailView(attempt.Id);
+            var auditView = new AuditDetailView(attempt);
+            ViewManager.LoadView(pnlContent, auditView);
         }
 
         public void LoadContestDetailsView(string contestId,string contestName)

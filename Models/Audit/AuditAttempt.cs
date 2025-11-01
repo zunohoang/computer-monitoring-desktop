@@ -1,6 +1,6 @@
 namespace computer_monitoring_desktop.Models.Audit
 {
-    internal class AuditAttempt
+    public class AuditAttempt
     {
         public int Id { get; set; }
         public string StudentCode { get; set; } = string.Empty;

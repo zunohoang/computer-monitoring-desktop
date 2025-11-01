@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using AntdUI;
 using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Models.Contest;
 
-namespace computer_monitoring_desktop.Services
+namespace computer_monitoring_desktop.Services.Contest
 {
     public class ContestDetailsService
     {

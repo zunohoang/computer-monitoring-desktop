@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
-using computer_monitoring_desktop.Services;
+using computer_monitoring_desktop.Services.Contest;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -29,14 +29,14 @@ namespace computer_monitoring_desktop.Views
         {
             // Use ContestService to load contests
             var contests = contestService.GetAllContests();
-            allContests = contests.Select(c => (
-                c.Id,
-                c.Name,
-                c.Description,
-                c.StartTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.EndTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.Status
-            )).ToList();
+            //allContests = contests.Select(c => (
+            //    c.Id,
+            //    c.Name,
+            //    c.Description,
+            //    c.StartTime.ToString("HH:mm:ss dd/MM/yyyy"),
+            //    c.EndTime.ToString("HH:mm:ss dd/MM/yyyy"),
+            //    c.Status
+            //)).ToList();
             totalPages = (int)Math.Ceiling(allContests.Count / (double)pageSize);
         }
 

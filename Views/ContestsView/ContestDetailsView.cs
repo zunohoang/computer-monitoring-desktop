@@ -12,6 +12,7 @@ using computer_monitoring_desktop.Models;
 using computer_monitoring_desktop.Models.Contest;
 using computer_monitoring_desktop.Models.Rooms;
 using computer_monitoring_desktop.Services;
+using computer_monitoring_desktop.Services.Contest;
 
 namespace computer_monitoring_desktop.Views.Contests
 {

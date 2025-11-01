@@ -34,11 +34,13 @@ namespace computer_monitoring_desktop.Views
             pnlMain = new Panel();
             pnlContentHost = new Panel();
             pnlHeader = new AntdUI.Panel();
-            btnChart = new AntdUI.Button();
             btnBack = new AntdUI.Button();
+            flowPanel1 = new AntdUI.FlowPanel();
             btnText = new AntdUI.Button();
+            btnChart = new AntdUI.Button();
             pnlMain.SuspendLayout();
             pnlHeader.SuspendLayout();
+            flowPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlMain
@@ -67,50 +69,69 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlHeader
             // 
-            pnlHeader.Back = Color.White;
-            pnlHeader.Controls.Add(btnChart);
+            pnlHeader.BackColor = Color.FromArgb(248, 249, 251);
             pnlHeader.Controls.Add(btnBack);
-            pnlHeader.Controls.Add(btnText);
+            pnlHeader.Controls.Add(flowPanel1);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(32, 24);
             pnlHeader.Margin = new Padding(0, 0, 0, 24);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(28, 24, 28, 24);
-            pnlHeader.Radius = 12;
+            pnlHeader.Radius = 0;
             pnlHeader.Size = new Size(1761, 56);
             pnlHeader.TabIndex = 0;
             // 
-            // btnChart
-            // 
-            btnChart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnChart.Location = new Point(1641, 6);
-            btnChart.Margin = new Padding(8, 0, 0, 0);
-            btnChart.Name = "btnChart";
-            btnChart.Size = new Size(120, 40);
-            btnChart.TabIndex = 1;
-            btnChart.Text = "Audit chart";
-            // 
             // btnBack
             // 
+            btnBack.BorderWidth = 1F;
             btnBack.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnBack.IconSvg = "ArrowLeftOutlined";
-            btnBack.Location = new Point(0, 0);
-            btnBack.Margin = new Padding(0, 0, 0, 12);
+            btnBack.Location = new Point(44, 0);
+            btnBack.Margin = new Padding(0);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(120, 44);
+            btnBack.Size = new Size(134, 56);
             btnBack.TabIndex = 0;
             btnBack.Text = "Back";
             // 
+            // flowPanel1
+            // 
+            flowPanel1.Align = AntdUI.TAlignFlow.RightCenter;
+            flowPanel1.Anchor = AnchorStyles.Right;
+            flowPanel1.BackColor = Color.White;
+            flowPanel1.Controls.Add(btnText);
+            flowPanel1.Controls.Add(btnChart);
+            flowPanel1.Location = new Point(1394, 3);
+            flowPanel1.Name = "flowPanel1";
+            flowPanel1.Size = new Size(336, 53);
+            flowPanel1.TabIndex = 2;
+            flowPanel1.Text = "flowPanel1";
+            // 
             // btnText
             // 
+            btnText.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnText.Location = new Point(1513, 6);
+            btnText.IconSvg = "FileTextOutlined";
+            btnText.Location = new Point(2, 0);
             btnText.Margin = new Padding(0);
             btnText.Name = "btnText";
-            btnText.Size = new Size(120, 40);
+            btnText.Size = new Size(165, 56);
             btnText.TabIndex = 0;
             btnText.Text = "Text log";
             btnText.Type = AntdUI.TTypeMini.Primary;
+            // 
+            // btnChart
+            // 
+            btnChart.BorderWidth = 1F;
+            btnChart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnChart.IconSvg = "BarChartOutlined";
+            flowPanel1.SetIndex(btnChart, 4);
+            btnChart.Location = new Point(167, 0);
+            btnChart.Margin = new Padding(0);
+            btnChart.Name = "btnChart";
+            btnChart.Padding = new Padding(3, 0, 3, 0);
+            btnChart.Size = new Size(169, 56);
+            btnChart.TabIndex = 1;
+            btnChart.Text = "Audit chart";
             // 
             // AuditDetailView
             // 
@@ -123,6 +144,7 @@ namespace computer_monitoring_desktop.Views
             Size = new Size(1825, 975);
             pnlMain.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
+            flowPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -134,5 +156,6 @@ namespace computer_monitoring_desktop.Views
         private Panel pnlContentHost;
         private AntdUI.Button btnChart;
         private AntdUI.Button btnText;
+        private AntdUI.FlowPanel flowPanel1;
     }
 }

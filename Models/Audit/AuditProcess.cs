@@ -2,7 +2,7 @@ using System;
 
 namespace computer_monitoring_desktop.Models.Audit
 {
-    internal class AuditProcess
+    public class AuditProcess
     {
         public int Id { get; set; }
         public int Pid { get; set; }

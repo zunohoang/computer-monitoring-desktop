@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
 using computer_monitoring_desktop.Data;
 using computer_monitoring_desktop.Models.Audit;
 using computer_monitoring_desktop.Models.Rooms;
 
-namespace computer_monitoring_desktop.Models.Repositories
+namespace computer_monitoring_desktop.Models.Repositories.Room
 {
-    internal class InMemoryRoomRepository : IRoomRepository
+    public class InMemoryRoomRepository : IRoomRepository
     {
         public IReadOnlyList<ExamRoom> GetRooms() => DataClass.ExamRooms;
         public ExamRoom? GetRoom(int roomId) => DataClass.ExamRooms.FirstOrDefault(r => r.Id == roomId);

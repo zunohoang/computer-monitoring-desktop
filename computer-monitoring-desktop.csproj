@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Models\Repositories\Attempt\" />
+    <Folder Include="Models\Repositories\User\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
