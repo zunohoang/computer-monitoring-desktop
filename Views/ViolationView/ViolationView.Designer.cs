@@ -31,6 +31,7 @@
             pnl_main = new AntdUI.Panel();
             pnl_content = new AntdUI.Panel();
             tbl_violation = new AntdUI.Table();
+            pgnViolations = new AntdUI.Pagination();
             slt_allLevel = new AntdUI.Select();
             slt_allStatus = new AntdUI.Select();
             pnl_notification = new AntdUI.Panel();
@@ -67,6 +68,7 @@
             // pnl_content
             // 
             pnl_content.Controls.Add(tbl_violation);
+            pnl_content.Controls.Add(pgnViolations);
             pnl_content.Controls.Add(slt_allLevel);
             pnl_content.Controls.Add(slt_allStatus);
             pnl_content.Dock = DockStyle.Fill;
@@ -80,14 +82,25 @@
             // tbl_violation
             // 
             tbl_violation.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tbl_violation.BackColor = Color.White;
             tbl_violation.Gap = 12;
             tbl_violation.Location = new Point(58, 142);
             tbl_violation.Name = "tbl_violation";
-            tbl_violation.Size = new Size(1770, 349);
+            tbl_violation.Size = new Size(1770, 299);
             tbl_violation.TabIndex = 2;
             tbl_violation.Text = "table1";
             tbl_violation.CellClick += table_violation_CellClick;
+            // 
+            // pgnViolations
+            // 
+            pgnViolations.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            pgnViolations.Location = new Point(1400, 450);
+            pgnViolations.Name = "pgnViolations";
+            pgnViolations.PageSize = 10;
+            pgnViolations.RightToLeft = RightToLeft.Yes;
+            pgnViolations.ShowSizeChanger = true;
+            pgnViolations.SizeChangerWidth = 50;
+            pgnViolations.Size = new Size(428, 40);
+            pgnViolations.TabIndex = 3;
             // 
             // slt_allLevel
             // 
@@ -124,7 +137,6 @@
             // pnl_totalviolations
             // 
             pnl_totalviolations.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pnl_totalviolations.BackColor = Color.White;
             pnl_totalviolations.BorderWidth = 1F;
             pnl_totalviolations.Controls.Add(lbl_violationNumber);
             pnl_totalviolations.Controls.Add(lbl_violation);
@@ -165,7 +177,6 @@
             // 
             // pnl_condition
             // 
-            pnl_condition.BackColor = Color.White;
             pnl_condition.BorderWidth = 1F;
             pnl_condition.Controls.Add(lbl_conditionNumber);
             pnl_condition.Controls.Add(lbl_condition);
@@ -207,7 +218,6 @@
             // pnl_level
             // 
             pnl_level.Anchor = AnchorStyles.Top;
-            pnl_level.BackColor = Color.White;
             pnl_level.BorderWidth = 1F;
             pnl_level.Controls.Add(lbl_levelNumber);
             pnl_level.Controls.Add(lbl_level);
@@ -248,7 +258,6 @@
             // 
             // phd_title
             // 
-            phd_title.BackColor = Color.White;
             phd_title.Dock = DockStyle.Top;
             phd_title.Font = new Font("Segoe UI", 11.1F, FontStyle.Regular, GraphicsUnit.Point, 0);
             phd_title.Location = new Point(0, 0);
@@ -291,6 +300,7 @@
         private AntdUI.Label lbl_level;
         private AntdUI.Panel pnl_content;
         private AntdUI.Table tbl_violation;
+        private AntdUI.Pagination pgnViolations;
         private AntdUI.Select slt_allLevel;
         private AntdUI.Select slt_allStatus;
     }

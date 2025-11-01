@@ -28,47 +28,7 @@ namespace computer_monitoring_desktop.Data
                 Description = "Kỳ thi Olympic Tin học sinh viên toàn quốc lần thứ 32",
                 Status = "Đã kết thúc",
                 StartTime = ParseDate("08:00:00 20/10/2024"),
-                EndTime = ParseDate("12:00:00 20/10/2024"),
-                Creator = "Nguyễn Văn Admin",
-                CreatedAt = ParseDate("10:00:00 1/10/2024"),
-                TotalRooms = 2,
-                TotalCapacity = 55,
-                CurrentParticipants = 48,
-                Violations = 12,
-                Participants = new List<Participant>
-                {
-                    new Participant { StudentId = "20210001", Name = "Nguyễn Văn A" },
-                    new Participant { StudentId = "20210002", Name = "Trần Thị B" },
-                    new Participant { StudentId = "20210003", Name = "Lê Minh C" },
-                    new Participant { StudentId = "20210004", Name = "Phạm Gia D" },
-                    new Participant { StudentId = "20210005", Name = "Hoàng Thu E" },
-                    new Participant { StudentId = "20210006", Name = "Vũ Văn F" },
-                    new Participant { StudentId = "20210007", Name = "Đặng Thị G" },
-                    new Participant { StudentId = "20210008", Name = "Mai Văn H" },
-                    new Participant { StudentId = "20210009", Name = "Bùi Thị I" },
-                    new Participant { StudentId = "20210010", Name = "Dương Văn K" },
-                },
-                Rooms = new List<ExamRoom>
-                {
-                    new ExamRoom 
-                    { 
-                        Id = 101,
-                        AccessCode = "ROOM001",
-                        Name = "Phòng 101 - Dãy A",
-                        Capacity = 30,
-                        ContestName = "Olympic Tin học 2024",
-                        AutoApprove = true
-                    },
-                    new ExamRoom 
-                    { 
-                        Id = 102,
-                        AccessCode = "ROOM002",
-                        Name = "Phòng 202 - Dãy B",
-                        Capacity = 25,
-                        ContestName = "Olympic Tin học 2024",
-                        AutoApprove = false
-                    },
-                }
+                EndTime = ParseDate("12:00:00 20/10/2024")
             },
             new Contest 
             { 
@@ -77,51 +37,7 @@ namespace computer_monitoring_desktop.Data
                 Description = "Kỳ thi giữa kỳ môn Lập trình cơ bản cho sinh viên K68",
                 Status = "Đang diễn ra",
                 StartTime = ParseDate("14:00:00 1/11/2024"),
-                EndTime = ParseDate("16:00:00 1/11/2024"),
-                Creator = "Trần Văn Giáo viên",
-                CreatedAt = ParseDate("09:00:00 25/10/2024"),
-                TotalRooms = 3,
-                TotalCapacity = 75,
-                CurrentParticipants = 62,
-                Violations = 5,
-                Participants = new List<Participant>
-                {
-                    new Participant { StudentId = "20220001", Name = "Lê Thị L" },
-                    new Participant { StudentId = "20220002", Name = "Ngô Văn M" },
-                    new Participant { StudentId = "20220003", Name = "Võ Thị N" },
-                    new Participant { StudentId = "20220004", Name = "Phan Văn O" },
-                    new Participant { StudentId = "20220005", Name = "Đinh Thị P" },
-                },
-                Rooms = new List<ExamRoom>
-                {
-                    new ExamRoom 
-                    { 
-                        Id = 103,
-                        AccessCode = "ROOM003",
-                        Name = "Phòng 203 - Dãy B",
-                        Capacity = 25,
-                        ContestName = "Kỳ thi Lập trình cơ bản K68",
-                        AutoApprove = true
-                    },
-                    new ExamRoom 
-                    { 
-                        Id = 104,
-                        AccessCode = "ROOM004",
-                        Name = "Phòng 204 - Dãy B",
-                        Capacity = 25,
-                        ContestName = "Kỳ thi Lập trình cơ bản K68",
-                        AutoApprove = true
-                    },
-                    new ExamRoom 
-                    { 
-                        Id = 105,
-                        AccessCode = "ROOM005",
-                        Name = "Phòng 301 - Dãy C",
-                        Capacity = 25,
-                        ContestName = "Kỳ thi Lập trình cơ bản K68",
-                        AutoApprove = false
-                    },
-                }
+                EndTime = ParseDate("16:00:00 1/11/2024")
             },
             new Contest 
             { 
@@ -130,32 +46,7 @@ namespace computer_monitoring_desktop.Data
                 Description = "Cuộc thi lập trình 24h - Sáng tạo ứng dụng AI",
                 Status = "Sắp diễn ra",
                 StartTime = ParseDate("08:00:00 15/11/2024"),
-                EndTime = ParseDate("08:00:00 16/11/2024"),
-                Creator = "Phạm Thị Tổ chức",
-                CreatedAt = ParseDate("15:00:00 1/11/2024"),
-                TotalRooms = 1,
-                TotalCapacity = 40,
-                CurrentParticipants = 35,
-                Violations = 0,
-                Participants = new List<Participant>
-                {
-                    new Participant { StudentId = "20210011", Name = "Trương Văn Q" },
-                    new Participant { StudentId = "20210012", Name = "Lý Thị R" },
-                    new Participant { StudentId = "20210013", Name = "Huỳnh Văn S" },
-                    new Participant { StudentId = "20210014", Name = "Tô Thị T" },
-                },
-                Rooms = new List<ExamRoom>
-                {
-                    new ExamRoom 
-                    { 
-                        Id = 106,
-                        AccessCode = "LAB301",
-                        Name = "Phòng Lab - Tầng 3",
-                        Capacity = 40,
-                        ContestName = "Hackathon 2024",
-                        AutoApprove = false
-                    },
-                }
+                EndTime = ParseDate("08:00:00 16/11/2024")
             },
         };
 
@@ -283,6 +174,99 @@ namespace computer_monitoring_desktop.Data
             new ExamRoom { Id = 101, AccessCode = "ROOM001", Name = "Phong 101 - Day A", Capacity = 30, ContestName = "Ky thi Olympic Tin hoc 2024", AutoApprove = true },
             new ExamRoom { Id = 102, AccessCode = "ROOM002", Name = "Phong 202 - Day B", Capacity = 25, ContestName = "Ky thi Lap trinh co ban K68", AutoApprove = false },
             new ExamRoom { Id = 103, AccessCode = "ROOM003", Name = "Phong Lab - Tang 3", Capacity = 20, ContestName = "Hackathon 2024", AutoApprove = true },
+        };
+
+        internal static readonly IReadOnlyList<ContestDetails> ContestDetailsList = new List<ContestDetails>
+        {
+            new ContestDetails
+            {
+                Id = "1",
+                Name = "Olympic Tin học 2024",
+                Status = "Đã kết thúc",
+                Description = "Kỳ thi Olympic Tin học sinh viên toàn quốc lần thứ 32",
+                StartTime = "08:00:00 20/10/2024",
+                EndTime = "12:00:00 20/10/2024",
+                Creator = "GS. Nguyễn Văn A",
+                CreatedAt = "15/09/2024",
+                TotalRooms = 3,
+                TotalCapacity = 75,
+                CurrentParticipants = 68,
+                MaxParticipants = 75,
+                Violations = 12,
+                Participants = new List<Participant>
+                {
+                    new Participant { Id = "1", StudentId = "20210001", Name = "Nguyễn Văn An" },
+                    new Participant { Id = "2", StudentId = "20210002", Name = "Trần Thị Bình" },
+                    new Participant { Id = "3", StudentId = "20210003", Name = "Lê Minh Châu" },
+                    new Participant { Id = "4", StudentId = "20210004", Name = "Phạm Gia Đức" },
+                    new Participant { Id = "5", StudentId = "20210005", Name = "Hoàng Thu Hà" },
+                    new Participant { Id = "6", StudentId = "20210006", Name = "Vũ Thành Long" },
+                    new Participant { Id = "7", StudentId = "20210007", Name = "Đỗ Minh Quân" },
+                    new Participant { Id = "8", StudentId = "20210008", Name = "Bùi Hải Yến" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom { Id = 101, AccessCode = "ROOM001", Name = "Phong 101 - Day A", Capacity = 30, ContestName = "Olympic Tin học 2024", AutoApprove = true },
+                    new ExamRoom { Id = 104, AccessCode = "ROOM004", Name = "Phong 102 - Day A", Capacity = 25, ContestName = "Olympic Tin học 2024", AutoApprove = true },
+                    new ExamRoom { Id = 105, AccessCode = "ROOM005", Name = "Phong 103 - Day A", Capacity = 20, ContestName = "Olympic Tin học 2024", AutoApprove = false },
+                }
+            },
+            new ContestDetails
+            {
+                Id = "2",
+                Name = "Kỳ thi Lập trình cơ bản K68",
+                Status = "Đang diễn ra",
+                Description = "Kỳ thi giữa kỳ môn Lập trình cơ bản cho sinh viên K68",
+                StartTime = "14:00:00 1/11/2024",
+                EndTime = "16:00:00 1/11/2024",
+                Creator = "TS. Trần Văn B",
+                CreatedAt = "20/10/2024",
+                TotalRooms = 2,
+                TotalCapacity = 50,
+                CurrentParticipants = 45,
+                MaxParticipants = 50,
+                Violations = 3,
+                Participants = new List<Participant>
+                {
+                    new Participant { Id = "9", StudentId = "20220001", Name = "Ngô Văn Tùng" },
+                    new Participant { Id = "10", StudentId = "20220002", Name = "Lý Thị Mai" },
+                    new Participant { Id = "11", StudentId = "20220003", Name = "Đinh Hoàng Nam" },
+                    new Participant { Id = "12", StudentId = "20220004", Name = "Cao Thu Phương" },
+                    new Participant { Id = "13", StudentId = "20220005", Name = "Dương Minh Tuấn" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom { Id = 102, AccessCode = "ROOM002", Name = "Phong 202 - Day B", Capacity = 25, ContestName = "Kỳ thi Lập trình cơ bản K68", AutoApprove = false },
+                    new ExamRoom { Id = 106, AccessCode = "ROOM006", Name = "Phong 203 - Day B", Capacity = 25, ContestName = "Kỳ thi Lập trình cơ bản K68", AutoApprove = true },
+                }
+            },
+            new ContestDetails
+            {
+                Id = "3",
+                Name = "Hackathon 2024",
+                Status = "Sắp diễn ra",
+                Description = "Cuộc thi lập trình 24h - Sáng tạo ứng dụng AI",
+                StartTime = "08:00:00 15/11/2024",
+                EndTime = "08:00:00 16/11/2024",
+                Creator = "PGS. Lê Thị C",
+                CreatedAt = "25/10/2024",
+                TotalRooms = 1,
+                TotalCapacity = 20,
+                CurrentParticipants = 18,
+                MaxParticipants = 20,
+                Violations = 0,
+                Participants = new List<Participant>
+                {
+                    new Participant { Id = "14", StudentId = "20230001", Name = "Trịnh Văn Hùng" },
+                    new Participant { Id = "15", StudentId = "20230002", Name = "Phan Thị Lan" },
+                    new Participant { Id = "16", StudentId = "20230003", Name = "Võ Minh Khôi" },
+                    new Participant { Id = "17", StudentId = "20230004", Name = "Hồ Thu Trang" },
+                },
+                Rooms = new List<ExamRoom>
+                {
+                    new ExamRoom { Id = 103, AccessCode = "ROOM003", Name = "Phong Lab - Tang 3", Capacity = 20, ContestName = "Hackathon 2024", AutoApprove = true },
+                }
+            }
         };
 
         internal static DateTime ParseDate(string value)

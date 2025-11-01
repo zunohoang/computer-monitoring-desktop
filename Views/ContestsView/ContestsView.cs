@@ -3,313 +3,136 @@ using System.Drawing;
 using System.Windows.Forms;
 using AntdUI;
 using computer_monitoring_desktop.Services;
+using computer_monitoring_desktop.Models.Contest;
+using System.ComponentModel;
 
 namespace computer_monitoring_desktop.Views
 {
     public partial class ContestView : UserControl
     {
-
-        // Pagination state
-        private int currentPage = 1;
-        private int pageSize = 5;
-        private int totalPages = 1;
-        private List<(string id, string name, string description, string startTime, string endTime, string status)> allContests;
-
+        private List<Contest> allContests;
         private ContestService contestService = new ContestService();
+        private int contestPageSize = 5;
+        private int contestCurrentPage = 1;
 
         public ContestView()
         {
             InitializeComponent();
-            AddPageSizeInput();
+            InitializeTable();
+            BindEvent();
             LoadAllContests();
-            RenderCurrentPage();
+        }
+
+        private void InitializeTable()
+        {
+            // Configure table columns
+            tblContests.Columns = new ColumnCollection
+                {
+                    new Column("STT", "STT", ColumnAlign.Center) { 
+                        Width = "60", 
+                        Fixed = true,
+                        Render = (value, record, rowIndex) => ((contestCurrentPage - 1) * contestPageSize + rowIndex + 1)
+                    },
+                    new Column("Id", "ID", ColumnAlign.Center) { Width = "80", Fixed = true },
+                    new Column("Name", "Tên cuộc thi", ColumnAlign.Left) { Width = "250" },
+                    new Column("Description", "Mô tả", ColumnAlign.Left),
+                    new Column("StartTime", "Thời gian bắt đầu", ColumnAlign.Center) { Width = "180" },
+                    new Column("EndTime", "Thời gian kết thúc", ColumnAlign.Center) { Width = "180" },
+                    new Column("Status", "Trạng thái", ColumnAlign.Center) { Width = "120" },
+                    new Column("Actions", "Thao tác", ColumnAlign.Center)
+                    {
+                        Width = "240",
+                        Fixed = true,
+                        Render = (value, record, rowIndex) => new CellLink[]
+                        {
+                            new CellButton("view", "Xem") { Type = TTypeMini.Primary, Ghost = true, IconSvg = "EyeOutlined" },
+                            new CellButton("edit", "Sửa") { Type = TTypeMini.Warn, Ghost = true, IconSvg = "EditOutlined" },
+                            new CellButton("delete", "Xóa") { Type = TTypeMini.Error, Ghost = true, IconSvg = "DeleteOutlined" }
+                        }
+                }
+            };
+
+        }
+
+        private void TblContests_CellButtonClick(object sender, TableButtonEventArgs e)
+        {
+            var recordType = e.Record.GetType();
+            var contestProperty = recordType.GetProperty("Contest");
+            if (contestProperty != null)
+            {
+                var contest = contestProperty.GetValue(e.Record) as Contest;
+                if (contest != null)
+                {
+                    switch (e.Btn.Id)
+                    {
+                        case "view":
+                            ViewContest(contest.Id, contest.Name);
+                            break;
+                        case "edit":
+                            EditContest(contest.Id);
+                            break;
+                        case "delete":
+                            DeleteContest(contest.Id);
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void BindEvent()
+        {
+            tblContests.CellButtonClick += TblContests_CellButtonClick;
+            pgnContests.ValueChanged += PgnContests_ValueChanged;
+            pgnContests.ShowSizeChanger = true;
+        }
+
+        private void PgnContests_ValueChanged(object sender, PagePageEventArgs e)
+        {
+            contestCurrentPage = e.Current;
+            if (e.PageSize != contestPageSize)
+            {
+                contestPageSize = e.PageSize;
+            }
+            UpdateContestsTable();
+        }
+
+        private void UpdateContestsTable()
+        {
+            if (allContests == null) return;
+
+            var pagedContests = allContests
+                .Skip((contestCurrentPage - 1) * contestPageSize)
+                .Take(contestPageSize)
+                .ToList();
+
+            // Transform data for table with formatted dates
+            var tableData = pagedContests.Select(c => new
+            {
+                c.Id,
+                c.Name,
+                c.Description,
+                StartTime = c.StartTime.ToString("HH:mm:ss dd/MM/yyyy"),
+                EndTime = c.EndTime.ToString("HH:mm:ss dd/MM/yyyy"),
+                c.Status,
+                Contest = c
+            }).ToList();
+
+            tblContests.DataSource = tableData;
         }
 
         private void LoadAllContests()
         {
-            // Use ContestService to load contests
-            var contests = contestService.GetAllContests();
-            allContests = contests.Select(c => (
-                c.Id,
-                c.Name,
-                c.Description,
-                c.StartTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.EndTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.Status
-            )).ToList();
-            totalPages = (int)Math.Ceiling(allContests.Count / (double)pageSize);
-        }
+            allContests = contestService.GetAllContests();
 
-        private void RenderCurrentPage()
-        {
-            pnlContestsContainer.Controls.Clear();
-            int startIdx = (currentPage - 1) * pageSize;
-            int endIdx = Math.Min(startIdx + pageSize, allContests.Count);
-            for (int i = startIdx; i < endIdx; i++)
-            {
-                var c = allContests[i];
-                AddContestRow(c.id, c.name, c.description, c.startTime, c.endTime, c.status);
-            }
-            RenderPagination();
-        }
+            pgnContests.Total = allContests.Count;
+            pgnContests.PageSize = contestPageSize;
+            pgnContests.Current = 1;
 
-        private void RenderPagination()
-        {
-            var oldPanel = pnlContestsContainer.Controls.Find("paginationPanel", false);
-            if (oldPanel.Length > 0)
-                pnlContestsContainer.Controls.Remove(oldPanel[0]);
-
-            var paginationPanel = new System.Windows.Forms.Panel
-            {
-                Name = "paginationPanel",
-                Height = 50,
-                Dock = DockStyle.Bottom,
-                BackColor = Color.White
-            };
-
-
-            int btnWidth = 40;
-            int spacing = 10;
-            int x = 10;
-
-            // Page size input
-            var lblPageSize = new AntdUI.Label
-            {
-                Text = "Số dòng:",
-                Location = new Point(x, 10),
-                Size = new Size(90, 30),
-                Font = new Font("Segoe UI", 9F),
-                BackColor = Color.Transparent
-            };
-            paginationPanel.Controls.Add(lblPageSize);
-            x += 95;
-
-            var txtPageSize = new AntdUI.Input
-            {
-                Text = pageSize.ToString(),
-                Location = new Point(x, 10),
-                Size = new Size(50, 30),
-                Font = new Font("Segoe UI", 10F),
-                TextAlign = HorizontalAlignment.Center
-            };
-            txtPageSize.KeyPress += (s, e) =>
-            {
-                // Only allow digits
-                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-                {
-                    e.Handled = true;
-                }
-            };
-            txtPageSize.Leave += (s, e) =>
-            {
-                int newSize;
-                if (int.TryParse(txtPageSize.Text, out newSize) && newSize > 0)
-                {
-                    pageSize = newSize;
-                    totalPages = (int)Math.Ceiling(allContests.Count / (double)pageSize);
-                    currentPage = 1;
-                    RenderCurrentPage();
-                }
-                else
-                {
-                    txtPageSize.Text = pageSize.ToString();
-                }
-            };
-            paginationPanel.Controls.Add(txtPageSize);
-            x += 60;
-
-
-            // Previous button
-            var btnPrev = new AntdUI.Button
-            {
-                Text = "<",
-                Location = new Point(x, 10),
-                Size = new Size(btnWidth, 30),
-                Enabled = currentPage > 1
-            };
-            btnPrev.Click += (s, e) => { currentPage--; RenderCurrentPage(); };
-            paginationPanel.Controls.Add(btnPrev);
-            x += btnWidth + spacing;
-
-            // Page numbers
-            for (int i = 1; i <= totalPages; i++)
-            {
-                var btnPage = new AntdUI.Button
-                {
-                    Text = i.ToString(),
-                    Location = new Point(x, 10),
-                    Size = new Size(btnWidth, 30),
-                    Type = i == currentPage ? TTypeMini.Primary : TTypeMini.Default
-                };
-                int pageNum = i;
-                btnPage.Click += (s, e) => { currentPage = pageNum; RenderCurrentPage(); };
-                paginationPanel.Controls.Add(btnPage);
-                x += btnWidth + spacing;
-            }
-
-            // Next button
-            var btnNext = new AntdUI.Button
-            {
-                Text = ">",
-                Location = new Point(x, 10),
-                Size = new Size(btnWidth, 30),
-                Enabled = currentPage < totalPages
-            };
-            btnNext.Click += (s, e) => { currentPage++; RenderCurrentPage(); };
-            paginationPanel.Controls.Add(btnNext);
-
-            pnlContestsContainer.Controls.Add(paginationPanel);
-            paginationPanel.BringToFront();
-        }
-
-
-        private void AddContestRow(string id, string name, string description, string startTime, string endTime, string status)
-        {
-            var rowPanel = new AntdUI.Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 60,
-                Padding = new Padding(20, 10, 20, 10),
-                Back = Color.White
-            };
-
-            var lblId = new System.Windows.Forms.Label
-            {
-                Text = id,
-                Location = new Point(10, 20),
-                Size = new Size(50, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            var lblName = new System.Windows.Forms.Label
-            {
-                Text = name,
-                Location = new Point(80, 20),
-                Size = new Size(250, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            var lblDescription = new System.Windows.Forms.Label
-            {
-                Text = description.Length > 40 ? description.Substring(0, 40) + "..." : description,
-                Location = new Point(350, 20),
-                Size = new Size(300, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            // Start Time Label
-            var lblStartTime = new System.Windows.Forms.Label
-            {
-                Text = startTime,
-                Location = new Point(760, 20),
-                Size = new Size(180, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            // End Time Label
-            var lblEndTime = new System.Windows.Forms.Label
-            {
-                Text = endTime,
-                Location = new Point(990, 20),
-                Size = new Size(180, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            // Status Label
-            var lblStatus = new System.Windows.Forms.Label
-            {
-                Text = status,
-                Location = new Point(1220, 20),
-                Size = new Size(100, 20),
-                Font = new Font("Segoe UI", 10F),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent
-            };
-
-            // Action Buttons Container
-            var actionPanel = new System.Windows.Forms.Panel
-            {
-                Location = new Point(1360, 15),
-                Size = new Size(229, 30),
-                BackColor = Color.Transparent
-            };
-
-            // View Button
-            var btnView = new AntdUI.Button
-            {
-                Text = "Xem",
-                Type = TTypeMini.Primary,
-                Ghost = true,
-                Location = new Point(0, 0),
-                Size = new Size(60, 30),
-                Font = new Font("Segoe UI", 9F),
-                IconSvg = "EyeOutlined"
-            };
-            btnView.Click += (s, e) => ViewContest(id, name);
-
-            // Edit Button
-            var btnEdit = new AntdUI.Button
-            {
-                Text = "Sửa",
-                Type = TTypeMini.Warn,
-                Ghost = true,
-                Location = new Point(70, 0),
-                Size = new Size(60, 30),
-                Font = new Font("Segoe UI", 9F),
-                IconSvg = "EditOutlined"
-            };
-            btnEdit.Click += (s, e) => EditContest(id);
-
-            // Delete Button
-            var btnDelete = new AntdUI.Button
-            {
-                Text = "Xóa",
-                Type = TTypeMini.Error,
-                Ghost = true,
-                Location = new Point(140, 0),
-                Size = new Size(70, 30),
-                Font = new Font("Segoe UI", 9F),
-                IconSvg = "DeleteOutlined"
-            };
-            btnDelete.Click += (s, e) => DeleteContest(id);
-
-            rowPanel.Controls.Add(lblId);
-            rowPanel.Controls.Add(lblName);
-            rowPanel.Controls.Add(lblDescription);
-            rowPanel.Controls.Add(lblStartTime);
-            rowPanel.Controls.Add(lblEndTime);
-            rowPanel.Controls.Add(lblStatus);
-            rowPanel.Controls.Add(actionPanel);
-
-            actionPanel.Controls.Add(btnView);
-            actionPanel.Controls.Add(btnEdit);
-            actionPanel.Controls.Add(btnDelete);
-
-            // Add to the container panel (not the main table panel)
-            pnlContestsContainer.Controls.Add(rowPanel);
-            rowPanel.BringToFront();
-        }
-
-        // Add page size input above table (optional, for initial load)
-        private void AddPageSizeInput()
-        {
-            // Optionally, you can add a page size input above the table if you want it always visible.
-            // For now, the input is in the pagination panel below the table.
+            UpdateContestsTable();
         }
 
         private void ViewContest(string id, string name)
         {
-            // Navigate to contest details view
             var mainWindow = this.FindForm() as MainWindow;
             if (mainWindow != null)
             {
@@ -335,8 +158,6 @@ namespace computer_monitoring_desktop.Views
             {
                 AntdUI.Message.success(FindForm(), $"Đã xóa cuộc thi {id} thành công!");
                 LoadAllContests();
-                if (currentPage > totalPages) currentPage = totalPages;
-                RenderCurrentPage();
             }
         }
 
@@ -516,8 +337,6 @@ namespace computer_monitoring_desktop.Views
                     modalForm.DialogResult = DialogResult.OK;
                     AntdUI.Message.success(FindForm(), contestId == null ? "Tạo cuộc thi thành công!" : "Cập nhật cuộc thi thành công!");
                     LoadAllContests();
-                    if (currentPage > totalPages) currentPage = totalPages;
-                    RenderCurrentPage();
                     modalForm.Close();
                 };
                 btnPanel.Controls.Add(btnSave);
@@ -551,5 +370,7 @@ namespace computer_monitoring_desktop.Views
             // Show modal
             modalForm.ShowDialog(FindForm());
         }
+
+
     }
 }
