@@ -31,7 +31,7 @@ namespace computer_monitoring_desktop.Views
         /// </summary>
         private void InitializeComponent()
         {
-            pnlMain = new Panel();
+            pnlMain = new AntdUI.Panel();
             pnlGridCard = new AntdUI.Panel();
             tblProcesses = new AntdUI.Table();
             lblGridSubtitle = new AntdUI.Label();
@@ -46,8 +46,7 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlMain
             // 
-            pnlMain.AutoScroll = true;
-            pnlMain.BackColor = Color.FromArgb(250, 250, 250);
+            pnlMain.BackColor = Color.Transparent;
             pnlMain.Controls.Add(pnlGridCard);
             pnlMain.Controls.Add(pnlHeader);
             pnlMain.Dock = DockStyle.Fill;
@@ -60,7 +59,7 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlGridCard
             // 
-            pnlGridCard.Back = Color.White;
+            pnlGridCard.BackColor = Color.Transparent;
             pnlGridCard.Controls.Add(tblProcesses);
             pnlGridCard.Controls.Add(lblGridSubtitle);
             pnlGridCard.Controls.Add(lblGridTitle);
@@ -89,7 +88,6 @@ namespace computer_monitoring_desktop.Views
             lblGridSubtitle.BackColor = Color.Transparent;
             lblGridSubtitle.Dock = DockStyle.Top;
             lblGridSubtitle.Font = new Font("Segoe UI", 10F);
-            lblGridSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
             lblGridSubtitle.Location = new Point(24, 64);
             lblGridSubtitle.Margin = new Padding(0, 4, 0, 16);
             lblGridSubtitle.Name = "lblGridSubtitle";
@@ -102,7 +100,6 @@ namespace computer_monitoring_desktop.Views
             lblGridTitle.BackColor = Color.Transparent;
             lblGridTitle.Dock = DockStyle.Top;
             lblGridTitle.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold);
-            lblGridTitle.ForeColor = Color.FromArgb(30, 41, 59);
             lblGridTitle.Location = new Point(24, 24);
             lblGridTitle.Margin = new Padding(0, 0, 0, 8);
             lblGridTitle.Name = "lblGridTitle";
@@ -114,6 +111,7 @@ namespace computer_monitoring_desktop.Views
             // pnlHeader
             // 
             pnlHeader.Back = Color.Transparent;
+            pnlHeader.BackColor = Color.Transparent;
             pnlHeader.Controls.Add(lblDescription);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Dock = DockStyle.Top;
@@ -128,7 +126,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblDescription.BackColor = Color.Transparent;
             lblDescription.Font = new Font("Segoe UI", 11F);
-            lblDescription.ForeColor = Color.FromArgb(71, 85, 105);
             lblDescription.Location = new Point(0, 60);
             lblDescription.Margin = new Padding(0);
             lblDescription.Name = "lblDescription";
@@ -141,7 +138,6 @@ namespace computer_monitoring_desktop.Views
             // 
             lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI Semibold", 26F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
             lblTitle.Location = new Point(0, 0);
             lblTitle.Margin = new Padding(0, 0, 0, 12);
             lblTitle.Name = "lblTitle";
@@ -166,7 +162,7 @@ namespace computer_monitoring_desktop.Views
 
         #endregion
 
-        private Panel pnlMain;
+        private AntdUI.Panel pnlMain;
         private AntdUI.Panel pnlHeader;
         private AntdUI.Label lblTitle;
         private AntdUI.Label lblDescription;

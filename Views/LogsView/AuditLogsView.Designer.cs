@@ -39,7 +39,6 @@ namespace computer_monitoring_desktop.Views
             lblTitle = new AntdUI.Label();
             pnlMain.SuspendLayout();
             pnlHeader.SuspendLayout();
-            flowPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlMain
@@ -111,7 +110,6 @@ namespace computer_monitoring_desktop.Views
             Size = new Size(1825, 975);
             pnlMain.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
-            flowPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 

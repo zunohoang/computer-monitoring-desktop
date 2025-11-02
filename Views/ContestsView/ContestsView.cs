@@ -1,10 +1,6 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using AntdUI;
-using computer_monitoring_desktop.Services;
+﻿using AntdUI;
 using computer_monitoring_desktop.Models.Contest;
-using System.ComponentModel;
+using computer_monitoring_desktop.Services;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -25,44 +21,31 @@ namespace computer_monitoring_desktop.Views
 
         private void InitializeTable()
         {
-            // Use ContestService to load contests
-            var contests = contestService.GetAllContests();
-            allContests = contests.Select(c => (
-                c.Id,
-                c.Name,
-                c.Description,
-                c.StartTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.EndTime.ToString("HH:mm:ss dd/MM/yyyy"),
-                c.Status
-            )).ToList();
-            totalPages = (int)Math.Ceiling(allContests.Count / (double)pageSize);
-        }
-
-        private void RenderCurrentPage()
-        {
-            pnlContestsContainer.Controls.Clear();
-            int startIdx = (currentPage - 1) * pageSize;
-            int endIdx = Math.Min(startIdx + pageSize, allContests.Count);
-            for (int i = startIdx; i < endIdx; i++)
-            {
-                var c = allContests[i];
-                AddContestRow(c.id, c.name, c.description, c.startTime, c.endTime, c.status);
-            }
-            RenderPagination();
-        }
-
-        private void RenderPagination()
-        {
-            var oldPanel = pnlContestsContainer.Controls.Find("paginationPanel", false);
-            if (oldPanel.Length > 0)
-                pnlContestsContainer.Controls.Remove(oldPanel[0]);
-
-            var paginationPanel = new System.Windows.Forms.Panel
-            {
-                Name = "paginationPanel",
-                Height = 50,
-                Dock = DockStyle.Bottom,
-                BackColor = Color.White
+            // Configure table columns
+            tblContests.Columns = new ColumnCollection
+                {
+                    new Column("STT", "STT", ColumnAlign.Center) {
+                        Width = "60",
+                        Fixed = true,
+                        Render = (value, record, rowIndex) => ((contestCurrentPage - 1) * contestPageSize + rowIndex + 1)
+                    },
+                    new Column("Id", "ID", ColumnAlign.Center) { Width = "80", Fixed = true },
+                    new Column("Name", "Tên cuộc thi", ColumnAlign.Left) { Width = "250" },
+                    new Column("Description", "Mô tả", ColumnAlign.Left),
+                    new Column("StartTime", "Thời gian bắt đầu", ColumnAlign.Center) { Width = "180" },
+                    new Column("EndTime", "Thời gian kết thúc", ColumnAlign.Center) { Width = "180" },
+                    new Column("Status", "Trạng thái", ColumnAlign.Center) { Width = "120" },
+                    new Column("Actions", "Thao tác", ColumnAlign.Center)
+                    {
+                        Width = "240",
+                        Fixed = true,
+                        Render = (value, record, rowIndex) => new CellLink[]
+                        {
+                            new CellButton("view", "Xem") { Type = TTypeMini.Primary, Ghost = true, IconSvg = "EyeOutlined" },
+                            new CellButton("edit", "Sửa") { Type = TTypeMini.Warn, Ghost = true, IconSvg = "EditOutlined" },
+                            new CellButton("delete", "Xóa") { Type = TTypeMini.Error, Ghost = true, IconSvg = "DeleteOutlined" }
+                        }
+                }
             };
 
         }

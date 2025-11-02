@@ -1,7 +1,13 @@
-﻿using System.ComponentModel;
+﻿using AntdUI;
 using computer_monitoring_desktop.Models.Audit;
 using computer_monitoring_desktop.Models.Repositories;
-using AntdUI;
+using computer_monitoring_desktop.Models.Repositories.Audit;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -15,20 +21,30 @@ namespace computer_monitoring_desktop.Views
 
         private readonly IAuditRepository auditRepo;
 
-        private bool isLoaded;
-        // Bộ data của thí sinh đã chọn
-        private AuditDataset? currentDataset;
-        private HashSet<string>? blacklistNames;
-        
-        // Không cần constructor không tham số
-
-        internal TextLogView(IAuditService service)
+        public TextLogView()
+            : this(new InMemoryAuditRepository(), new InMemoryAuditRepository().GetAttempts().First().Id)
         {
-            // Again, don't know why
-            auditService = service ?? throw new ArgumentNullException(nameof(service));
+        }
+
+        internal TextLogView(IAuditRepository repository)
+            : this(repository, repository.GetAttempts().First().Id)
+        {
+        }
+
+        public TextLogView(int attemptId)
+            : this(new InMemoryAuditRepository(), attemptId)
+        {
+        }
+
+        internal TextLogView(IAuditRepository repository, int attemptId)
+        {
+            auditRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+
             InitializeComponent();
 
-            blacklistNames = auditService?.GetBlacklistNames();
+            blacklistNames = auditRepo.GetBlacklist()
+                .Select(item => item.Name.Trim().ToLowerInvariant())
+                .ToHashSet();
 
             InitializeTable();
             BindDataset(attemptId);
@@ -36,10 +52,15 @@ namespace computer_monitoring_desktop.Views
             Load += HandleLoad;
         }
 
-        private void HandleLoad(object? sender, EventArgs e)
+        internal void UpdateAttempt(AuditAttempt newAttempt)
         {
-            isLoaded = true;
-            if (currentDataset != null)
+            UpdateAttempt(newAttempt.Id);
+        }
+
+        public void UpdateAttempt(int newAttemptId)
+        {
+            BindDataset(newAttemptId);
+            if (isLoaded)
             {
                 UpdateHeaderText();
                 PopulateTable();
@@ -62,9 +83,6 @@ namespace computer_monitoring_desktop.Views
 
         private void UpdateHeaderText()
         {
-            if (currentDataset == null) return;
-
-            var attempt = currentDataset.Attempt;
             lblTitle.Text = $"Text log - {attempt.StudentName}";
             lblDescription.Text = $"MSSV: {attempt.StudentCode} | Máy trạm: {attempt.MachineName} | Phòng: {attempt.RoomCode} | Kỳ thi: {attempt.ContestName}";
             lblGridTitle.Text = "Tiến trình đang theo dõi";
@@ -81,9 +99,9 @@ namespace computer_monitoring_desktop.Views
                 new Column("DurationDisplay", "Thời lượng", ColumnAlign.Center),
                 new Column("Pid", "PID", ColumnAlign.Center)
             };
-            
+
             tblProcesses.Columns = columns;
-            
+
             // Add hover and click styling for blacklisted rows
             tblProcesses.SetRowStyle += Table_SetRowStyle;
         }
@@ -111,7 +129,7 @@ namespace computer_monitoring_desktop.Views
                 .ToArray();
 
             tblProcesses.DataSource = processData;
-            
+
             // Refresh the table to apply the SetRowStyle styling
             tblProcesses.Invalidate();
 
@@ -120,7 +138,6 @@ namespace computer_monitoring_desktop.Views
                 : $"Không có tiến trình được ghi nhận trên {attempt.MachineName}.";
         }
 
-        // Class không bị kế thừa, không ai biết, chú giấu kỹ quá..., nó là 1 cách để cấu trúc class mang tính đóng gói
         private sealed class ProcessRow
         {
             public ProcessRow(AuditProcess process, bool isBlacklisted)
@@ -142,10 +159,10 @@ namespace computer_monitoring_desktop.Views
             public bool IsRunning { get; }
             public bool IsBlacklisted { get; }
 
-            
+
             public string StatusDisplay => IsRunning ? "Dang chay" : Status;
             public string StartDisplay => StartTime.ToString("HH:mm:ss dd/MM");
-            public string EndDisplay => EndTime.HasValue ? EndTime.Value.ToString("HH:mm:ss dd/MM") : "Đang chạy";
+            public string EndDisplay => EndTime.HasValue ? EndTime.Value.ToString("HH:mm:ss dd/MM") : "Dang chay";
             public string DurationDisplay
             {
                 get
@@ -160,10 +177,10 @@ namespace computer_monitoring_desktop.Views
 
                     if (duration.TotalHours < 1)
                     {
-                        return $"{duration.TotalMinutes:F0} phút";
+                        return $"{duration.TotalMinutes:F0} phut";
                     }
 
-                    return $"{duration.TotalHours:F1} giờ";
+                    return $"{duration.TotalHours:F1} gio";
                 }
             }
         }

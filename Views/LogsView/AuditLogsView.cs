@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using computer_monitoring_desktop.Models.Audit;
 using computer_monitoring_desktop.Models.Repositories;
+using computer_monitoring_desktop.Models.Repositories.Audit;
 
 namespace computer_monitoring_desktop.Views
 {

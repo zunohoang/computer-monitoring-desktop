@@ -31,7 +31,7 @@ namespace computer_monitoring_desktop.Views
         /// </summary>
         private void InitializeComponent()
         {
-            pnlMain = new Panel();
+            pnlMain = new AntdUI.Panel();
             pnlTimelineCard = new AntdUI.Panel();
             pnlTimelineScroll = new Panel();
             flpTimeline = new FlowLayoutPanel();
@@ -53,7 +53,6 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlMain
             // 
-            pnlMain.AutoScroll = true;
             pnlMain.Controls.Add(pnlTimelineCard);
             pnlMain.Controls.Add(flpSummary);
             pnlMain.Controls.Add(pnlHeader);
@@ -81,6 +80,7 @@ namespace computer_monitoring_desktop.Views
             // 
             // pnlTimelineScroll
             // 
+            pnlTimelineScroll.AutoScroll = true;
             pnlTimelineScroll.BackColor = Color.Transparent;
             pnlTimelineScroll.Controls.Add(flpTimeline);
             pnlTimelineScroll.Dock = DockStyle.Fill;
@@ -93,9 +93,9 @@ namespace computer_monitoring_desktop.Views
             // 
             // flpTimeline
             // 
-            flpTimeline.AutoScroll = true;
+            flpTimeline.AutoScroll = false;
             flpTimeline.BackColor = Color.Transparent;
-            flpTimeline.Dock = DockStyle.Fill;
+            flpTimeline.Dock = DockStyle.Top;
             flpTimeline.FlowDirection = FlowDirection.TopDown;
             flpTimeline.Location = new Point(0, 8);
             flpTimeline.Margin = new Padding(0);
@@ -235,7 +235,7 @@ namespace computer_monitoring_desktop.Views
 
         #endregion
 
-        private Panel pnlMain;
+        private AntdUI.Panel pnlMain;
         private AntdUI.Panel pnlHeader;
         private AntdUI.Label lblTitle;
         private AntdUI.Label lblDescription;

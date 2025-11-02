@@ -1,13 +1,13 @@
-﻿using System;
+﻿using AntdUI;
+using computer_monitoring_desktop.Data;
+using computer_monitoring_desktop.Models.Audit;
+using computer_monitoring_desktop.Models.Repositories;
+using computer_monitoring_desktop.Models.Repositories.Room;
+using computer_monitoring_desktop.Models.Rooms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using AntdUI;
-using computer_monitoring_desktop.Models.Audit;
-using computer_monitoring_desktop.Models.Repositories.Room;
-using computer_monitoring_desktop.Models.Rooms;
-using computer_monitoring_desktop.Models.Repositories;
-using computer_monitoring_desktop.Data;
 
 namespace computer_monitoring_desktop.Views
 {
@@ -15,56 +15,56 @@ namespace computer_monitoring_desktop.Views
     public partial class RoomManagementView : UserControl
     {
         #region Private Fields
-        
+
         private readonly IRoomRepository roomRepo;
         private List<ExamRoom> allRooms = new();
         private List<AuditAttempt> allAttempts = new();
         private ExamRoom? selectedRoom;
-        
+
         // Pagination state
         private int contestantPageSize = 10;
         private int contestantCurrentPage = 1;
-        
+
         #endregion
 
         #region Constructor
-        
+
         public RoomManagementView()
             : this(new InMemoryRoomRepository())
         {
         }
 
-        public RoomManagementView(IRoomService service)
+        internal RoomManagementView(IRoomRepository repository)
         {
-            roomService = service ?? throw new ArgumentNullException(nameof(service));
+            roomRepo = repository ?? throw new ArgumentNullException(nameof(repository));
 
             InitializeComponent();
-            
+
             InitializeRoomsTable();
             InitializeContestantsTable();
             BindEvents();
             LoadRooms();
         }
-        
+
         #endregion
 
         #region Event Binding
-        
+
         private void BindEvents()
         {
             // Pagination events
             pgnContestants.ValueChanged += PgnContestants_ValueChanged;
             pgnContestants.ShowSizeChanger = true;
-            
+
             // Table events
             tblRooms.CellClick += TblRooms_CellClick;
             tblContestants.CellButtonClick += TblContestants_CellButtonClick;
         }
-        
+
         #endregion
 
         #region Pagination Event Handlers
-        
+
         private void PgnContestants_ValueChanged(object sender, PagePageEventArgs e)
         {
             contestantCurrentPage = e.Current;
@@ -74,11 +74,11 @@ namespace computer_monitoring_desktop.Views
             }
             UpdateContestantsTable();
         }
-        
+
         #endregion
 
         #region Table Initialization
-        
+
         private void InitializeRoomsTable()
         {
             tblRooms.Columns = new ColumnCollection()
@@ -92,7 +92,7 @@ namespace computer_monitoring_desktop.Views
         {
             tblContestants.Columns = new ColumnCollection()
             {
-                new Column("STT", "STT") { 
+                new Column("STT", "STT") {
                     Align = ColumnAlign.Center,
                     Fixed = true
                 },
@@ -106,16 +106,16 @@ namespace computer_monitoring_desktop.Views
                 }
             };
         }
-        
+
         #endregion
 
         #region Data Loading Methods
-        
+
         private void LoadRooms()
         {
             // Get rooms from repository
             allRooms = roomRepo.GetRooms().ToList();
-            
+
             // Transform data for display
             var tableData = allRooms.Select(room => {
                 var attemptCount = roomRepo.GetAttemptCount(room.Id);
@@ -126,10 +126,10 @@ namespace computer_monitoring_desktop.Views
                     Room = room
                 };
             }).ToList();
-            
+
             tblRooms.DataSource = tableData;
             lblRoomsTitle.Text = $"Phòng thi ({allRooms.Count})";
-            
+
             if (allRooms.Count > 0)
             {
                 // Auto-select first room
@@ -148,16 +148,16 @@ namespace computer_monitoring_desktop.Views
         {
             selectedRoom = room;
             lblContestantsTitle.Text = $"Thí sinh - {room.AccessCode}";
-            
+
             // Get attempts from repository
             allAttempts = roomRepo.GetAttemptsByRoom(room.Id).ToList();
-            
+
             // Setup pagination
             pgnContestants.Total = allAttempts.Count;
             pgnContestants.PageSize = contestantPageSize;
             pgnContestants.Current = 1;
             contestantCurrentPage = 1;
-            
+
             UpdateContestantsTable();
         }
 
@@ -187,15 +187,15 @@ namespace computer_monitoring_desktop.Views
 
             tblContestants.DataSource = tableData;
         }
-        
+
         #endregion
 
         #region Table Click Handlers
-        
+
         private void TblRooms_CellClick(object sender, TableClickEventArgs e)
         {
             if (e.Record == null) return;
-            
+
             var recordType = e.Record.GetType();
             var roomProperty = recordType.GetProperty("Room");
             if (roomProperty != null)
@@ -211,7 +211,7 @@ namespace computer_monitoring_desktop.Views
         private void TblContestants_CellButtonClick(object sender, TableButtonEventArgs e)
         {
             if (e.Record == null || e.Btn?.Id != "ViewLog") return;
-            
+
             var recordType = e.Record.GetType();
             var attemptProperty = recordType.GetProperty("Attempt");
             if (attemptProperty != null)
@@ -223,18 +223,18 @@ namespace computer_monitoring_desktop.Views
                 }
             }
         }
-        
+
         #endregion
 
         #region Navigation
-        
+
         private void NavigateToLogs(AuditAttempt attempt)
         {
             if (FindForm() is MainWindow mainWindow)
             {
                 mainWindow.BeginInvoke(new Action(() =>
                 {
-                    mainWindow.LoadAuditDetailView(attempt);
+                    mainWindow.LoadAuditDetailView(attempt.Id);
                 }));
             }
             else
@@ -242,7 +242,7 @@ namespace computer_monitoring_desktop.Views
                 AntdUI.Message.warn(FindForm(), "Không thể mở log chi tiết ngay bây giờ. Vui lòng thử lại.");
             }
         }
-        
+
         #endregion
     }
 }
